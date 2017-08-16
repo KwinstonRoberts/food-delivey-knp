@@ -1,7 +1,19 @@
 body {
   background-color: #EEE;
 
-  h1 {
-    color: #244751;
+  h2 {
+    color: #263238;
   }
+  .navbar-brand  h2 {
+    font-size: 2em;
+    line-height: 10px;
+  }
+}
+
+.navbar{
+  background-color: #00E676;
+}
+.navbar-btn{
+  padding:10px;
+  margin:30px 10px 10px 0;
 }
