@@ -36,17 +36,27 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
+
 app.use("/api/users", usersRoutes(knex));
+
+var dishes = {};
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect('/menu');
 });
 
 
 app.get("/menu", (req, res) => {
-  
-});
+ knex.select('name','price').from('dishes').asCallback((err,rows)=>{
+    if (err) return console.error(err);
+      let templateVars = {
+        dishes:rows
+      }
+      //console.log(templateVars);
+      res.render('index',templateVars)
+    })
+  });
 
 app.get("/menu/:id",(req, res) => {
 

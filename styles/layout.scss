@@ -23,7 +23,9 @@ body {
     }
     #menu{
       display:none;
-      margin-top:50px;
+      #details{
+        margin:50px;
+      }
       b{
         line-height: 25px;
         text-align: center;
@@ -38,8 +40,8 @@ body {
       }
     }
     #accordion{
-      overflow-y:scroll;
-      height:600px;
+      overflow-y:auto;
+      height:700px;
       h2{
         margin:0;
       }

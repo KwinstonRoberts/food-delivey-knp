@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
   $('.cta').on('click','button',function(){
     $('.cta').slideUp();
@@ -6,6 +8,6 @@ $(document).ready(function(){
 
   $('.options>button').on('click',function(e){
     $(this).toggleClass('active');
-  })
+  });
 
-})
+});

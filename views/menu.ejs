@@ -10,17 +10,12 @@
       </h4>
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
-        <h4 class="foodItemTitle">The Billionaire Burger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">Triple Bacon Cheeseburger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">The Deluxe Burger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
 
+      <div class="panel-body">
+          <% for (x in dishes){ %>
+        <h4 class="foodItemTitle pull-left"><%= dishes[x].name %></h4>
+        <div class="orderPrice pull-right"><span class="price">$<%= dishes[x].price %></span></div>
+          <%}%>
       </div>
     </div>
 
