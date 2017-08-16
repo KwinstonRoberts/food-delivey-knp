@@ -34,7 +34,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li>
               <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-info navbar-btn">Login</button>
+                <button type="button" class="btn btn-info navbar-btn" data-toggle="modal" data-target="#myModal">Login</button>
                 <button type="button" class="btn btn-info navbar-btn">Register</button>
               </div>
             </li>
@@ -42,5 +42,22 @@
         </div>
       </div>
     </nav>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            Login
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
