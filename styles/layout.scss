@@ -23,7 +23,7 @@ body {
     }
     #menu{
       display:none;
-      margin-top:150px;
+      margin-top:50px;
       b{
         line-height: 25px;
         text-align: center;
@@ -35,6 +35,13 @@ body {
         .active{
           background-color:#5bc0de;
         }
+      }
+    }
+    #accordion{
+      overflow-y:scroll;
+      height:600px;
+      h2{
+        margin:0;
       }
     }
   }

@@ -44,8 +44,12 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/login", (req, res) => {
-  res.render("login")
+app.get("/menu", (req, res) => {
+  
+});
+
+app.get("/menu/:id",(req, res) => {
+
 });
 
 app.listen(PORT, () => {
