@@ -18,7 +18,7 @@ exports.seed = function(knex, Promise) {
         }),
         knex('dishes').insert({
           name: 'Humble Burger',
-          pic: '/images/humbleBurger.jpg',
+          pic: '/images/humbleBurger.jpeg',
           price:21.00,
           description:'After being humbled by Elon Musk, the CEO of Tesla and SpaceX, Mark learned a valuable lesson and created the Humble burger. These succulent sliders signify the shrinkage of his ego.',
           type:'main'
