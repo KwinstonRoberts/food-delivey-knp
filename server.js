@@ -78,14 +78,14 @@ app.get("/menu/:name",(req, res) => {
 app.post("/cart",(req, res) => {
   if(!req.body.name)return console.error('param does not exist');
   console.log(req.body.name);
-  for(x in qty){
+  for(x in req.body.quantity){
     knex('menu_cart').insert(
       {
         cart_id: knex.select('id').from('cart').where('owner','Kyle'),
         menu_id: knex.select('id').from('dishes').where('name',req.body.name)
       }).asCallback((err)=>{
         if (err) return console.error(err);
-        knex.count("menu_id").from('menu_cart').where('cart_id',
+        knex.countDistinct("menu_id").from('menu_cart').where('cart_id',
         knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
         if (err) return console.error(err);
           res.json({
