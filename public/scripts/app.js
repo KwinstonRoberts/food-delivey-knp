@@ -27,4 +27,21 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
+  $('#cart-btn').on('click','button',function(){
+    console.log('cart button cicked')
+    $.ajax({
+      type:'POST',
+      url:`/cart`,
+      data:{name:$('#details').find('h2').text(),quantity:1},
+      success: function(data){
+        console.log(data.items);
+      }
+    });
+  })
+
+  $('.options>button').on('click',function(e){
+    $(this).toggleClass('active');
+  });
+
+
 });

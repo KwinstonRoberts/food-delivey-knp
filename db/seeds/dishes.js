@@ -1,5 +1,5 @@
 exports.seed = function(knex, Promise) {
-  return knex('dishes').truncate().then(function(){
+  return knex.raw('TRUNCATE TABLE dishes CASCADE').then(function(){
     return Promise.all([
         // Inserts seed entries
         knex('dishes').insert({
