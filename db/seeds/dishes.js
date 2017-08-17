@@ -11,7 +11,7 @@ exports.seed = function(knex, Promise) {
         }),
         knex('dishes').insert({
           name: 'Billionaire Burger',
-          pic: '/images/burger2.jpg',
+          pic: '/images/billionaireBurger.jpg',
           price:100.00,
           description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
           type:'main'

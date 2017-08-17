@@ -19,6 +19,7 @@ $(document).ready(function(){
         $('#details').find('h2').text(data.dish.name);
         $('#details').find('p').text(data.dish.description);
         $('#details').find('b').text('$' + data.dish.price);
+        $('#details').find('img').attr('src',data.dish.pic);
       }
     });
   })
@@ -32,7 +33,7 @@ $(document).ready(function(){
     $.ajax({
       type:'POST',
       url:`/cart`,
-      data:{name:$('#details').find('h2').text(),quantity:1},
+      data:{name:$('#details').find('h2').text(),quantity:$('#qty').val()},
       success: function(data){
         console.log(data.items);
       }
