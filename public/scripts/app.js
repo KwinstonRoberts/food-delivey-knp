@@ -10,4 +10,21 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
+  $('.dish').on('click',function(){
+    $.ajax({
+      type:'GET',
+      url:`/menu/${$(this).find('.foodItemTitle').text()}`,
+      success: function(data){
+        //console.log(data);
+        $('#details').find('h2').text(data.dish.name);
+        $('#details').find('p').text(data.dish.description);
+        $('#details').find('b').text('$' + data.dish.price);
+      }
+    });
+  })
+
+  $('.options>button').on('click',function(e){
+    $(this).toggleClass('active');
+  });
+
 });

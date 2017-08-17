@@ -15,9 +15,9 @@
           <% for (x in dishes){
               if(dishes[x].type==='main' && x<=3){
              %>
-            <div class='row'>
-              <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
-              <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+            <div class='row dish'>
+              <h4 class="foodItemTitle pull-left col-xs-7"><%= dishes[x].name %></h4>
+              <h4 class="price pull-right col-xs-5">$<%= dishes[x].price %></h4>
             </div>
             <hr>
           <%}}%>
@@ -37,9 +37,9 @@
         <% for (x in dishes){
             if(dishes[x].type==='main'){
         %>
-           <div class='row'>
-             <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
-             <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+           <div class='row dish'>
+             <h4 class="foodItemTitle pull-left col-xs-7"><%= dishes[x].name %></h4>
+             <h4 class="price pull-right col-xs-5">$<%= dishes[x].price %></h4>
            </div>
            <hr>
           <%}}%>
@@ -59,9 +59,9 @@
         <% for (x in dishes){
             if(dishes[x].type==='sides'){
         %>
-           <div class='row'>
-             <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
-             <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+           <div class='row dish'>
+             <h4 class="foodItemTitle pull-left col-xs-7"><%= dishes[x].name %></h4>
+             <h4 class="price pull-right col-xs-5">$<%= dishes[x].price %></h4>
            </div>
            <hr>
           <%}}%>
@@ -81,9 +81,9 @@
           <% for (x in dishes){
               if(dishes[x].type==='drinks'){
           %>
-         <div class='row'>
-           <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
-           <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+         <div class='row dish'>
+           <h4 class="foodItemTitle pull-left col-xs-7"><%= dishes[x].name %></h4>
+           <h4 class="price pull-right col-xs-5">$<%= dishes[x].price %></h4>
          </div>
          <hr>
         <%}}%>

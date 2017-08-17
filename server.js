@@ -50,15 +50,27 @@ app.get("/menu", (req, res) => {
  knex.select('name','price','type').from('dishes').asCallback((err,rows)=>{
     if (err) return console.error(err);
       let templateVars = {
-        dishes:rows
+        dishes:rows,
+        dish:{}
       }
+      knex.select('*').from('dishes').where('name','Billionaire Burger').asCallback((err,row)=>{
+         if (err) return console.error(err);
+           templateVars.dish = row;
+
       console.log(templateVars);
       res.render('index',templateVars)
     })
   });
 
-app.get("/menu/:id",(req, res) => {
-
+app.get("/menu/:name",(req, res) => {
+  console.log(req.params.name);
+  knex.select('*').from('dishes').where('name',req.params.name).asCallback((err,row)=>{
+     if (err) return console.error(err);
+       res.json({
+         dish:row[0]
+       });
+     })
+   });
 });
 
 app.listen(PORT, () => {

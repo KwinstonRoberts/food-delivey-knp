@@ -41,9 +41,28 @@ body {
     }
     #accordion{
       overflow-y:auto;
+      overflow-x: hidden;
       height:650px;
       h2{
         margin:0;
+        padding:0;
+      }
+      hr{
+        margin:2px;
+      }
+      .panel-body{
+        padding:2px 10px;
+      }
+      .dish:hover{
+        background-color: #ccc;
+      }
+      h4{
+        white-space: nowrap;
+        overflow:hidden;
+        text-overflow: ellipsis;
+      }
+      .price{
+        text-align: right;
       }
     }
   }
