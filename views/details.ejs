@@ -3,9 +3,16 @@
     <div class='col-xs-12 col-md-4'>
       <h2><%=dish[0].name%></h2>
       <p><%=dish[0].description%></p>
-      <div id='cart-btn' class='container row'>
-        <button class='btn btn-info col-xs-12 col-sm-5 col-md-6 pull-left'>Add to cart</button>
-        <b class='label label-default col-xs-12  col-sm-2 pull-right'><%=dish[0].price%></b>
+      <div id='cart-btn' class='container'>
+        <div class="form-group row">
+          <button class='btn btn-info col-xs-12 col-sm-3 col-md-6 pull-left'>Add to cart</button>
+           <div class="input-group col-sm-5 col-sm-offset-1 pull-left">
+             <label class="sr-only" for="qty">Quantity</label>
+             <div class="input-group-addon">Quantity</div>
+             <input type="number" min=0 max=1000 class="form-control" id="qty" placeholder="#">
+           </div>
+           <b class='label label-default col-xs-12 col-sm-2 pull-right'>$<%=dish[0].price%></b>
+        </div>
       </div>
     </div>
   </div>

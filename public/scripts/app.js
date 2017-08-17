@@ -19,6 +19,7 @@ $(document).ready(function(){
         $('#details').find('h2').text(data.dish.name);
         $('#details').find('p').text(data.dish.description);
         $('#details').find('b').text('$' + data.dish.price);
+        $('#details').find('img').attr('src',data.dish.pic);
       }
     });
   })
@@ -26,5 +27,22 @@ $(document).ready(function(){
   $('.options>button').on('click',function(e){
     $(this).toggleClass('active');
   });
+
+  $('#cart-btn').on('click','button',function(){
+    console.log('cart button cicked')
+    $.ajax({
+      type:'POST',
+      url:`/cart`,
+      data:{name:$('#details').find('h2').text(),quantity:$('#qty').val()},
+      success: function(data){
+        console.log(data.items);
+      }
+    });
+  })
+
+  $('.options>button').on('click',function(e){
+    $(this).toggleClass('active');
+  });
+
 
 });
