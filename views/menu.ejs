@@ -12,13 +12,17 @@
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 
       <div class="panel-body">
-          <% for (x in dishes){ %>
-        <h4 class="foodItemTitle pull-left"><%= dishes[x].name %></h4>
-        <div class="orderPrice pull-right"><span class="price">$<%= dishes[x].price %></span></div>
-          <%}%>
+          <% for (x in dishes){
+              if(dishes[x].type==='main' && x<=3){
+             %>
+            <div class='row'>
+              <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
+              <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+            </div>
+            <hr>
+          <%}}%>
       </div>
     </div>
-
   </div>
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingTwo">
@@ -30,24 +34,15 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        <h4 class="foodItemTitle">The Billionaire Burger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">Triple Bacon Cheeseburger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">The Deluxe Burger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">The Billionaire Burger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">Triple Bacon Cheeseburger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">The Deluxe Burger</h4>
-        <p class="foodItemDescription"> This is one of our bestsellers for good reason. We triple the bacon, double the cheese and smother it all in a creamy chipolte mayo sauce.</p>
-        <div class="orderPrice"><span class="price">$16.99</span> <button class="orderButton">More</button> </div>
+        <% for (x in dishes){
+            if(dishes[x].type==='main'){
+        %>
+           <div class='row'>
+             <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
+             <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+           </div>
+           <hr>
+          <%}}%>
       </div>
     </div>
   </div>
@@ -61,15 +56,15 @@
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-        <h4 class="foodItemTitle">Fries</h4>
-        <p class="foodItemDescription"> A classic side dish. Pairs well with any Zuckerburger</p>
-        <div class="orderPrice"><span class="price">$6.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">Salad</h4>
-        <p class="foodItemDescription"> Side salad prepared with fresh, locally sourced vegetables.</p>
-        <div class="orderPrice" ><span class="price">$10.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">Yam Fries</h4>
-        <p class="foodItemDescription"> A classic side dish. Pairs well with any Zuckerburger</p>
-        <div class="orderPrice"><span class="price">$9.99</span> <button class="orderButton">More</button> </div>
+        <% for (x in dishes){
+            if(dishes[x].type==='sides'){
+        %>
+           <div class='row'>
+             <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
+             <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+           </div>
+           <hr>
+          <%}}%>
       </div>
     </div>
   </div>
@@ -81,17 +76,18 @@
         </a>
       </h4>
     </div>
-    <div id="collapseFour" class="panel-collapse collapse drinkPanel" role="tabpanel" aria-labelledby="headingFour>
+    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
       <div class="panel-body">
-        <h4 class="foodItemTitle">Pop</h4>
-        <p class="foodItemDescription"> Pepsi, RootBeer, Gingerale </p>
-        <div class="orderPrice"><span class="price">$2.50</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">Bottled Water</h4>
-        <p class="foodItemDescription"> Spring or Distilled</p>
-        <div class="orderPrice"><span class="price">$2.99</span> <button class="orderButton">More</button> </div>
-        <h4 class="foodItemTitle">Iced Tea</h4>
-        <p class="foodItemDescription"> Iced Tea or Lemmonade made fresh in house daily</p>
-        <div class="orderPrice"><span class="price">$2.99</span> <button class="orderButton">More</button> </div>
+          <% for (x in dishes){
+              if(dishes[x].type==='drinks'){
+          %>
+         <div class='row'>
+           <h4 class="foodItemTitle pull-left col-xs-6"><%= dishes[x].name %></h4>
+           <div class="orderPrice pull-right col-xs-6"><span class="price">$<%= dishes[x].price %></span></div>
+         </div>
+         <hr>
+        <%}}%>
       </div>
     </div>
   </div>
+</div>

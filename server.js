@@ -39,7 +39,6 @@ app.use(express.static("public"));
 
 app.use("/api/users", usersRoutes(knex));
 
-var dishes = {};
 
 // Home page
 app.get("/", (req, res) => {
@@ -48,12 +47,12 @@ app.get("/", (req, res) => {
 
 
 app.get("/menu", (req, res) => {
- knex.select('name','price').from('dishes').asCallback((err,rows)=>{
+ knex.select('name','price','type').from('dishes').asCallback((err,rows)=>{
     if (err) return console.error(err);
       let templateVars = {
         dishes:rows
       }
-      //console.log(templateVars);
+      console.log(templateVars);
       res.render('index',templateVars)
     })
   });
