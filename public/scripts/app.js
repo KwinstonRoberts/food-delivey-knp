@@ -20,6 +20,9 @@ $(document).ready(function(){
         $('#details').find('p').text(data.dish.description);
         $('#details').find('b').text('$' + data.dish.price);
         $('#details').find('img').attr('src',data.dish.pic);
+      },
+      error: function(err){
+        console.log(err);
       }
     });
   })

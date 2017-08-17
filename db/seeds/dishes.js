@@ -4,93 +4,93 @@ exports.seed = function(knex, Promise) {
         // Inserts seed entries
         knex('dishes').insert({
           name: 'Face Burger',
-          pic: '/images/burger2.jpg',
+          pic: '/images/faceBurger.jpg',
           price:17.00,
-          description:'Lorem ipsum dolor sit amet,adipisicing elit. Sint facilis, quas rem dignissimos error non inventore cupiditate odio maxime saepe eos ea!',
+          description:' Face Burger is our signiture dish. Mark created this burger when he was at Harvard, and it soon became very popular among various Ivy league schools.',
           type:'main'
         }),
         knex('dishes').insert({
           name: 'Billionaire Burger',
           pic: '/images/billionaireBurger.jpg',
           price:100.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'With truffles and caviar The Billionaire Burger is the epitomy of lavish indulgence. Eating this burger will have you feeling like a jet owning billionaire.',
           type:'main'
         }),
         knex('dishes').insert({
           name: 'Humble Burger',
-          pic: '/images/burger2.jpg',
+          pic: '/images/humbleBurger.jpg',
           price:21.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'After being humbled by Elon Musk, the CEO of Tesla and SpaceX, Mark learned a valuable lesson and created the Humble burger. These succulent sliders signify the shrinkage of his ego.',
           type:'main'
         }),
         knex('dishes').insert({
           name: 'Farmville Vegan Burger',
-          pic: '/images/burger2.jpg',
+          pic: '/images/farmville.jpg',
           price:20.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'The Farmville Vegan Burger will make even the most voracious meat-eater consider going Vegan.',
           type:'main'
         }),
         knex('dishes').insert({
           name: 'Poke Burger',
-          pic: '/images/burger2.jpg',
+          pic: '/images/pokeBurger.jpg',
           price:21.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'The Poke Burger features an extra large patty, double cheese and jumbo shrimp.',
           type:'main'
         }),
         knex('dishes').insert({
           name: 'Harvard Fries',
-          pic: '/images/burger2.jpg',
+          pic: '/images/fries.jpg',
           price:7.00,
-          description:'Lorem ipsum dolor sit amet,adipisicing elit. Sint facilis, quas rem dignissimos error non inventore cupiditate odio maxime saepe eos ea!',
+          description:'Made with fresh potatoes from P.E.I Canada, Harvard Fries are  double fried in 100% olive oil. The Harvard Fries are not salty like Stanford fries nor like to surf',
           type:'sides'
         }),
         knex('dishes').insert({
           name: 'Ivy League Rings',
-          pic: '/images/burger2.jpg',
+          pic: '/images/onionRings.jpeg',
           price:8.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'This king of onion rings, made with freshly prepared onions, put all others to shame, demand them to bend a knee, pledge fieldty, then ask to kiss the batter of Ivy League rings.',
           type:'sides'
         }),
         knex('dishes').insert({
           name: 'Elon Yam Frites',
-          pic: '/images/burger2.jpg',
+          pic: '/images/yamfries.jpg',
           price:9.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'Out of respect to Elon Musk, who has educated Mark on A.I, these yam fries are sweet but low on the glycemic index, providing you the taste of sweet treats with the benefit of low sugar.',
           type:'sides'
         }),
         knex('dishes').insert({
           name: 'Social Salad',
-          pic: '/images/burger2.jpg',
+          pic: '/images/salad.jpg',
           price:9.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'Eating salad is not a lonely pursuit anymore! The social salad is not only fresh, healthy and tasty but also photogenic enough to share with your friends on social media.',
           type:'sides'
         }),
         knex('dishes').insert({
           name: 'Silicon Poutine',
-          pic: '/images/burger2.jpg',
+          pic: '/images/poutine.jpg',
           price:11.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'Traditional poutine meets the creativity and the scale of Silicon Valley! The Silicon Poutine uses only the heaviest cheese and gravy for the hungry minds, like bootcamp students! Poutine is garnished with green onion and bacon.',
           type:'sides'
         }),
         knex('dishes').insert({
           name: 'Soft Drinks',
-          pic: '/images/burger2.jpg',
+          pic: '/images/drinks.png',
           price:3.00,
-          description:'Lorem ipsum dolor sit amet,adipisicing elit. Sint facilis, quas rem dignissimos error non inventore cupiditate odio maxime saepe eos ea!',
+          description:'Drinks with lot of sugar!',
           type:'drinks'
         }),
         knex('dishes').insert({
           name: 'Nerd Chic Smoothie',
-          pic: '/images/burger2.jpg',
+          pic: '/images/smoothies.jpg',
           price:9.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'A Smoothie for both nerds and chic people, and everyone else in between! The smoothie has yogurt, fruits, hemp protein, and kale!',
           type:'drinks'
         }),
         knex('dishes').insert({
           name: 'Perrierrier',
-          pic: '/images/burger2.jpg',
+          pic: '/images/Perrier.jpg',
           price:8.00,
-          description:'Similique modi temporibus, accusantium minus expedita. Ab eos, rem totam ea quaerat aspernatur et id sint, consectetur, libero, aperiam adipisci alias vel.',
+          description:'The best carbonated water in town!',
           type:'drinks'
         })
       ]);
