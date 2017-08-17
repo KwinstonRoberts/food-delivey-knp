@@ -73,6 +73,30 @@ app.get("/menu/:name",(req, res) => {
    });
 });
 
+
+
+app.post("/cart",(req, res) => {
+  if(!req.body.name)return console.error('param does not exist');
+  console.log(req.body.name);
+  for(x in qty){
+    knex('menu_cart').insert(
+      {
+        cart_id: knex.select('id').from('cart').where('owner','Kyle'),
+        menu_id: knex.select('id').from('dishes').where('name',req.body.name)
+      }).asCallback((err)=>{
+        if (err) return console.error(err);
+        knex.count("menu_id").from('menu_cart').where('cart_id',
+        knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
+        if (err) return console.error(err);
+          res.json({
+            items: row[0]
+          });
+        });
+     });
+   }
+});
+
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
