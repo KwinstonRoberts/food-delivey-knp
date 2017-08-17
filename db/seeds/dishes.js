@@ -7,7 +7,7 @@ exports.seed = function(knex, Promise) {
           name: 'Face Burger',
           pic: '/images/burger2.jpg',
           price:10.00,
-          description:'Lorem ipsum dolor sit amet,adipisicing elit. Sint facilis, quas rem dignissimos error non inventore cupiditate odio maxime saepe eos ea!'
+          description:'Lorem ipsum dolor sit amet,adipisicing elit. Sint facilis, quas rem dignissimos error non inventore cupiditate odio maxime saepe eos ea!',
           type:'main'
         })
       ]);
