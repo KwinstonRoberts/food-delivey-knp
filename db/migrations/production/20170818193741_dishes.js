@@ -7,8 +7,8 @@ exports.up = function(knex, Promise) {
        table.string('pic').
        table.decimal('price');
        table.string('type');
-     ])
-   });
+     });
+   ])
 };
 
 exports.down = function(knex, Promise) {
