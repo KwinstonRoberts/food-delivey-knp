@@ -127,6 +127,7 @@ $(document).ready(function(){
 
         cartContentHtml += ' </tbody> </table>';
 
+
         var sumTotal = 0;
 
         for (arr of data['cart']) {
@@ -155,6 +156,7 @@ $(document).ready(function(){
           </tbody>
 
         </table>`
+
 
         $('#cart-content').html(cartContentHtml)
 
