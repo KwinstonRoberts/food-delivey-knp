@@ -165,8 +165,14 @@ $(document).ready(function(){
   })
 
 
-  // $('.add-to-cart').click(function(e) {
+  $('.card').hover(function(){
+    $('.card-block').toggle('slow', function(){
 
-  // })
+    });
+  });
+
+
+
+
 
 });
