@@ -17,8 +17,8 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-const accountSid = 'AC28ad3682f9e6c90670221e2c37f03907';
-const authToken = 'f9f233345f8dcfb8eeadd3defd9e9eb8';
+const accountSid = process.env.TWILIO_KEY;
+const authToken =  process.env.TWILIO_SECRET;
 const client = require('twilio')(accountSid, authToken);
 
 app.use(morgan('dev'));
@@ -100,19 +100,21 @@ app.post("/cart",(req, res) => {
     });
 
 app.get("/cart", (req, res) => {
-  knex.select("*").distinct().from("menu_cart").asCallback((err,rows)=> {
-    let templateVars = {cart:[]}
-    if (err) return console.error(err);
-    for(x in rows){
-     knex.select("name,price").from("dishes").where('id',rows[x].id).asCallback((err,row)=>{
-      console.log(row);
-      templateVars.push(row);
-     })
+  knex('dishes')
+  .leftJoin('menu_cart','dishes.id','menu_cart.menu_id')
+  .leftJoin('cart','menu_cart.cart_id','cart.id')
+  .select('name','price', 'menu_cart.quantity as quantity').distinct()
+  .whereNotNull('quantity')
+  .asCallback((err,rows)=>{
+    console.log(rows)
+    let templateVars = {
+      cart : rows
     }
      res.render('cart',templateVars);
   })
+});
 
-})
+
 
 
 
