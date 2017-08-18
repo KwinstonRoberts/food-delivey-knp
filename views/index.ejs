@@ -61,30 +61,16 @@
               <% include details.ejs %>
             </div>
 
-            <div class='col-xs-12 col-sm-2'>
-
-
-
-              <div class="card">
-               <img src="../images/poutine.jpg" class='img-responsive card-img-top'>
-               <div class="card-block">
-                <h4 class="card-title"> Silicon Poutine </h4>
-                <p class="card-text"><span class="sidePrice text-center">$10.00</span></p>
-                <button class="btn center-block">Add</button>
-                </div>
-                </div>
-
+            <div id='addons' class='col-xs-12 col-sm-2'>
+              <% for(x in addons){%>
+               <img src="../images/poutine.jpg" class='img-responsive'>
                <img src="../images/yamfries.jpg" class='img-responsive'>
                <img src="../images/salad.jpg" class='img-responsive'>
                <img src="../images/fries.jpg" class='img-responsive'>
                <img src="../images/onionRings.jpeg" class='img-responsive'>
-               <img src="../images/smoothies.jpg" class='img-responsive'>
           </div>
 
-
-
-
-        </div> <!-- need to keep these -->
+        </div>
 
       </div>
    </body>
