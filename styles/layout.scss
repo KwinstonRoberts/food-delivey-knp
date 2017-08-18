@@ -22,7 +22,12 @@ body {
     z-index: 1;
     width: 100%;
   }
-
+  .dropdown{
+    margin: 50px;
+    button{
+      background-color: #ecefc7;
+    }
+  }
   .navbar-brand{
   padding-bottom:5px;
 

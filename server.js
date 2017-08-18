@@ -17,9 +17,11 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-//const accountSid = process.env.TWILIO_KEY;
-//const authToken =  process.env.TWILIO_SECRET;
-//const client = require('twilio')(accountSid, authToken);
+
+// const accountSid = process.env.TWILIO_KEY;
+// const authToken =  process.env.TWILIO_SECRET;
+// const client = require('twilio')(accountSid, authToken);
+
 
 app.use(morgan('dev'));
 
@@ -79,7 +81,7 @@ app.post("/cart",(req, res) => {
   knex('menu_cart').insert({
     cart_id: knex.select('id').from('cart').where('owner','Kyle'),
     menu_id: knex.select('id').from('dishes').where('name',req.body.name),
-    quantity:req.body.quantity
+    quantity: req.body.quantity
   }).asCallback((err)=>{
     if (err) return console.error(err);
     knex.countDistinct("menu_id").from('menu_cart').where('cart_id',knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
@@ -108,9 +110,14 @@ app.get("/cart", (req, res) => {
   .asCallback((err,rows)=>{
     console.log(rows)
     let templateVars = {
-      cart : rows
+      cart: [{name: 'Face Burger',
+          pic: '/images/faceBurger.jpg',
+          price:17.00,
+          description:' Face Burger is our signiture dish. Mark created this burger when he was at Harvard, and it soon became very popular among various Ivy league schools.',
+          type:'main'}]
+      // cart : rows
     }
-     res.render('cart',templateVars);
+     res.json(templateVars);
   })
 });
 
