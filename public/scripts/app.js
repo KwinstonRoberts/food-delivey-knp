@@ -70,7 +70,7 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
-  $('#cart-btn').on('click','button',function(){
+  $('.add-to-cart').on('click', function(){
     console.log('cart button cicked')
     $.ajax({
       type:'POST',
@@ -91,9 +91,51 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
+  $('#show-cart-button').on('click', function(e){
+    console.log('show cart')
+    $.ajax({
+      type:'Get',
+      url:'/cart',
+      success: function(data) {
+        var cartContentHtml = '';
 
-  $('.add-to-cart').click(function(e) {
-    console.log($(this).data("dish-id"))
+        cartContentHtml += `<table class="table table-inverse cart-subtotal">
+        <thead>
+
+          <tr>
+            <th>Items</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>SubTotal</th>
+          </tr>
+
+        </thead>
+        <tbody>
+
+        `;
+
+        for(arr of data['cart']) {
+
+          cartContentHtml += `<tr>
+           <td> <p> ${arr.name} </p> </td>
+           <td> <p> ${arr.quantity} </p> </td>
+           <td> <p> ${arr.price} </p> </td>
+           <td> <p> ${(arr.price * arr.quantity.toFixed(2))} <p> </td>
+            </tr>
+          `;
+        }
+
+        cartContentHtml += ' </tbody> </table>';
+        console.log(data['cart'].length)
+        console.log(data);
+        console.log(data.cart[0].name)
+        $('#cart-content').html(cartContentHtml)
+
+      }
+    })
   })
+  // $('.add-to-cart').click(function(e) {
+
+  // })
 
 });

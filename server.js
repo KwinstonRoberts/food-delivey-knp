@@ -122,12 +122,12 @@ app.get("/cart", (req, res) => {
   .asCallback((err,rows)=>{
     console.log(rows)
     let templateVars = {
-      cart: [{name: 'Face Burger',
-          pic: '/images/faceBurger.jpg',
-          price:17.00,
-          description:' Face Burger is our signiture dish. Mark created this burger when he was at Harvard, and it soon became very popular among various Ivy league schools.',
-          type:'main'}]
-      // cart : rows
+      // cart: [{name: 'Face Burger',
+      //     pic: '/images/faceBurger.jpg',
+      //     price:17.00,
+      //     description:' Face Burger is our signiture dish. Mark created this burger when he was at Harvard, and it soon became very popular among various Ivy league schools.',
+      //     type:'main'}]
+      cart : rows
     }
      res.json(templateVars);
   })
