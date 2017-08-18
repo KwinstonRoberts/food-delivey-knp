@@ -57,6 +57,7 @@ $(document).ready(function(){
         $('#details').find('p').text(data.dish.description);
         $('#details').find('b').text('$' + data.dish.price);
         $('#details').find('img').attr('src',data.dish.pic);
+        $('#details').find('button.add-to-cart').data('dish-id',data.dish.id);
       },
       error: function(err){
         console.log(err);
@@ -89,5 +90,9 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
+
+  $('.add-to-cart').click(function(e) {
+    console.log($(this).data("dish-id"))
+  })
 
 });
