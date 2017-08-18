@@ -17,9 +17,9 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-const accountSid = process.env.TWILIO_KEY;
-const authToken =  process.env.TWILIO_SECRET;
-const client = require('twilio')(accountSid, authToken);
+//const accountSid = process.env.TWILIO_KEY;
+//const authToken =  process.env.TWILIO_SECRET;
+//const client = require('twilio')(accountSid, authToken);
 
 app.use(morgan('dev'));
 
