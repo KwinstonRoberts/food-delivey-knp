@@ -97,6 +97,24 @@ app.post("/cart",(req, res) => {
 });
 
 
+app.get("/cart", (req, res) => {
+  knex.select("*").distinct().from("menu_cart").asCallback((err,rows)=> {
+    let templateVars = {cart:[]}
+    if (err) return console.error(err);
+    for(x in rows){
+     knex.select("name,price").from("dishes").where('id',rows[x].id).asCallback((err,row)=>{
+      console.log(row);
+      templateVars.push(row);
+     })
+    }
+     res.render('cart',templateVars);
+  })
+
+})
+
+
+
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
