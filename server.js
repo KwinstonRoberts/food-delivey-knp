@@ -77,8 +77,8 @@ app.get("/menu", (req, res) => {
       knex.select('*').from('dishes').where('name','Billionaire Burger').asCallback((err,row)=>{
          if (err) return console.error(err);
          templateVars.dish = row;
-         knex.select('*').from('dishes').where('type','sides').asCallback((err,row)=>{
-          templateVars.adddons = row;
+         knex.select('name',"pic","price").from('dishes').where('type','sides').asCallback((err,sides)=>{
+          templateVars.adddons = sides;
           console.log(templateVars);
           res.render('index',templateVars)
         });
