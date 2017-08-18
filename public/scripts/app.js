@@ -126,9 +126,7 @@ $(document).ready(function(){
         }
 
         cartContentHtml += ' </tbody> </table>';
-        console.log(data['cart'].length)
-        console.log(data);
-        console.log(data.cart[0].name)
+    
         $('#cart-content').html(cartContentHtml)
 
       }
