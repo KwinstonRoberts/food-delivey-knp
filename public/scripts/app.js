@@ -96,4 +96,13 @@ $(document).ready(function(){
     console.log($(this).data("dish-id"))
   })
 
+  $('.card').hover(function(){
+    $('.card-block').toggle('slow', function(){
+
+    });
+  });
+
+
+
+
 });
