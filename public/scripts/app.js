@@ -1,9 +1,10 @@
-
+2
 
 $(document).ready(function(){
   $('.cta').on('click','button',function(){
     $('.cta').slideUp();
     $('#menu').slideDown();
+    $('.background').fadeTo('slow', 0);
   })
 
   $('.options>button').on('click',function(e){
