@@ -18,9 +18,9 @@ const knexLogger  = require('knex-logger');
 const usersRoutes = require("./routes/users");
 
 
-const accountSid = process.env.TWILIO_KEY;
-const authToken =  process.env.TWILIO_SECRET;
-const client = require('twilio')(accountSid, authToken);
+// const accountSid = process.env.TWILIO_KEY;
+// const authToken =  process.env.TWILIO_SECRET;
+// const client = require('twilio')(accountSid, authToken);
 
 
 app.post('/sms', function(req, res) {
