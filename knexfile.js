@@ -1,5 +1,6 @@
-if(process.env.ENV === 'development')require('dotenv').config();
-
+if(process.env.ENV === 'development' || typeof process.env.ENV === 'undefined') {
+  require('dotenv').config();
+}
 
 module.exports = {
 
