@@ -1,27 +1,26 @@
   <div id='details' class='row'>
-    <img src='<%=dish[0].pic%>' class='col-xs-12 col-md-8'>
-    <div class='col-xs-12 col-md-4'>
+
+  <div>
+    <img class='img-responsive' width="720px" height="400px" src='<%=dish[0].pic%>'>
+
       <h2><%=dish[0].name%></h2>
       <p><%=dish[0].description%></p>
+
       <div id='cart-btn' class='container'>
         <div class="form-group row">
+<<<<<<< HEAD
           <button data-dish-id="<%=dish[0].id%>" class="btn btn-info col-xs-12 col-sm-3 col-md-6 pull-left add-to-cart" type="button">Add to cart</button>
 
+=======
+          <button data-dish-id="<%=dish[0].id%>" class="btn btn-info col-xs-12 col-sm-3 col-md-6 pull-left add-to-cart dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to cart</button>
+>>>>>>> 613531f4afa4e5fb3735c79198e3ef498f5be4eb
            <div class="input-group col-sm-5 col-sm-offset-1 pull-left">
              <label class="sr-only" for="qty">Quantity</label>
              <div class="input-group-addon">Quantity</div>
              <input type="number" value=1 min=1 max=1000 class="form-control" id="qty" placeholder="#">
+             <b class='input-group-addon'>$<%=dish[0].price%></b>
            </div>
-           <b class='label label-default col-xs-12 col-sm-2 pull-right'>$<%=dish[0].price%></b>
         </div>
       </div>
-    </div>
-  </div>
-
-  <b class='col-xs-12'> ~Additional Options~ </b>
-  <div class='container row options'>
-    <button class='btn btn-default col-xs-12 col-sm-4'>Onion Rings</button>
-    <button class='btn btn-default col-xs-12 col-sm-4'>Fries</button>
-    <button class='btn btn-default col-xs-12 col-sm-4'>Coca Cola</button>
-  </div>
-</div>
+   </div>
+   </div>

@@ -41,6 +41,7 @@ $(document).ready(function(){
     $('.background').fadeTo('slow', 0);
     $('.background').slideUp();
     $('#menu').slideDown();
+    enableScroll();
   })
 
   $('.options>button').on('click',function(e){
