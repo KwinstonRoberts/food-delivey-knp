@@ -17,9 +17,10 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
+const accountSid = 'AC28ad3682f9e6c90670221e2c37f03907';
+const authToken = 'f9f233345f8dcfb8eeadd3defd9e9eb8';
+const client = require('twilio')(accountSid, authToken);
+
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
@@ -83,12 +84,20 @@ app.post("/cart",(req, res) => {
     if (err) return console.error(err);
     knex.countDistinct("menu_id").from('menu_cart').where('cart_id',knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
       if (err) return console.error(err);
-      res.json({
-        items: row[0]
+      // client.messages.create({
+      //     to: '+16477619205',
+      //     from: '+14508230998',
+      //     body: `You added ${req.body.name} to your cart`,
+      // }, function(err,message){
+      //   if(err)console.error(err)
+      //       console.log(message);
+      //     });
+          res.json({
+            items: row[0]
+          });
+        });
       });
     });
-  });
-});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
