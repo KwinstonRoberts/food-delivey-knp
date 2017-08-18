@@ -1,12 +1,15 @@
-
+body,html{
+  height:100%;
+}
 body {
 
     .navbar-header .navbar-brand {
     font-size: 2em;
     font-family: 'Roboto', sans-serif;
     color: #ecefc7;
-
-
+  }
+  .jumbotron{
+    height:100%;
   }
   .navbar{
     background-color: #302f2f;
@@ -14,7 +17,7 @@ body {
     height:130px;
     border-radius: 0px;
     border: 1px solid #302f2f;
-    position: fixed;
+    // position: fixed;
     top: 0;
     z-index: 1;
     width: 100%;
@@ -27,19 +30,17 @@ body {
   .navbar-right li .navbar-text{
     color: #ecefc7;
     padding: 10px 30px 0 0;
-    font-size: 1.1em;
+    font-size: 0.8em;
     letter-spacing: .5em;
+    line-height: 80px;
   }
 
   .background {
     background-image: url(../images/burgerBackground.jpg);
-    background-size: cover;
+    background-size:cover;
     height: 100%;
     border-radius: 0px;
-    margin-top: 80px;
-    margin-bottom: 140px;
-
-
+    margin-top:-50px;
     .cta{
       margin-left: 4%;
       height: 700px;
@@ -61,28 +62,40 @@ body {
       opacity: 0.5;
     }
 
+
     #menu{
       display:none;
+
       #details{
         margin: 50px;
+        webkit-transform: translateY(500px);
+
       }
+
       b{
         line-height: 25px;
         text-align: center;
       }
       #cart-btn{
         margin-bottom:20px;
+        .label{
+          padding:20px;
+        }
       }
+
       .options {
         .active{
           background-color:#5bc0de;
         }
+
       }
     }
     #accordion{
       overflow-y:auto;
       overflow-x: hidden;
       height:650px;
+      webkit-transform: translateY(500px);
+
       h2{
         margin:0;
         padding:0;
@@ -104,6 +117,7 @@ body {
       .price{
         text-align: right;
       }
+
     }
   }
 }

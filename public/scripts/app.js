@@ -38,11 +38,9 @@ $(document).ready(function(){
 
 
   $('.cta').on('click','button',function(){
-    $('.cta').slideUp();
-    $('#menu').slideDown();
-
     $('.background').fadeTo('slow', 0);
-    enableScroll();
+    $('.background').slideUp();
+    $('#menu').slideDown();
   })
 
   $('.options>button').on('click',function(e){
