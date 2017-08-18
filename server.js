@@ -72,14 +72,16 @@ app.get("/menu", (req, res) => {
     if (err) return console.error(err);
       let templateVars = {
         dishes:rows,
-        dish:{}
+        addons:{},
       }
       knex.select('*').from('dishes').where('name','Billionaire Burger').asCallback((err,row)=>{
          if (err) return console.error(err);
-           templateVars.dish = row;
-
-      console.log(templateVars);
-      res.render('index',templateVars)
+         templateVars.dish = row;
+         knex.select('*').from('dishes').where('type','sides').asCallback((err,row)=>{
+          templateVars.adddons = row;
+          console.log(templateVars);
+          res.render('index',templateVars)
+        });
     })
   });
 
