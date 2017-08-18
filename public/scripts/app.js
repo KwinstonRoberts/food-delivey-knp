@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 
   // left: 37, up: 38, right: 39, down: 40,
@@ -83,6 +81,11 @@ $(document).ready(function(){
   })
 
   $('.options>button').on('click',function(e){
+    $(this).toggleClass('active');
+  });
+
+
+  $('.table-inverse').on('click', function(e){
     $(this).toggleClass('active');
   });
 
