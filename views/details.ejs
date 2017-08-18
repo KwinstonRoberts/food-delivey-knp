@@ -5,16 +5,7 @@
       <p><%=dish[0].description%></p>
       <div id='cart-btn' class='container'>
         <div class="form-group row">
-          <button data-dish-id="<%=dish[0].id%>" class="btn btn-info col-xs-12 col-sm-3 col-md-6 pull-left add-to-cart dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add to cart</button>
-
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-
+          <button data-dish-id="<%=dish[0].id%>" class="btn btn-info col-xs-12 col-sm-3 col-md-6 pull-left add-to-cart" type="button">Add to cart</button>
 
            <div class="input-group col-sm-5 col-sm-offset-1 pull-left">
              <label class="sr-only" for="qty">Quantity</label>

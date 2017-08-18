@@ -69,7 +69,7 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
-  $('#cart-btn').on('click','button',function(){
+  $('.add-to-cart').on('click', function(){
     console.log('cart button cicked')
     $.ajax({
       type:'POST',
@@ -91,8 +91,8 @@ $(document).ready(function(){
   });
 
 
-  $('.add-to-cart').click(function(e) {
-    console.log($(this).data("dish-id"))
-  })
+  // $('.add-to-cart').click(function(e) {
+
+  // })
 
 });
