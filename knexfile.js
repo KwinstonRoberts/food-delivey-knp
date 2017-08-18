@@ -30,7 +30,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: './db/migrations',
+      directory: './db/migrations/production',
       tableName: 'migrations'
     },
     seeds: {
