@@ -1,11 +1,13 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('dishes', function (table) {
-     table.increments('id');
-     table.string('name');
-     table.string('pic').
-     table.float('price');
-     table.string('type');
+  return Promise.all([
+     knex.schema.createTable('dishes', function (table) {
+       table.increments('id');
+       table.string('name');
+       table.string('pic').
+       table.decimal('price');
+       table.string('type');
+     ])
    });
 };
 
