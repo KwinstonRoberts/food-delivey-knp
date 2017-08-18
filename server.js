@@ -23,6 +23,26 @@ const usersRoutes = require("./routes/users");
 // const client = require('twilio')(accountSid, authToken);
 
 
+app.post('/sms', function(req, res) {
+  var twilio = require('twilio');
+  var twiml = new twilio.TwimlResponse();
+  twiml.message('The Robots are coming! Head for the hills!');
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
+});
+
+app.post("/order", (req, res) => {
+  client.messages.create({
+      to: '+16477619205',
+      from: '+14508230998',
+      body: `Your order has been placed. Thank you for choosing Zuckerburger.
+            `,
+  }, function(err,message){
+    if(err)console.error(err)
+        console.log(message);
+      });
+});
+
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
@@ -86,14 +106,6 @@ app.post("/cart",(req, res) => {
     if (err) return console.error(err);
     knex.countDistinct("menu_id").from('menu_cart').where('cart_id',knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
       if (err) return console.error(err);
-      // client.messages.create({
-      //     to: '+16477619205',
-      //     from: '+14508230998',
-      //     body: `You added ${req.body.name} to your cart`,
-      // }, function(err,message){
-      //   if(err)console.error(err)
-      //       console.log(message);
-      //     });
           res.json({
             items: row[0]
           });
