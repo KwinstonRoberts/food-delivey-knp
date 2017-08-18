@@ -114,26 +114,55 @@ $(document).ready(function(){
 
         `;
 
-        for(arr of data['cart']) {
+        for (arr of data['cart']) {
 
           cartContentHtml += `<tr>
            <td> <p> ${arr.name} </p> </td>
            <td> <p> ${arr.quantity} </p> </td>
            <td> <p> ${arr.price} </p> </td>
-           <td> <p> ${(arr.price * arr.quantity.toFixed(2))} <p> </td>
+           <td> <p> $${(arr.price * arr.quantity.toFixed(2))} <p> </td>
             </tr>
           `;
         }
 
         cartContentHtml += ' </tbody> </table>';
-        console.log(data['cart'].length)
-        console.log(data);
-        console.log(data.cart[0].name)
+
+        var sumTotal = 0;
+
+        for (arr of data['cart']) {
+          sumTotal += (arr.price * arr.quantity.toFixed(2))
+
+        }
+
+
+        cartContentHtml += `<table>
+          <thead>
+            <tr>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <th> Total Cost </th>
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <td> <p> $${sumTotal} </p> </td>
+            </tr>
+          </tbody>
+
+        </table>`
+
         $('#cart-content').html(cartContentHtml)
 
       }
     })
   })
+
+
   // $('.add-to-cart').click(function(e) {
 
   // })
