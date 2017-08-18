@@ -4,8 +4,9 @@ exports.up = function(knex, Promise) {
      knex.schema.createTable('dishes', function (table) {
        table.increments('id');
        table.string('name');
-       table.string('pic').
-       table.decimal('price');
+       table.string('pic');
+       table.string('description');
+       table.float('price');
        table.string('type');
      })
    ])
