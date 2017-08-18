@@ -1,30 +1,64 @@
 
 body {
-  background-color: #EEE;
-  .navbar-header .navbar-brand {
+
+    .navbar-header .navbar-brand {
     font-size: 2em;
-    color: #e5da62;
+    font-family: 'Roboto', sans-serif;
+    color: #ecefc7;
+
 
   }
   .navbar{
-    background-color: #333;
+    background-color: #302f2f;
     margin:0;
-    height:10%;
+    height:130px;
+    border-radius: 0px;
+    border: 1px solid #302f2f;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
   }
-  i{
-    color:white;
+  .navbar-right li .navbar-text{
+    color: #ecefc7;
+    padding: 10px 30px 0 0;
+    font-size: 1.1em;
+    letter-spacing: .5em;
   }
+
   .jumbotron {
+    background-image: url(../images/burgerBackground.jpg);
+    background-size: cover;
     height: 100%;
+    border-radius: 0px;
+    margin-top: 120px;
+
+
     .cta{
-      margin-left: 20%;
-      height:20%;
-      padding-top: 300px;
+      margin-left: 4%;
+      height: 700px;
+      padding-top: 450px;
     }
+
+    #viewMenu{
+    color: #ecefc7 ;
+    color: #302f2f;
+    background-color: #302f2f;
+    background-color: #ecefc7;
+    padding: 10px 40px;
+    border: 1px solid #ecefc7;
+    box-shadow: 7px 7px 5px;
+    font-size: 1.3em;
+    }
+
+    #viewMenu:hover{
+      opacity: 0.5;
+    }
+
     #menu{
       display:none;
       #details{
-        margin:50px;
+        margin: 50px;
       }
       b{
         line-height: 25px;
