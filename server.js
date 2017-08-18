@@ -17,9 +17,10 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
+const accountSid = 'AC28ad3682f9e6c90670221e2c37f03907';
+const authToken = 'f9f233345f8dcfb8eeadd3defd9e9eb8';
+const client = require('twilio')(accountSid, authToken);
+
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
@@ -39,12 +40,10 @@ app.use(express.static("public"));
 
 app.use("/api/users", usersRoutes(knex));
 
-
 // Home page
 app.get("/", (req, res) => {
   res.redirect('/menu');
 });
-
 
 app.get("/menu", (req, res) => {
  knex.select('name','price','type').from('dishes').asCallback((err,rows)=>{
@@ -73,28 +72,49 @@ app.get("/menu/:name",(req, res) => {
    });
 });
 
-
-
 app.post("/cart",(req, res) => {
   if(!req.body.name)return console.error('param does not exist');
   console.log(req.body.name);
-  for(x in req.body.quantity){
-    knex('menu_cart').insert(
-      {
-        cart_id: knex.select('id').from('cart').where('owner','Kyle'),
-        menu_id: knex.select('id').from('dishes').where('name',req.body.name)
-      }).asCallback((err)=>{
-        if (err) return console.error(err);
-        knex.countDistinct("menu_id").from('menu_cart').where('cart_id',
-        knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
-        if (err) return console.error(err);
+
+  knex('menu_cart').insert({
+    cart_id: knex.select('id').from('cart').where('owner','Kyle'),
+    menu_id: knex.select('id').from('dishes').where('name',req.body.name),
+    quantity:req.body.quantity
+  }).asCallback((err)=>{
+    if (err) return console.error(err);
+    knex.countDistinct("menu_id").from('menu_cart').where('cart_id',knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
+      if (err) return console.error(err);
+      // client.messages.create({
+      //     to: '+16477619205',
+      //     from: '+14508230998',
+      //     body: `You added ${req.body.name} to your cart`,
+      // }, function(err,message){
+      //   if(err)console.error(err)
+      //       console.log(message);
+      //     });
           res.json({
             items: row[0]
           });
         });
-     });
-   }
-});
+      });
+    });
+
+app.get("/cart", (req, res) => {
+  knex.select("*").distinct().from("menu_cart").asCallback((err,rows)=> {
+    let templateVars = {cart:[]}
+    if (err) return console.error(err);
+    for(x in rows){
+     knex.select("name,price").from("dishes").where('id',rows[x].id).asCallback((err,row)=>{
+      console.log(row);
+      templateVars.push(row);
+     })
+    }
+     res.render('cart',templateVars);
+  })
+
+})
+
+
 
 
 app.listen(PORT, () => {
