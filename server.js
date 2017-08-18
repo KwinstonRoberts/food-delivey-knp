@@ -1,6 +1,6 @@
 "use strict";
 
-require('dotenv').config();
+if(process.env.ENV === 'development')require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
