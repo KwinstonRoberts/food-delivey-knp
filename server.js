@@ -79,7 +79,7 @@ app.post("/cart",(req, res) => {
   knex('menu_cart').insert({
     cart_id: knex.select('id').from('cart').where('owner','Kyle'),
     menu_id: knex.select('id').from('dishes').where('name',req.body.name),
-    quantity:req.body.quantity
+    quantity: req.body.quantity
   }).asCallback((err)=>{
     if (err) return console.error(err);
     knex.countDistinct("menu_id").from('menu_cart').where('cart_id',knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
