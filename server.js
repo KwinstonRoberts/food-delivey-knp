@@ -49,6 +49,7 @@ app.post('/sms', function(req, res) {
 app.post("/order", (req, res) => {
   client.messages
   .create({
+    console.log(req.body.phone);
     to: '+1' + req.body.phone,
     from: '+14508230998',
     body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
