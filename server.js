@@ -41,11 +41,10 @@ app.use(express.static("public"));
 app.post('/sms', function(req, res) {
   const MessagingResponse = require('twilio').twiml.MessagingResponse;
   var twiml = new MessagingResponse();
-
   knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) => {
     if(err)console.error(err);
+    console.log(row[0]);
     var status = row[0].status;
-  }).then(function(){
     if(status==='ordered'){
       if(req.body.Body.toLowerCase() === 'confirm'){
         twiml.message('Thanks, your order is now being processed');
