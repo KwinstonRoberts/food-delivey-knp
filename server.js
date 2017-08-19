@@ -143,13 +143,13 @@ app.post("/order", (req, res) => {
     client.messages.create({
       to: process.env.VERIFIED_NUMBER,
       from: process.env.TWILIO_NUMBER,
-      body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,'')}\n
+      body: `Your order has been placed ${req.body.name}: \n${req.body.receipt}\n
       text "confirm" to start the order or text "cancel" to undo`,
     }).then((message) => console.log(message.sid));
         knex('order').insert({
         name: req.body.name || 'kyle',
         phone: process.env.VERIFIED_NUMBER,
-        receipt: req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,''),
+        receipt: req.body.receipt,
         status: 'ordered'
       }).asCallback((err,row)=>{
         if(err)console.error(err)
