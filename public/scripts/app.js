@@ -166,7 +166,7 @@ $(document).ready(function(){
 
 
   $('.card').hover(function(){
-    $('.card-block').toggle('slow', function(){
+    $(this).find('.card-block').toggle('slow', function(){
 
     });
   });
