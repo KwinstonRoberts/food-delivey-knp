@@ -123,22 +123,22 @@ app.post('/sms', function(req, res) {
                 if(err)console.error(err);
                 res.end(twiml.toString());
               });
-            }else if(req.body.Body.toLowerCase()==='finish' && status==='ready'){
-              twiml.message('Thanks for ordering at Zuckerburgers!');
-              res.writeHead(200, {'Content-Type': 'text/xml'});
-              console.log(req.body.From);
-              knex('order')
-                .where('phone', '=', req.body.From)
-                .update({
-                  status: 'finished',
-                }).asCallback((err)=>{
-                  if(err)console.error(err);
-                  res.end(twiml.toString());
-                });
-            }
           }
-       });
+        }else if(req.body.Body.toLowerCase()==='finish' && status==='ready'){
+          twiml.message('Thanks for ordering at Zuckerburgers!');
+          res.writeHead(200, {'Content-Type': 'text/xml'});
+          console.log(req.body.From);
+          knex('order')
+            .where('phone', '=', req.body.From)
+            .update({
+              status: 'finished',
+            }).asCallback((err)=>{
+              if(err)console.error(err);
+              res.end(twiml.toString());
+            });
+        }
      });
+  });
 app.post("/order", (req, res) => {
     client.messages.create({
       to: process.env.VERIFIED_NUMBER,
