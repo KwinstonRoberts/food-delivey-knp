@@ -178,12 +178,11 @@ $(document).ready(function(){
       success: function (data) {
       var orderReceipt = [];
 
-
         for (arr of data['cart']) {
           // console.log(arr.name, arr.quantity, arr.price, (arr.price * arr.quantity.toFixed(2)) )
-          var orderObject = { Name: arr.name, Qunatity: arr.quantity, Price: arr.price, subtotal: (arr.price * arr.quantity.toFixed(2))}
+          var orderObject = { Name: arr.name, Quantity: arr.quantity, Price: arr.price, subtotal: (arr.price * arr.quantity.toFixed(2))}
           orderReceipt.push(orderObject)
-          // console.log(orderReceipt)
+          console.log(orderReceipt)
         }
 
       console.log('orderReceipt', orderReceipt)
