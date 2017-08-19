@@ -66,7 +66,7 @@ app.post("/order", (req, res) => {
         twiml.say({ voice: 'alice' }, 'hello world!');
         // Render the response as XML in reply to the webhook request
         response.type('text/xml');
-        return twiml.toString());
+        return twiml.toString();
       },
       to: '+16477619205',
       from: '+14508230998',
