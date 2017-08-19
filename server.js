@@ -77,7 +77,6 @@ app.post('/sms', function(req, res) {
           knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
             if(err)console.error(err);
             var receipt = row[0].receipt;
-          }).then(function(){
             twiml.message(`Here is your current order: \n
               ${receipt}
               `);
