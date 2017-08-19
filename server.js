@@ -110,7 +110,6 @@ app.post('/sms', function(req, res) {
         }
       });
    });
-});
 
 app.post("/order", (req, res) => {
     client.messages.create({
