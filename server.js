@@ -44,7 +44,7 @@ app.post('/sms', function(req, res) {
   if(req.body.Body.toLowerCase() === 'confirm'){
     twiml.message('Thanks, your order is now being processed');
     res.writeHead(200, {'Content-Type': 'text/xml'});
-    console.log(req.body.from);
+    console.log(req.body.From);
     knex('order')
       .where('phone', '=', req.body.from)
       .update({
