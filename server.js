@@ -51,7 +51,7 @@ app.post("/order", (req, res) => {
   client.messages
   .create({
 
-    to: '+1' + req.body.phone.toString(),
+    to: '+16477619205',
     from: '+14508230998',
     body: `Your order has been placed`,
   })
