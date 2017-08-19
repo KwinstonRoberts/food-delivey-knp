@@ -41,11 +41,11 @@ app.use(express.static("public"));
 app.post('/sms/:reply', function(req, res) {
   const MessagingResponse = require('twilio').twiml.MessagingResponse;
   var twiml = new twilio.TwimlResponse();
-  if(req.body.reply===1){
+
     twiml.message('The Robots are coming! Head for the hills!');
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
-  }
+
 });
 
 app.post("/order", (req, res) => {
