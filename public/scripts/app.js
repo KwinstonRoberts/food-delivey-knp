@@ -171,7 +171,40 @@ $(document).ready(function(){
 
 
 
-  // $('.add-to-cart').click(function(e) {
+  $('#orderButton').on('click', function(e) {
+    $.ajax({
+      type : 'Get',
+      url : '/cart',
+      success: function (data) {
+      var orderReceipt = [];
+
+
+        for (arr of data['cart']) {
+          // console.log(arr.name, arr.quantity, arr.price, (arr.price * arr.quantity.toFixed(2)) )
+          var orderObject = { Name: arr.name, Qunatity: arr.quantity, Price: arr.price, subtotal: (arr.price * arr.quantity.toFixed(2))}
+          orderReceipt.push(orderObject)
+          // console.log(orderReceipt)
+        }
+
+      console.log('orderReceipt', orderReceipt)
+
+      var receipt = orderReceipt
+
+          $.ajax({
+            type : 'Post',
+            url : '/order',
+            success: function(data) {
+              console.log('receipt inside ajax call', receipt)
+            }
+          })
+
+      }
+
+
+    })
+
+
+  })
 
   $('.card').hover(function(){
     $(this).find('.card-block').toggle('slow', function(){
@@ -181,7 +214,7 @@ $(document).ready(function(){
 
 
 
->>>>>>> a9cbdd6d3dbbdc6801ca2ecf6a6c76ab65ce4a74
+
 
 
 });
