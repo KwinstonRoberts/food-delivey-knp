@@ -96,8 +96,8 @@ app.post('/sms', function(req, res) {
                   res.end(twiml.toString());
                 })
               });
-            });
-          }else if(req.body.Body.toLowerCase()==='decline' && status!=='processed'){
+            }
+        }else if(req.body.Body.toLowerCase()==='decline' && status!=='processed'){
             twiml.message('Your order has been cancelled');
             res.writeHead(200, {'Content-Type': 'text/xml'});
             knex('order')
