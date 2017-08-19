@@ -56,14 +56,17 @@ app.post('/sms', function(req, res) {
             status: 'confirmed',
           }).asCallback((err)=>{
             if(err)console.error(err);
-            client.messages.create({
-              to: process.env.VERIFIED_NUMBER,
-              from: process.env.TWILIO_NUMBER,
-              body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,'')}\n
-              text "confirm" to start the order or text "cancel" to undo`,
-            }).then((message) => {
-                console.log(message.sid);
-                res.end(twiml.toString());
+            knex.select('receipt').from('order')
+              .where('phone', '=', req.body.From)
+              .asCallback((err,row)=>{
+                if(err)console.error(err);
+                client.messages.create({
+                  to: process.env.VERIFIED_NUMBER,
+                  from: process.env.TWILIO_NUMBER,
+                  body: `${req.body.From} Has ordered these items:\n
+                  ${row[0].receipt}`
+                    console.log(message.sid);
+                    res.end(twiml.toString());
               });
             });
 
