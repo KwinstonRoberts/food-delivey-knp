@@ -135,7 +135,7 @@ app.post("/order", (req, res) => {
         status: 'ordered'
       }).asCallback((err,row)=>{
         if(err)console.error(err)
-        console.log('done');
+         res.end('Done');
       });
     });
 app.use("/api/users", usersRoutes(knex));
