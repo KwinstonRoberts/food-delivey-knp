@@ -44,10 +44,20 @@ app.post('/sms', function(req, res) {
   if(req.body.Body.toLowerCase()==='confirm'){
     twiml.message('Thanks, your order is now being processed');
     res.writeHead(200, {'Content-Type': 'text/xml'});
+    console.log(req.body.phone);
+    knex('order')
+      .where('phone', '=', req.body.from)
+      .update({
+        status: 'comfirmed',
+      })
     res.end(twiml.toString());
   }else if(req.body.Body.toLowerCase()==='cancel'){
     twiml.message('Your order has been cancelled');
     res.writeHead(200, {'Content-Type': 'text/xml'});
+    knex('order')
+      .where('phone', '=', req.body.from)
+      .del();
+    })
     res.end(twiml.toString());
   }
 });
@@ -59,6 +69,14 @@ app.post("/order", (req, res) => {
     body: `Your order has been placed ${req.body.name}:${req.body.receipt}\n
     text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
+      knex('order').insert({
+        name: req.body.name,
+        email: 'example@example.com',
+        phone: process.env.VERIFIED_NUMBER,
+        receipt: req.body.receipt,
+        status: 'ordered'
+
+      })
       console.log(message.sid);
     });
   });
@@ -69,6 +87,7 @@ var receipt =function(){ app.post('/receipt', (req, res) => {
   twiml.say('Kyle has placed an order');
   res.writeHead(200, { 'Content-Type': 'text/xml' });
   res.end(twiml.toString());
+
 })};
 
 app.use("/api/users", usersRoutes(knex));
