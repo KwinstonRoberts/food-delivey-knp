@@ -118,15 +118,15 @@ app.post("/order", (req, res) => {
     body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,'')}\n
     text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
+      res.end(message);
       knex('order').insert({
         name: req.body.name || 'kyle',
         phone: process.env.VERIFIED_NUMBER,
         receipt: req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,''),
         status: 'ordered'
       });
-      res.end(message);
-      });
     });
+  });
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
