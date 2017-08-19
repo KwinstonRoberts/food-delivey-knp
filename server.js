@@ -58,9 +58,7 @@ app.post("/order", (req, res) => {
   .then((message) => {
 
     client.api.calls.create({
-      url: `<Response>
-<Say voice="alice">Kyle has placed an order</Say>
-</Response>`,
+      url: 'public/responsetwilio.xml',
       to: '+16477619205',
       from: '+14508230998',
     })
