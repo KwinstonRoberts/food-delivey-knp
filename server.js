@@ -56,17 +56,22 @@ app.post('/sms', function(req, res) {
             status: 'confirmed',
           }).asCallback((err)=>{
             if(err)console.error(err);
-            knex.select('*').from('order').asCallback((err,rows)=>{
-              if(err)console.error(err);
-              console.log(rows);
-              res.end(twiml.toString());
+            client.messages.create({
+              to: process.env.VERIFIED_NUMBER,
+              from: process.env.TWILIO_NUMBER,
+              body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,'')}\n
+              text "confirm" to start the order or text "cancel" to undo`,
+            }).then((message) => {
+                console.log(message.sid));
+                res.end(twiml.toString());
+              }
             });
         });
       }else if(req.body.Body.toLowerCase()==='decline'){
         twiml.message('Your order has been cancelled');
         res.writeHead(200, {'Content-Type': 'text/xml'});
         knex('order')
-          .where('phone', '=', req.body.from)
+          .where('phone', '=', req.body.From)
           .del().asCallback((err)=>{
             if(err)console.error(err);
             res.end(twiml.toString());
@@ -88,24 +93,34 @@ app.post('/sms', function(req, res) {
                 status: 'confirmed',
               }).asCallback((err)=>{
                 if(err)console.error(err);
-                knex.select('*').from('order').asCallback((err,rows)=>{
-                  if(err)console.error(err);
-                  console.log(rows);
                   res.end(twiml.toString());
                 })
               });
             });
-          }else if(req.body.Body.toLowerCase()==='decline'){
+          }else if(req.body.Body.toLowerCase()==='decline' && status!=='processed'){
             twiml.message('Your order has been cancelled');
             res.writeHead(200, {'Content-Type': 'text/xml'});
             knex('order')
-              .where('phone', '=', req.body.from)
+              .where('phone', '=', req.body.From)
               .del().asCallback((err)=>{
                 if(err)console.error(err);
                 res.end(twiml.toString());
               });
-           }
-        }
+           }else if(req.body.toLowerCase==='process'){
+             twiml.message('Your food is now being made. It will be ready in 5 minutes');
+             res.writeHead(200, {'Content-Type': 'text/xml'});
+             console.log(req.body.From);
+             knex('order')
+               .where('phone', '=', req.body.From)
+               .update({
+                 status: 'processed',
+               }).asCallback((err)=>{
+                 if(err)console.error(err);
+                 res.end(twiml.toString());
+                 });
+             });
+         }
+
       });
    });
 
