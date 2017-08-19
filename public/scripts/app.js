@@ -172,9 +172,7 @@ $(document).ready(function(){
 
         </table>`
 
-        cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
-
-
+  
         $('#cart-content').html(cartContentHtml)
 
       }
