@@ -47,7 +47,7 @@ app.post('/sms', function(req, res) {
     var status = row[0].status;
     if(status==='ordered'){
       if(req.body.Body.toLowerCase() === 'confirm'){
-        twiml.message('Thanks, your order is now being processed');
+        twiml.message('Thanks, your order is now being processed\ntext "receipt" to review the order');
         res.writeHead(200, {'Content-Type': 'text/xml'});
         console.log(req.body.From);
         knex('order')
@@ -64,7 +64,8 @@ app.post('/sms', function(req, res) {
                   to: process.env.VERIFIED_NUMBER,
                   from: process.env.TWILIO_NUMBER,
                   body: `${req.body.From} Has ordered these items:\n
-                  ${row[0].receipt}`
+                  ${row[0].receipt}\n
+                  type "ready" when the order has been completed`
                 }).then((message)=>{
                   console.log(message.sid);
                   res.end(twiml.toString());
@@ -110,19 +111,19 @@ app.post('/sms', function(req, res) {
                 if(err)console.error(err);
                 res.end(twiml.toString());
               });
-          }else if(req.body.Body.toLowerCase()==='process'){
-            twiml.message('Your food is now being made. It will be ready in 5 minutes');
+          }else if(req.body.Body.toLowerCase()==='ready'){
+            twiml.message('Your food is ready for pickup.');
             res.writeHead(200, {'Content-Type': 'text/xml'});
             console.log(req.body.From);
             knex('order')
               .where('phone', '=', req.body.From)
               .update({
-                status: 'processed',
+                status: 'read',
               }).asCallback((err)=>{
                 if(err)console.error(err);
                 res.end(twiml.toString());
               });
-            }else if(req.body.BodytoLowerCase()==='finish' && status==='processed'){
+            }else if(req.body.Body.toLowerCase()==='finish' && status==='processed'){
               twiml.message('Thanks for ordering at Zuckerburgers!');
               res.writeHead(200, {'Content-Type': 'text/xml'});
               console.log(req.body.From);
