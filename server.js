@@ -57,10 +57,10 @@ app.post("/order", (req, res) => {
     from: '+14508230998',
     body: `Your order has been placed ${req.body.name}: \n
      ${req.body.receipt}`,
-  }).then((call) => console.log(call.sid));
-    console.log(message.sid)
+  }).then((call) => {
+      console.log(message.sid)
+    });
   });
-});
 
 var receipt =function(){ app.post('/receipt', (req, res) => {
   const VoiceResponse = require('twilio').twiml.VoiceResponse;
