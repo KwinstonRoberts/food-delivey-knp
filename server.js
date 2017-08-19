@@ -65,11 +65,12 @@ app.post('/sms', function(req, res) {
                   from: process.env.TWILIO_NUMBER,
                   body: `${req.body.From} Has ordered these items:\n
                   ${row[0].receipt}`
-                    console.log(message.sid);
-                    res.end(twiml.toString());
-              });
+                }).then((message)=>{
+                  console.log(message.sid);
+                  res.end(twiml.toString());
+                  });
+                })
             });
-
       }else if(req.body.Body.toLowerCase()==='decline'){
         twiml.message('Your order has been cancelled');
         res.writeHead(200, {'Content-Type': 'text/xml'});
