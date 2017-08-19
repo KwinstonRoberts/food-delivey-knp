@@ -58,14 +58,7 @@ app.post("/order", (req, res) => {
   .then((message) => {
 
     client.api.calls.create({
-      url: function(){
-        const VoiceResponse = require('twilio').twiml.VoiceResponse;
-        const app = express();
-        // Use the Twilio Node.js SDK to build an XML response
-        const twiml = new VoiceResponse();
-        twiml.say({ voice: 'alice' }, 'hello world!');
-        return twiml.toString();
-      },
+      url: receipt(),
       to: '+16477619205',
       from: '+14508230998',
     })
@@ -74,7 +67,13 @@ app.post("/order", (req, res) => {
   });
 });
 
-
+var receipt =function(){ app.post('/receipt', (req, res) => {
+  const VoiceResponse = require('twilio').twiml.VoiceResponse;
+  const twiml = new VoiceResponse();
+  twiml.say('Kyle has placed an order');
+  res.writeHead(200, { 'Content-Type': 'text/xml' });
+  res.end(twiml.toString());
+})};
 
 app.use("/api/users", usersRoutes(knex));
 
