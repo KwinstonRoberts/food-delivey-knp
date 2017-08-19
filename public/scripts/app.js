@@ -173,6 +173,15 @@ $(document).ready(function(){
 
   // $('.add-to-cart').click(function(e) {
 
-  // })
+  $('.card').hover(function(){
+    $(this).find('.card-block').toggle('slow', function(){
+
+    });
+  });
+
+
+
+>>>>>>> a9cbdd6d3dbbdc6801ca2ecf6a6c76ab65ce4a74
+
 
 });

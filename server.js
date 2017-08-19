@@ -17,31 +17,11 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
+const accountSid = process.env.TWILIO_KEY;
+const authToken =  process.env.TWILIO_SECRET;
+const client = require('twilio')(accountSid, authToken);
 
-// const accountSid = process.env.TWILIO_KEY;
-// const authToken =  process.env.TWILIO_SECRET;
-// const client = require('twilio')(accountSid, authToken);
 
-
-app.post('/sms', function(req, res) {
-  var twilio = require('twilio');
-  var twiml = new twilio.TwimlResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
-});
-
-app.post("/order", (req, res) => {
-  client.messages.create({
-      to: '+16477619205',
-      from: '+14508230998',
-      body: `Your order has been placed. Thank you for choosing Zuckerburger.
-            `,
-  }, function(err,message){
-    if(err)console.error(err)
-        console.log(message);
-      });
-});
 
 app.use(morgan('dev'));
 
@@ -60,6 +40,37 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 
+app.post('/sms', function(req, res) {
+  var twiml = new twilio.TwimlResponse();
+  twiml.message('The Robots are coming! Head for the hills!');
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
+});
+
+app.post("/order", (req, res) => {
+  twilio = require('twilio');
+  client.messages.create({
+      to: `+1${req.body.number}`,
+      from: '+14508230998',
+      body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
+      ${req.body.receipt}`
+  }, function(){
+    const VoiceResponse = require('twilio').twiml.VoiceResponse;
+    const response = new VoiceResponse();
+    response.say(
+      {
+        voice: 'alice',
+        language: 'en',
+      },
+      `${req.body.name} has placed an order: \n
+      ${req.body.response}`
+    );
+        console.log(message,response.toString());
+    });
+  });
+
+
+
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
@@ -72,15 +83,18 @@ app.get("/menu", (req, res) => {
     if (err) return console.error(err);
       let templateVars = {
         dishes:rows,
-        dish:{}
+        dish:{},
+        addons:{}
       }
       knex.select('*').from('dishes').where('name','Billionaire Burger').asCallback((err,row)=>{
          if (err) return console.error(err);
            templateVars.dish = row;
-
-      console.log(templateVars);
-      res.render('index',templateVars)
-    })
+          knex.select('name','price','pic').from('dishes').where('type','sides').asCallback((err,sides)=>{
+            templateVars.addons = sides;
+            console.log(templateVars);
+            res.render('index',templateVars)
+          });
+    });
   });
 
 app.get("/menu/:name",(req, res) => {
@@ -122,21 +136,11 @@ app.get("/cart", (req, res) => {
   .asCallback((err,rows)=>{
     console.log(rows)
     let templateVars = {
-      // cart: [{name: 'Face Burger',
-      //     pic: '/images/faceBurger.jpg',
-      //     price:17.00,
-      //     description:' Face Burger is our signiture dish. Mark created this burger when he was at Harvard, and it soon became very popular among various Ivy league schools.',
-      //     type:'main'}]
       cart : rows
     }
      res.json(templateVars);
   })
 });
-
-
-
-
-
 
 
 app.listen(PORT, () => {

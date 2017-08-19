@@ -47,11 +47,6 @@
         </div>
         <div id='menu' class='container'>
           <div class='row'>
-
-
-
-
-
             <div class='col-xs-12 col-sm-3'>
               <% include menu.ejs %>
             </div>
@@ -61,15 +56,23 @@
               <% include details.ejs %>
             </div>
 
-            <div class='col-xs-12 col-sm-2'>
-               <img src="../images/poutine.jpg" class='img-responsive'>
-               <img src="../images/yamfries.jpg" class='img-responsive'>
-               <img src="../images/salad.jpg" class='img-responsive'>
-               <img src="../images/fries.jpg" class='img-responsive'>
-               <img src="../images/onionRings.jpeg" class='img-responsive'>
-          </div>
+            <div id='addons' class='col-xs-12 col-sm-2'>
+              <% for(x in addons){%>
+                <div class="card">
+                   <img class="card-img-top img-responsive" src="<%=addons[x].pic%>" >
+                   <div class="card-block">
+                     <h4 class="card-title"> <%=addons[x].name%></h4>
+                     <p class="card-text sidePrice"> <%=addons[x].price%> </p>
+                     <button class="btn center-block">Add</button>
+                  </div>
 
-        </div>
+              </div>
+              <%}%>
+
+          </div> <!-- end of addons -->
+
+        </div> <!-- end of row -->
+
 
       </div>
 
