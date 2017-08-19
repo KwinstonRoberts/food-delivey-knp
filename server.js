@@ -72,7 +72,7 @@ app.post('/sms', function(req, res) {
                   });
                 })
             });
-      }else if(req.body.Body.toLowerCase()==='decline'){
+      }else if(req.body.Body.toLowerCase()==='2'){
         twiml.message('Your order has been cancelled');
         res.writeHead(200, {'Content-Type': 'text/xml'});
         knex('order')
@@ -102,7 +102,7 @@ app.post('/sms', function(req, res) {
                 })
               });
 
-          }else if(req.body.Body.toLowerCase()==='decline' && status!=='processed'){
+          }else if(req.body.Body.toLowerCase()==='2' && status!=='processed'){
             twiml.message('Your order has been cancelled');
             res.writeHead(200, {'Content-Type': 'text/xml'});
             knex('order')
@@ -124,7 +124,7 @@ app.post('/sms', function(req, res) {
                 res.end(twiml.toString());
               });
           }
-        }else if(req.body.Body.toLowerCase()==='end' && status==='ready'){
+        }else if(req.body.Body.toLowerCase()==='done' && status==='ready'){
           twiml.message('Thanks for ordering at Zuckerburgers!');
           res.writeHead(200, {'Content-Type': 'text/xml'});
           console.log(req.body.From);
@@ -144,7 +144,7 @@ app.post("/order", (req, res) => {
       to: process.env.VERIFIED_NUMBER,
       from: process.env.TWILIO_NUMBER,
       body: `Your order has been placed ${req.body.name}: \n${req.body.receipt}\n
-      text "confirm" to start the order or text "cancel" to undo`,
+      text "confirm" to start the order or text "2" to undo`,
     }).then((message) => console.log(message.sid));
         knex('order').insert({
         name: req.body.name || 'kyle',

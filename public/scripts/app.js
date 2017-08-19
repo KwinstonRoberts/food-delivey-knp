@@ -177,13 +177,16 @@ $(document).ready(function(){
       url : '/cart',
       success: function (data) {
       var orderReceipt = [];
-
+        orderReceipt.push('====================\n');
         for (arr of data['cart']) {
           // console.log(arr.name, arr.quantity, arr.price, (arr.price * arr.quantity.toFixed(2)) )
-          var orderObject = '' + arr.name + ': quantity' + arr.quantity + '         price' + arr.price + '           subtotal: ' +  (arr.price * arr.quantity.toFixed(2));
+          var orderObject = '' + arr.name + ':\nquantity' + arr.quantity + '\nprice: ' + arr.price + '\nsubtotal: ' +  (arr.price * arr.quantity.toFixed(2));
           orderReceipt.push(orderObject)
+          orderReceipt.push('-------------------------\n');
           //console.log(orderReceipt)
         }
+        orderReceipt.push('====================\n');
+
 
       console.log('orderReceipt', orderReceipt)
 
