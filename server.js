@@ -124,7 +124,7 @@ app.post('/sms', function(req, res) {
                 res.end(twiml.toString());
               });
           }
-        }else if(req.body.Body.toLowerCase()==='finish' && status==='ready'){
+        }else if(req.body.Body.toLowerCase()==='end' && status==='ready'){
           twiml.message('Thanks for ordering at Zuckerburgers!');
           res.writeHead(200, {'Content-Type': 'text/xml'});
           console.log(req.body.From);
