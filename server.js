@@ -78,7 +78,6 @@ app.post("/order", (req, res) => {
   }).then((message) => {
       knex('order').insert({
         name: req.body.name || 'kyle',
-        email: 'example@example.com',
         phone: process.env.VERIFIED_NUMBER,
         receipt: req.body.receipt,
         status: 'ordered'
