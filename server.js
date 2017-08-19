@@ -39,9 +39,9 @@ app.use(express.static("public"));
 // Mount all resource routes
 
 app.post('/sms', function(req, res) {
-  const MessagingResponse = require('twilio').twiml.MessagingResponse;
+  const MessagingResponse = client.twiml.MessagingResponse;
   var twiml = new MessagingResponse();
-  if(req.body.Body.toLowerCase()==='confirm'){
+  if(req.body.Body.toLowerCase() === 'confirm'){
     twiml.message('Thanks, your order is now being processed');
     res.writeHead(200, {'Content-Type': 'text/xml'});
     console.log(req.body.phone);
