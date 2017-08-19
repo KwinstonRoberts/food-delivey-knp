@@ -8,10 +8,10 @@ exports.up = function(knex, Promise) {
        table.integer('phone');
        table.text('receipt','longtext');
        table.integer('amount_owing');
-     });
+     })
   ]);
 };
 
 exports.down = function(knex, Promise) {
-   knex.schema.dropTable('order');
+   return knex.schema.dropTable('order');
 };
