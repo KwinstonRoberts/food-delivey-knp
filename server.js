@@ -51,10 +51,9 @@ app.post("/order", (req, res) => {
   client.messages
   .create({
 
-    to: '+1' + req.body.phone,
+    to: '+1' + req.body.phone.toString(),
     from: '+14508230998',
-    body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
-    ${req.body.receipt}`,
+    body: `Your order has been placed`,
   })
   .then((message) => console.log(message.sid));
 });
