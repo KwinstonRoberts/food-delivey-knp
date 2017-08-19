@@ -44,76 +44,78 @@ app.post('/sms', function(req, res) {
 
   knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) =>{
     if(err)console.error(err);
+    console.log(row)
     var status = row[0].status;
+
+    if(status==='ordered'){
+      if(req.body.Body.toLowerCase() === 'confirm'){
+        twiml.message('Thanks, your order is now being processed');
+        res.writeHead(200, {'Content-Type': 'text/xml'});
+        console.log(req.body.From);
+        knex('order')
+          .where('phone', '=', req.body.From)
+          .update({
+            status: 'confirmed',
+          }).asCallback((err)=>{
+            if(err)console.error(err);
+            knex.select('*').from('order').asCallback((err,rows)=>{
+              if(err)console.error(err);
+              console.log(rows);
+            });
+          res.end(twiml.toString());
+        });
+      }else if(req.body.Body.toLowerCase()==='decline'){
+        twiml.message('Your order has been cancelled');
+        res.writeHead(200, {'Content-Type': 'text/xml'});
+        knex('order')
+          .where('phone', '=', req.body.from)
+          .del().asCallback((err)=>{
+            if(err)console.error(err);
+            res.end(twiml.toString());
+          });
+      }
+    }else if(status==='confirmed'){
+      if(req.body.Body.toLowerCase() === 'receipt'){
+        knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
+          if(err)console.error(err);
+          var receipt = row[0].receipt;
+        });
+        twiml.message(`Here is your current order: \n
+          ${receipt}
+          `);
+        res.writeHead(200, {'Content-Type': 'text/xml'});
+        console.log(req.body.From);
+        knex('order')
+          .where('phone', '=', req.body.From)
+          .update({
+            status: 'confirmed',
+          }).asCallback((err)=>{
+            if(err)console.error(err);
+            knex.select('*').from('order').asCallback((err,rows)=>{
+              if(err)console.error(err);
+              console.log(rows);
+            });
+          res.end(twiml.toString());
+        });
+      }else if(req.body.Body.toLowerCase()==='decline'){
+        twiml.message('Your order has been cancelled');
+        res.writeHead(200, {'Content-Type': 'text/xml'});
+        knex('order')
+          .where('phone', '=', req.body.from)
+          .del().asCallback((err)=>{
+            if(err)console.error(err);
+            res.end(twiml.toString());
+          });
+      }
+    }
   });
-  if(status==='ordered'){
-    if(req.body.Body.toLowerCase() === 'confirm'){
-      twiml.message('Thanks, your order is now being processed');
-      res.writeHead(200, {'Content-Type': 'text/xml'});
-      console.log(req.body.From);
-      knex('order')
-        .where('phone', '=', req.body.From)
-        .update({
-          status: 'confirmed',
-        }).asCallback((err)=>{
-          if(err)console.error(err);
-          knex.select('*').from('order').asCallback((err,rows)=>{
-            if(err)console.error(err);
-            console.log(rows);
-          });
-        res.end(twiml.toString());
-      });
-    }else if(req.body.Body.toLowerCase()==='decline'){
-      twiml.message('Your order has been cancelled');
-      res.writeHead(200, {'Content-Type': 'text/xml'});
-      knex('order')
-        .where('phone', '=', req.body.from)
-        .del().asCallback((err)=>{
-          if(err)console.error(err);
-          res.end(twiml.toString());
-        });
-    }
-  }else if(status==='confirmed'){
-    if(req.body.Body.toLowerCase() === 'receipt'){
-      knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
-        if(err)console.error(err);
-        var receipt = row[0].receipt;
-      });
-      twiml.message(`Here is your current order: \n
-        ${receipt}
-        `);
-      res.writeHead(200, {'Content-Type': 'text/xml'});
-      console.log(req.body.From);
-      knex('order')
-        .where('phone', '=', req.body.From)
-        .update({
-          status: 'confirmed',
-        }).asCallback((err)=>{
-          if(err)console.error(err);
-          knex.select('*').from('order').asCallback((err,rows)=>{
-            if(err)console.error(err);
-            console.log(rows);
-          });
-        res.end(twiml.toString());
-      });
-    }else if(req.body.Body.toLowerCase()==='decline'){
-      twiml.message('Your order has been cancelled');
-      res.writeHead(200, {'Content-Type': 'text/xml'});
-      knex('order')
-        .where('phone', '=', req.body.from)
-        .del().asCallback((err)=>{
-          if(err)console.error(err);
-          res.end(twiml.toString());
-        });
-    }
-  }
 });
 
 app.post("/order", (req, res) => {
     client.messages.create({
     to: process.env.VERIFIED_NUMBER,
     from: process.env.TWILIO_NUMBER,
-    body: `Your order has been placed ${req.body.name}:${req.body.receipt}\n
+    body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<*>/g,'')}\n
     text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
       knex('order').insert({
