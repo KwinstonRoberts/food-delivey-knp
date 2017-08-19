@@ -72,43 +72,43 @@ app.post('/sms', function(req, res) {
             if(err)console.error(err);
             res.end(twiml.toString());
           });
-      }
-    }else if(status==='confirmed'){
-      if(req.body.Body.toLowerCase() === 'receipt'){
-        knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
-          if(err)console.error(err);
-          var receipt = row[0].receipt;
-        }).then(function(){
-        twiml.message(`Here is your current order: \n
-          ${receipt}
-          `);
-        res.writeHead(200, {'Content-Type': 'text/xml'});
-        console.log(req.body.From);
-        knex('order')
-          .where('phone', '=', req.body.From)
-          .update({
-            status: 'confirmed',
-          }).asCallback((err)=>{
+        }
+      }else if(status==='confirmed'){
+        if(req.body.Body.toLowerCase() === 'receipt'){
+          knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
             if(err)console.error(err);
-            knex.select('*').from('order').asCallback((err,rows)=>{
+            var receipt = row[0].receipt;
+          }).then(function(){
+          twiml.message(`Here is your current order: \n
+            ${receipt}
+            `);
+          res.writeHead(200, {'Content-Type': 'text/xml'});
+          console.log(req.body.From);
+          knex('order')
+            .where('phone', '=', req.body.From)
+            .update({
+              status: 'confirmed',
+            }).asCallback((err)=>{
               if(err)console.error(err);
-              console.log(rows);
-            });
-          res.end(twiml.toString());
-        });
-      }else if(req.body.Body.toLowerCase()==='decline'){
-        twiml.message('Your order has been cancelled');
-        res.writeHead(200, {'Content-Type': 'text/xml'});
-        knex('order')
-          .where('phone', '=', req.body.from)
-          .del().asCallback((err)=>{
-            if(err)console.error(err);
+              knex.select('*').from('order').asCallback((err,rows)=>{
+                if(err)console.error(err);
+                console.log(rows);
+              });
             res.end(twiml.toString());
-          });
+            });
+          }else if(req.body.Body.toLowerCase()==='decline'){
+            twiml.message('Your order has been cancelled');
+            res.writeHead(200, {'Content-Type': 'text/xml'});
+            knex('order')
+              .where('phone', '=', req.body.from)
+              .del().asCallback((err)=>{
+                if(err)console.error(err);
+                res.end(twiml.toString());
+              });
+           }
+        });
       }
-    });
-    }
-  });
+   });
 });
 
 app.post("/order", (req, res) => {
