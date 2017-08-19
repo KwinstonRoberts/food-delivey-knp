@@ -62,7 +62,7 @@ app.post('/sms', function(req, res) {
               body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,'')}\n
               text "confirm" to start the order or text "cancel" to undo`,
             }).then((message) => {
-                console.log(message.sid));
+                console.log(message.sid);
                 res.end(twiml.toString());
               }
             });
