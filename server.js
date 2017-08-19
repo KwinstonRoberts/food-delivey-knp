@@ -57,7 +57,6 @@ app.post('/sms', function(req, res) {
     knex('order')
       .where('phone', '=', req.body.from)
       .del();
-    })
     res.end(twiml.toString());
   }
 });
