@@ -79,22 +79,23 @@ app.post('/sms', function(req, res) {
             if(err)console.error(err);
             var receipt = row[0].receipt;
           }).then(function(){
-          twiml.message(`Here is your current order: \n
-            ${receipt}
-            `);
-          res.writeHead(200, {'Content-Type': 'text/xml'});
-          console.log(req.body.From);
-          knex('order')
-            .where('phone', '=', req.body.From)
-            .update({
-              status: 'confirmed',
-            }).asCallback((err)=>{
-              if(err)console.error(err);
-              knex.select('*').from('order').asCallback((err,rows)=>{
+            twiml.message(`Here is your current order: \n
+              ${receipt}
+              `);
+            res.writeHead(200, {'Content-Type': 'text/xml'});
+            console.log(req.body.From);
+            knex('order')
+              .where('phone', '=', req.body.From)
+              .update({
+                status: 'confirmed',
+              }).asCallback((err)=>{
                 if(err)console.error(err);
-                console.log(rows);
+                knex.select('*').from('order').asCallback((err,rows)=>{
+                  if(err)console.error(err);
+                  console.log(rows);
+                  res.end(twiml.toString());
+                })
               });
-            res.end(twiml.toString());
             });
           }else if(req.body.Body.toLowerCase()==='decline'){
             twiml.message('Your order has been cancelled');
