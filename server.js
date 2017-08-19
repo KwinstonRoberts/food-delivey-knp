@@ -65,7 +65,7 @@ app.post('/sms', function(req, res) {
                   from: process.env.TWILIO_NUMBER,
                   body: `${req.body.From} Has ordered these items:\n
                   ${row[0].receipt}\n
-                  type "ready" when the order has been completed`
+                  text "ready" when the order has been completed, and "end" once you have received payment`
                 }).then((message)=>{
                   console.log(message.sid);
                   res.end(twiml.toString());
@@ -118,12 +118,12 @@ app.post('/sms', function(req, res) {
             knex('order')
               .where('phone', '=', req.body.From)
               .update({
-                status: 'read',
+                status: 'ready',
               }).asCallback((err)=>{
                 if(err)console.error(err);
                 res.end(twiml.toString());
               });
-            }else if(req.body.Body.toLowerCase()==='finish' && status==='processed'){
+            }else if(req.body.Body.toLowerCase()==='finish' && status==='ready'){
               twiml.message('Thanks for ordering at Zuckerburgers!');
               res.writeHead(200, {'Content-Type': 'text/xml'});
               console.log(req.body.From);
