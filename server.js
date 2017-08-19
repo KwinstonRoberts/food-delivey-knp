@@ -52,8 +52,7 @@ app.post('/sms', function(req, res) {
 });
 
 app.post("/order", (req, res) => {
-    console.log(req.body.phone);
-  client.messages.create({
+    client.messages.create({
     to: process.env.VERIFIED_NUMBER,
     from: process.env.TWILIO_NUMBER,
     body: `Your order has been placed ${req.body.name}:${req.body.receipt}\n
