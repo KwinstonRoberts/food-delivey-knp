@@ -43,7 +43,7 @@ app.post('/sms', function(req, res) {
   var twiml = new MessagingResponse();
 
   knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) =>{
-    if(err)res.end(console.log('order for this number has not yet been created'));
+    if(err)console.error(err);
     var status = row[0].status;
   });
   if(status==='ordered'){
@@ -119,7 +119,7 @@ app.post("/order", (req, res) => {
       knex('order').insert({
         name: req.body.name || 'kyle',
         phone: process.env.VERIFIED_NUMBER,
-        receipt: req.body.receipt.replace(/<\/tr>/,'\n').replace(/<*>/,''),
+        receipt: req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<*>/g,''),
         status: 'ordered'
 
       }).asCallback((err)=>{
