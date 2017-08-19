@@ -53,18 +53,18 @@ app.post("/order", (req, res) => {
       from: '+14508230998',
       body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
       ${req.body.receipt}`
-  }, function(){
-    const VoiceResponse = require('twilio').twiml.VoiceResponse;
-    const response = new VoiceResponse();
-    response.say(
-      {
-        voice: 'alice',
-        language: 'en',
-      },
-      `${req.body.name} has placed an order: \n
-      ${req.body.response}`
-    );
-        console.log(response.toString());
+  },function(message){
+    // const VoiceResponse = require('twilio').twiml.VoiceResponse;
+    // const response = new VoiceResponse();
+    // response.say(
+    //   {
+    //     voice: 'alice',
+    //     language: 'en',
+    //   },
+    //   `${req.body.name} has placed an order: \n
+    //   ${req.body.response}`
+    // );
+        console.log(message);
     });
   });
 
