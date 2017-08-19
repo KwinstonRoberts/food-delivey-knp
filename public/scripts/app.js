@@ -188,11 +188,12 @@ $(document).ready(function(){
 
       console.log('orderReceipt', orderReceipt)
 
-      var receipt = orderReceipt
-
           $.ajax({
-            type : 'Post',
+            type : 'POST',
             url : '/order',
+            name:$('#orderForm').find('#name').val(),
+            email:$('#orderForm').find('#email').val(),
+            receipt:orderReceipt,
             success: function(data) {
               console.log('receipt inside ajax call', receipt)
             }

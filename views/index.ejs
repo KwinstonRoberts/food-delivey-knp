@@ -27,9 +27,15 @@
                   <span class="caret"></span>
                 </button>
 
-                <div id="cart-content" class="dropdown-menu" aria-labelledby="show-cart-button"></div>
 
-              </div> <!-- end of cart container -->
+                <div id="cart-content" class="dropdown-menu" aria-labelledby="show-cart-button">
+
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
       </nav>
 
       <div class="jumbotron">
@@ -47,7 +53,6 @@
             </div>
 
             <div class='col-xs-12 col-sm-7'>
-
               <% include details.ejs %>
             </div>
 
@@ -60,7 +65,6 @@
                      <p class="card-text sidePrice"> <%=addons[x].price%> </p>
                      <button class="btn center-block">Add</button>
                   </div>
-
               </div>
               <%}%>
 
@@ -88,25 +92,21 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Confirm </h4>
           </div>
-          <div class="modal-body">
-            <form action="/order" method="POST" style="margin:50px;">
-              <label for=""> email </label>
-              <input id="email" type="email" name="email" style="width: 350px">
-              <label for=""> phone number </label>
-              <input id="phoneNumber" type="phoneNumber" name="phoneNumber" style="width: 350px">
-              <label for=""> Order Details </label>
-              <div id="orderDetails">                  </div>
+          <div id='orderForm' class="modal-body">
 
-              <button id="orderButton" type="button" class="btn btn-primary">Order</button>
+              <label for="name"> Name </label>
+              <input id="name" type="text" name="name" style="width: 350px">
+              <label for="phone"> phone number </label>
+              <input id="phonenumber" type="phone" name="phone" style="width: 350px">
 
+              <label for="">Order Details</label>
+              <div id="orderDetails"></div>
 
-            </form>
-
-
+              <div id='thanks'>Thanks for your order. You should be receiving a text message shortly with your receipt</div>
 
           </div>
           <div class="modal-footer">
-
+            <button id='orderButton' type="button" class="btn btn-primary">Order</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

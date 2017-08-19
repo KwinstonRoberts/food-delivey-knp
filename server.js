@@ -1,6 +1,5 @@
 "use strict";
 
-if(process.env.ENV === 'development')require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
@@ -22,7 +21,6 @@ const authToken =  process.env.TWILIO_SECRET;
 const client = require('twilio')(accountSid, authToken);
 
 
-
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
@@ -41,36 +39,123 @@ app.use(express.static("public"));
 // Mount all resource routes
 
 app.post('/sms', function(req, res) {
-  var twiml = new twilio.TwimlResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
-});
+  const MessagingResponse = require('twilio').twiml.MessagingResponse;
+  var twiml = new MessagingResponse();
+  knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) => {
+    if(err)console.error(err);
+    console.log(row[0]);
+    var status = row[0].status;
+    if(status==='ordered'){
+      if(req.body.Body.toLowerCase() === 'confirm'){
+        twiml.message('Thanks, your order is now being processed\ntext "receipt" to review the order');
+        res.writeHead(200, {'Content-Type': 'text/xml'});
+        console.log(req.body.From);
+        knex('order')
+          .where('phone', '=', req.body.From)
+          .update({
+            status: 'confirmed',
+          }).asCallback((err)=>{
+            if(err)console.error(err);
+            knex.select('receipt').from('order')
+              .where('phone', '=', req.body.From)
+              .asCallback((err,row)=>{
+                if(err)console.error(err);
+                client.messages.create({
+                  to: process.env.VERIFIED_NUMBER,
+                  from: process.env.TWILIO_NUMBER,
+                  body: `${req.body.From} Has ordered these items:\n
+                  ${row[0].receipt}\n
+                  text "ready" when the order has been completed, and "end" once you have received payment`
+                }).then((message)=>{
+                  console.log(message.sid);
+                  res.end(twiml.toString());
+                  });
+                })
+            });
+      }else if(req.body.Body.toLowerCase()==='decline'){
+        twiml.message('Your order has been cancelled');
+        res.writeHead(200, {'Content-Type': 'text/xml'});
+        knex('order')
+          .where('phone', '=', req.body.From)
+          .del().asCallback((err)=>{
+            if(err)console.error(err);
+            res.end(twiml.toString());
+          });
+        }
+      }else if(status==='confirmed'){
+        if(req.body.Body.toLowerCase() === 'receipt'){
+          knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
+            if(err)console.error(err);
+            var receipt = row[0].receipt;
+            twiml.message(`Here is your current order: \n
+              ${receipt}
+              `);
+            res.writeHead(200, {'Content-Type': 'text/xml'});
+            console.log(req.body.From);
+            knex('order')
+              .where('phone', '=', req.body.From)
+              .update({
+                status: 'confirmed',
+              }).asCallback((err)=>{
+                if(err)console.error(err);
+                  res.end(twiml.toString());
+                })
+              });
 
-app.post("/order", (req, res) => {
-  twilio = require('twilio');
-  client.messages.create({
-      to: `+1${req.body.number}`,
-      from: '+14508230998',
-      body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
-      ${req.body.receipt}`
-  }, function(){
-    const VoiceResponse = require('twilio').twiml.VoiceResponse;
-    const response = new VoiceResponse();
-    response.say(
-      {
-        voice: 'alice',
-        language: 'en',
-      },
-      `${req.body.name} has placed an order: \n
-      ${req.body.response}`
-    );
-        console.log(message,response.toString());
-    });
+          }else if(req.body.Body.toLowerCase()==='decline' && status!=='processed'){
+            twiml.message('Your order has been cancelled');
+            res.writeHead(200, {'Content-Type': 'text/xml'});
+            knex('order')
+              .where('phone', '=', req.body.From)
+              .del().asCallback((err)=>{
+                if(err)console.error(err);
+                res.end(twiml.toString());
+              });
+          }else if(req.body.Body.toLowerCase()==='ready'){
+            twiml.message('Your food is ready for pickup.');
+            res.writeHead(200, {'Content-Type': 'text/xml'});
+            console.log(req.body.From);
+            knex('order')
+              .where('phone', '=', req.body.From)
+              .update({
+                status: 'ready',
+              }).asCallback((err)=>{
+                if(err)console.error(err);
+                res.end(twiml.toString());
+              });
+          }
+        }else if(req.body.Body.toLowerCase()==='end' && status==='ready'){
+          twiml.message('Thanks for ordering at Zuckerburgers!');
+          res.writeHead(200, {'Content-Type': 'text/xml'});
+          console.log(req.body.From);
+          knex('order')
+            .where('phone', '=', req.body.From)
+            .update({
+              status: 'finished',
+            }).asCallback((err)=>{
+              if(err)console.error(err);
+              res.end(twiml.toString());
+            });
+        }
+     });
   });
-
-
-
+app.post("/order", (req, res) => {
+    client.messages.create({
+      to: process.env.VERIFIED_NUMBER,
+      from: process.env.TWILIO_NUMBER,
+      body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,'')}\n
+      text "confirm" to start the order or text "cancel" to undo`,
+    }).then((message) => console.log(message.sid));
+        knex('order').insert({
+        name: req.body.name || 'kyle',
+        phone: process.env.VERIFIED_NUMBER,
+        receipt: req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,''),
+        status: 'ordered'
+      }).asCallback((err,row)=>{
+        if(err)console.error(err)
+         res.end('Done');
+      });
+    });
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
@@ -141,8 +226,6 @@ app.get("/cart", (req, res) => {
      res.json(templateVars);
   })
 });
-
-
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
