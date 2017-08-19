@@ -53,7 +53,7 @@ app.post('/sms', function(req, res) {
         if(err)console.error(err);
         knex.select('*').from('order').asCallback((err,rows)=>{
           if(err)console.error(err);
-          console.log(rows[0]);
+          console.log(rows);
         });
       res.end(twiml.toString());
     });
@@ -83,8 +83,11 @@ app.post("/order", (req, res) => {
         receipt: req.body.receipt,
         status: 'ordered'
 
+      }).asCallback((err)=>{
+          if(err)console.error(err);
+          res.send(console.log(message.sid));
       })
-      res.send(console.log(message.sid));
+
     });
   });
 
