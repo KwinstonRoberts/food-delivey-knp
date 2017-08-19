@@ -64,9 +64,9 @@ app.post('/sms', function(req, res) {
             }).then((message) => {
                 console.log(message.sid);
                 res.end(twiml.toString());
-              }
+              });
             });
-        });
+
       }else if(req.body.Body.toLowerCase()==='decline'){
         twiml.message('Your order has been cancelled');
         res.writeHead(200, {'Content-Type': 'text/xml'});
