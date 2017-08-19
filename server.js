@@ -58,7 +58,7 @@ app.post("/order", (req, res) => {
   .then((message) => {
 
     client.api.calls.create({
-      url: receipt(),
+      url: 'http://demo.twilio.com/docs/voice.xml',
       to: '+16477619205',
       from: '+14508230998',
     })
