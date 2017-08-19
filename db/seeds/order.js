@@ -1,7 +1,7 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-    knex('order').del();
+    knex('order').truncate();
     return Promise.all([
   ]);
 };
