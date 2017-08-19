@@ -21,7 +21,6 @@ const authToken =  process.env.TWILIO_SECRET;
 const client = require('twilio')(accountSid, authToken);
 
 
-
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
@@ -39,11 +38,14 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 
-app.post('/sms', function(req, res) {
+app.post('/sms/:reply', function(req, res) {
+  const MessagingResponse = require('twilio').twiml.MessagingResponse;
   var twiml = new twilio.TwimlResponse();
-  twiml.message('The Robots are coming! Head for the hills!');
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+  if(req.body.reply===1){
+    twiml.message('The Robots are coming! Head for the hills!');
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
+  }
 });
 
 app.post("/order", (req, res) => {
@@ -53,16 +55,9 @@ app.post("/order", (req, res) => {
 
     to: '+16477619205',
     from: '+14508230998',
-    body: `Your order has been placed ${req.body.name} ${req.body.receipt}`,
-  })
-  .then((message) => {
-
-    client.api.calls.create({
-      url: 'http://demo.twilio.com/docs/voice.xml',
-      to: '+16477619205',
-      from: '+14508230998',
-    })
-    .then((call) => console.log(call.sid));
+    body: `Your order has been placed ${req.body.name}: \n
+     ${req.body.receipt}`,
+  }).then((call) => console.log(call.sid));
     console.log(message.sid)
   });
 });
