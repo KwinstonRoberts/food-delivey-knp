@@ -51,7 +51,7 @@ app.post('/sms', function(req, res) {
         status: 'comfirmed',
       }).asCallback((err)=>{
         knex.select('*').from('order').asCallback((err,rows)=>{
-          console.log(rows);
+          console.log(rows[0]);
         });
       res.end(twiml.toString());
     });
@@ -73,7 +73,7 @@ app.post("/order", (req, res) => {
     text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
       knex('order').insert({
-        name: req.body.name,
+        name: req.body.name || 'kyle'
         email: 'example@example.com',
         phone: process.env.VERIFIED_NUMBER,
         receipt: req.body.receipt,
