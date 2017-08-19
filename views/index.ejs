@@ -83,22 +83,17 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Order</h4>
           </div>
-          <div class="modal-body">
-            <form action="/order" method="POST" style="margin:50px;">
-              <label for=""> email </label>
+          <div id='orderForm' class="modal-body">
+              <input id="name" type="text" name="name" style="width: 350px">
+              <label for="name"> Name </label>
               <input id="email" type="email" name="email" style="width: 350px">
               <label for=""> phone number </label>
-              <input id="phoneNumber" type="phoneNumber" name="phoneNumber" style="width: 350px">
-              <button type="button" class="btn btn-primary">Order</button>
-            </form>
 
-            <div id="receipt">
-
-            </div>
+              <div id='thanks'>Thanks for your order. You should be receiving a text message shortly with your receipt</div>
 
           </div>
           <div class="modal-footer">
-
+            <button id='order' type="button" class="btn btn-primary">Order</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

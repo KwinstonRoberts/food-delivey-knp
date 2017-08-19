@@ -82,6 +82,23 @@ $(document).ready(function(){
     });
   })
 
+  $('#order').on('click', function(){
+    console.log('order button cicked');
+    $.ajax({
+      type:'POST',
+      url:`/order`,
+      data:{
+        name:$('#orderForm').find('#name').val(),
+        email:$('#orderForm').find('#email').val(),
+        phone:$('#orderForm').find('#phonenumber').val(),
+        receipt:$('#cart-content').html(),
+      },
+      success: function(data){
+        console.log(data.items);
+      }
+    });
+  })
+
   $('.options>button').on('click',function(e){
     $(this).toggleClass('active');
   });
