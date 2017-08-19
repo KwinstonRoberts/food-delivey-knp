@@ -57,13 +57,22 @@
             </div>
 
             <div id='addons' class='col-xs-12 col-sm-2'>
-              <% console.log(addons);%>
               <% for(x in addons){%>
-               <img src="<%=addons[x].pic%>" class='img-responsive'>
-              <%}%>
-          </div>
+                <div class="card">
+                   <img class="card-img-top img-responsive" src="<%=addons[x].pic%>" >
+                   <div class="card-block">
+                     <h4 class="card-title"> <%=addons[x].name%></h4>
+                     <p class="card-text sidePrice"> <%=addons[x].price%> </p>
+                     <button class="btn center-block">Add</button>
+                  </div>
 
-        </div>
+              </div>
+              <%}%>
+
+          </div> <!-- end of addons -->
+
+        </div> <!-- end of row -->
+
 
       </div>
    </body>
