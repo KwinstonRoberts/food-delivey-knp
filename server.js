@@ -128,7 +128,6 @@ app.post("/order", (req, res) => {
         res.end('done');
       });
     });
-  });
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
