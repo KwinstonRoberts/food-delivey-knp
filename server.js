@@ -44,6 +44,7 @@ app.post('/sms', function(req, res) {
   if(req.body.Body.toLowerCase()==='confirm'){
     twiml.message('Thanks, your order is now being processed');
     res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
   }else if(req.body.Body.toLowerCase()==='cancel'){
     twiml.message('Your order has been cancelled');
     res.writeHead(200, {'Content-Type': 'text/xml'});
@@ -58,7 +59,7 @@ app.post("/order", (req, res) => {
     body: `Your order has been placed ${req.body.name}:${req.body.receipt}\n
     text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
-      console.log(message.sid)
+      console.log(message.sid);
     });
   });
 
