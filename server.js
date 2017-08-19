@@ -73,7 +73,7 @@ app.post("/order", (req, res) => {
     text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
       knex('order').insert({
-        name: req.body.name || 'kyle'
+        name: req.body.name || 'kyle',
         email: 'example@example.com',
         phone: process.env.VERIFIED_NUMBER,
         receipt: req.body.receipt,
