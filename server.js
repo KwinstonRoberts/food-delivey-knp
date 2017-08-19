@@ -53,7 +53,8 @@ app.post("/order", (req, res) => {
 
     to: '+16477619205',
     from: '+14508230998',
-    body: `Your order has been placed`,
+    body: `Your order has been placed ${name}\n
+    ${req.body.receipt}`,
   })
   .then((message) => console.log(message.sid));
 });

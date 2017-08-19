@@ -91,7 +91,7 @@ $(document).ready(function(){
         name:$('#orderForm').find('#name').val(),
         email:$('#orderForm').find('#email').val(),
         phone:$('#orderForm').find('#phonenumber').val(),
-        receipt:'',
+        receipt:$('#cart-content').html(),
       },
       success: function(data){
         console.log(data.items);
