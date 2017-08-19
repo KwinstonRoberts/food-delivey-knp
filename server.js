@@ -31,10 +31,12 @@ app.post('/sms', function(req, res) {
 });
 
 app.post("/order", (req, res) => {
+  twilio = require('twilio');
   client.messages.create({
-      to: '+16477619205',
+      to: `+1${req.body.number}`,
       from: '+14508230998',
-      body: `Your order has been placed. Thank you for choosing Zuckerburger.
+      body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
+      ${req.body.receipt}
             `,
   }, function(err,message){
     if(err)console.error(err)
@@ -124,11 +126,6 @@ app.get("/cart", (req, res) => {
   .asCallback((err,rows)=>{
     console.log(rows)
     let templateVars = {
-      // cart: [{name: 'Face Burger',
-      //     pic: '/images/faceBurger.jpg',
-      //     price:17.00,
-      //     description:' Face Burger is our signiture dish. Mark created this burger when he was at Harvard, and it soon became very popular among various Ivy league schools.',
-      //     type:'main'}]
       cart : rows
     }
      res.json(templateVars);

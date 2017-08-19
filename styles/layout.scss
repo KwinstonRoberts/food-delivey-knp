@@ -1,3 +1,11 @@
+*, *:before, *:after{
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing:border-box;
+  box-sizing: border-box;
+}
+
 body,html{
   height:100%;
 }
@@ -95,6 +103,7 @@ body {
 
       }
     }
+
     #accordion{
       overflow-y:auto;
       overflow-x: hidden;
@@ -125,4 +134,39 @@ body {
 
     }
   }
+  .card{
+    background-color: white;
+    border-radius: 5px;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+  }
+  .card-title{
+    text-align: center;
+  }
+  .card-text{
+  text-align: center;
+  margin-bottom: 0;
+  font-size: 1em;
+  font-weight: bold;
+  }
+  .card-block{
+    display: none;
+  }
+  .card-block .btn {
+    border: 1px solid #302f2f;
+    background-color: white;
+    font-size: .8em;
+    padding: 2px 10px;
+
+
+  }
+  .sidePrice{
+    font-size: 1em;
+  }
 }
+
+
+
+
+
+
