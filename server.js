@@ -49,7 +49,7 @@ app.post('/sms', function(req, res) {
       .where('phone', '=', req.body.from)
       .update({
         status: 'comfirmed',
-      }).ascallback((err)=>{
+      }).asCallback((err)=>{
         knex.select('*').from('order').asCallback((err,rows)=>{
           console.log(rows);
         });
