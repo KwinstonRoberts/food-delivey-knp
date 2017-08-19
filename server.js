@@ -1,6 +1,5 @@
 "use strict";
 
-if(process.env.ENV === 'development')require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
@@ -50,24 +49,13 @@ app.post('/sms', function(req, res) {
 app.post("/order", (req, res) => {
   client.messages
   .create({
-      to: `+1${req.body.phone}`,
-      from: '+14508230998',
-      body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
-      ${req.body.receipt}`
-  }).then((message)=>{
-    // const VoiceResponse = require('twilio').twiml.VoiceResponse;
-    // const response = new VoiceResponse();
-    // response.say(
-    //   {
-    //     voice: 'alice',
-    //     language: 'en',
-    //   },
-    //   `${req.body.name} has placed an order: \n
-    //   ${req.body.response}`
-    // );
-        console.log(message);
-    });
-  });
+    to: '+1' + req.body.phone,
+    from: '+14508230998',
+    body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
+    ${req.body.receipt}`,
+  })
+  .then((message) => console.log(message.sid));
+});
 
 
 
