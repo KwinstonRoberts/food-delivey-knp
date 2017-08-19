@@ -180,7 +180,7 @@ $(document).ready(function(){
 
         for (arr of data['cart']) {
           // console.log(arr.name, arr.quantity, arr.price, (arr.price * arr.quantity.toFixed(2)) )
-          var orderObject = '' + arr.name + ': quantity' + arr.quantity + '         price' + arr.price + '           subtotal: ' +  (arr.price * arr.quantity.toFixed(2))
+          var orderObject = '' + arr.name + ': quantity' + arr.quantity + '         price' + arr.price + '           subtotal: ' +  (arr.price * arr.quantity.toFixed(2));
           orderReceipt.push(orderObject)
           //console.log(orderReceipt)
         }
@@ -190,9 +190,11 @@ $(document).ready(function(){
           $.ajax({
             type : 'POST',
             url : '/order',
-            name:$('#orderForm').find('#name').val(),
-            email:$('#orderForm').find('#email').val(),
-            receipt: orderReceipt.join('\n'),
+            data:{
+              name:$('#orderForm').find('#name').val(),
+              email:$('#orderForm').find('#email').val(),
+              receipt: orderReceipt.join('\n')
+            },
             success: function(data) {
               console.log('receipt inside ajax call', receipt)
             }
