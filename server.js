@@ -44,7 +44,6 @@ app.post('/sms', function(req, res) {
 
   knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) =>{
     if(err)console.error(err);
-    console.log(row)
     var status = row[0].status;
 
     if(status==='ordered'){
@@ -61,8 +60,8 @@ app.post('/sms', function(req, res) {
             knex.select('*').from('order').asCallback((err,rows)=>{
               if(err)console.error(err);
               console.log(rows);
+              res.end(twiml.toString());
             });
-          res.end(twiml.toString());
         });
       }else if(req.body.Body.toLowerCase()==='decline'){
         twiml.message('Your order has been cancelled');
@@ -115,7 +114,7 @@ app.post("/order", (req, res) => {
     client.messages.create({
     to: process.env.VERIFIED_NUMBER,
     from: process.env.TWILIO_NUMBER,
-    body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<*>/g,'')}\n
+    body: `Your order has been placed ${req.body.name}: \n${req.body.receipt.replace(/[<\/tr>]/g,'\n').replace(/<[a-z]*>/g,'')}\n
     text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
       knex('order').insert({
