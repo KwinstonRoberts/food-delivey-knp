@@ -189,10 +189,6 @@ body {
       width: 90%;
       margin: 0 auto;
     }
-    .background{
-      background-size: contain;
-
-    }
 
     footer{
       justify-content: center;
@@ -202,19 +198,30 @@ body {
 
   @media(max-width: 615px){
     .navBar{
-      height: 180px;
+      height: 300px;
       flex-direction: column;
       justify-content: center;
+      padding-bottom: 50px;
+
     }
 
      .dropdown{
       padding: 0;
       margin: 0;
     }
+    .background{
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+     .background .cta{
+      margin-left: 25%;
+      height: 700px;
+      padding-top: 280px;
+    }
+
+
   }
-
-
-
 }
 
 
