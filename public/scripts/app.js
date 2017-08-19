@@ -82,21 +82,133 @@ $(document).ready(function(){
     });
   })
 
-  $('#order').on('click', function(){
-    console.log('order button cicked');
+  $('.options>button').on('click',function(e){
+    $(this).toggleClass('active');
+  });
+
+
+  $('.table-inverse').on('click', function(e){
+    $(this).toggleClass('active');
+  });
+
+  $('#show-cart-button').on('click', function(e){
+    console.log('show cart')
     $.ajax({
-      type:'POST',
-      url:`/order`,
-      data:{
-        name:$('#orderForm').find('#name').val(),
-        email:$('#orderForm').find('#email').val(),
-        receipt:$('#cart-content').html()
-      },
-      success: function(data){
-        console.log(data.items);
+      type:'Get',
+      url:'/cart',
+      success: function(data) {
+        var cartContentHtml = '';
+
+        cartContentHtml += `<table class="table table-inverse cart-subtotal">
+        <thead>
+
+          <tr>
+            <th>Items</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>SubTotal</th>
+          </tr>
+
+        </thead>
+        <tbody>
+
+        `;
+
+        for (arr of data['cart']) {
+
+          cartContentHtml += `<tr>
+           <td> <p> ${arr.name} </p> </td>
+           <td> <p> ${arr.quantity} </p> </td>
+           <td> <p> ${arr.price} </p> </td>
+           <td> <p> $${(arr.price * arr.quantity.toFixed(2))} <p> </td>
+            </tr>
+          `;
+        }
+
+        cartContentHtml += ' </tbody> </table>';
+
+
+        var sumTotal = 0;
+
+        for (arr of data['cart']) {
+          sumTotal += (arr.price * arr.quantity.toFixed(2))
+        }
+
+
+        cartContentHtml += `<table>
+          <thead>
+            <tr>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <th> Total Cost </th>
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <td> <p>                         </p> </td>
+              <td> <p> $${sumTotal} </p> </td>
+            </tr>
+          </tbody>
+
+        </table>`
+
+        cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
+
+
+        $('#cart-content').html(cartContentHtml)
+
       }
-    });
+    })
   })
+
+    $('#order').on('click', function(){
+      console.log('order button cicked');
+      $.ajax({
+        type:'POST',
+        url:`/order`,
+        data:{
+          name:$('#orderForm').find('#name').val(),
+          email:$('#orderForm').find('#email').val(),
+          receipt:$('#cart-content').html()
+        },
+        success: function(data){
+          console.log(data.items);
+        }
+      });
+    });
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   $('.options>button').on('click',function(e){
     $(this).toggleClass('active');
@@ -172,7 +284,7 @@ $(document).ready(function(){
 
         </table>`
 
-  
+
         $('#cart-content').html(cartContentHtml)
 
       }
