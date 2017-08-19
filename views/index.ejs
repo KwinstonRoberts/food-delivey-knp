@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -16,35 +17,29 @@
   </head>
 
   <body>
-      <nav class="navbar navbar-default">
-        <div class='container-fluid'>
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#"><i class='burger'><img src="../images/lightLogoTagNoBG.png"></i></a>
-          </div>
-          <ul class="nav navbar-nav navbar-right">
-            <li><p class='navbar-text'><%= Math.floor(Math.random()*700)%> Spadina Road - Toronto, ON</p></li>
-            <li>
+      <nav class="navBar">
+
+            <a href="#"><i class='burger'><img src="../images/lightLogoTagNoBG.png" class="img-responsive"></i></a>
+
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="show-cart-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   <span class='glyphicon glyphicon-shopping-cart'></span>
                   <span class="caret"></span>
                 </button>
 
-<div id="cart-content" class="dropdown-menu" aria-labelledby="show-cart-button">
+                <div id="cart-content" class="dropdown-menu" aria-labelledby="show-cart-button"></div>
 
-  </div>
-
-              </div>
-            </li>
-          </ul>
-        </div>
+              </div> <!-- end of cart container -->
       </nav>
+
       <div class="jumbotron">
         <div class="background">
         <div class='container-fluid cta'>
           <button class='btn' id="viewMenu">View Menu</button>
           </div>
-        </div>
+
+        </div> <!-- end of .background -->
+
         <div id='menu' class='container'>
           <div class='row'>
             <div class='col-xs-12 col-sm-3'>
@@ -59,7 +54,7 @@
             <div id='addons' class='col-xs-12 col-sm-2'>
               <% for(x in addons){%>
                 <div class="card">
-                   <img class="card-img-top img-responsive" src="<%=addons[x].pic%>" >
+                   <img class="card-img-top img-responsive center-block" src="<%=addons[x].pic%>" >
                    <div class="card-block">
                      <h4 class="card-title"> <%=addons[x].name%></h4>
                      <p class="card-text sidePrice"> <%=addons[x].price%> </p>
@@ -72,6 +67,16 @@
           </div> <!-- end of addons -->
 
         </div> <!-- end of row -->
+    </div>
+
+      <footer>
+        <p class='siteAddress'><%= Math.floor(Math.random()*700)%> Spadina Road - Toronto, ON</p>
+        <div class="footerSocial">
+         <i class="fa fa-facebook-square fa-3x socialLogo" aria-hidden="true"></i>
+          <i class="fa fa-twitter fa-3x sociallogo"></i>
+          <i class="fa fa-instagram fa-3x sociallogo"></i>
+        </div>
+      </footer>
 
 
       </div>
@@ -106,5 +111,6 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
    </body>
 </html>
