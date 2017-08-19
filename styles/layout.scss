@@ -176,6 +176,23 @@ body {
     box-shadow: 0 4px 4px rgba(0,0,0,0.15);
     transition: box-shadow 0.3s ease-in-out;
   }
+
+  footer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 60px;
+  border-top: 5px solid #282520;
+  background-color: white;
+  }
+  .siteAddress{
+    padding-left: 20px;
+  }
+
+  .footerSocial{
+    padding-right: 20px;
+    padding-left: 10px;
+  }
 @media(max-width: 1000px){
   h4 {font-size: 1em;}
 }
@@ -187,8 +204,17 @@ body {
       width: 90%;
       margin: 0 auto;
     }
+    .background{
+      background-size: contain;
+
+    }
+
+    footer{
+      justify-content: center;
+    }
 
   }
+
 
 
 }
