@@ -107,8 +107,8 @@ app.post('/sms', function(req, res) {
                 res.end(twiml.toString());
               });
            }
-        });
-      }
+        }
+      });
    });
 });
 
