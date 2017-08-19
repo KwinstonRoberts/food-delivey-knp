@@ -52,7 +52,7 @@ app.post('/sms', function(req, res) {
       }).asCallback((err)=>{
         if(err)console.error(err);
         knex.select('*').from('order').asCallback((err,rows)=>{
-          if(err)console.errro(err);
+          if(err)console.error(err);
           console.log(rows[0]);
         });
       res.end(twiml.toString());
