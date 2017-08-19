@@ -118,12 +118,9 @@ app.post('/sms', function(req, res) {
                  if(err)console.error(err);
                  res.end(twiml.toString());
                  });
-             });
-         }
-
+             }
+           });
       });
-   });
-
 app.post("/order", (req, res) => {
     client.messages.create({
       to: process.env.VERIFIED_NUMBER,
