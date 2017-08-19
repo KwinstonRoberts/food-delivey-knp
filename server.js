@@ -41,20 +41,23 @@ app.use(express.static("public"));
 app.post('/sms', function(req, res) {
   const MessagingResponse = require('twilio').twiml.MessagingResponse;
   var twiml = new MessagingResponse();
-
-    twiml.message('The Robots are coming! Head for the hills!');
+  if(req.body.Body.toLowerCase()==='confirm'){
+    twiml.message('Thanks, your order is now being processed');
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+  }else if(req.body.Body.toLowerCase()==='cancel'){
+    twiml.message('Your order has been cancelled');
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
-
+  }
 });
 
 app.post("/order", (req, res) => {
     console.log(req.body.phone);
   client.messages.create({
-
-    to: '+16477619205',
-    from: '+14508230998',
-    body: `Your order has been placed ${req.body.name}:${req.body.receipt}`,
+    to: process.env.VERIFIED_NUMBER,
+    from: process.env.TWILIO_NUMBER,
+    body: `Your order has been placed ${req.body.name}:${req.body.receipt}\n
+    text "confirm" to start the order or text "cancel" to undo`,
   }).then((message) => {
       console.log(message.sid)
     });
