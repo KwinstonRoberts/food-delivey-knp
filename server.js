@@ -48,7 +48,6 @@ app.post('/sms', function(req, res) {
 });
 
 app.post("/order", (req, res) => {
-  twilio = require('twilio');
   client.messages.create({
       to: `+1${req.body.number}`,
       from: '+14508230998',
