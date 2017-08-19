@@ -38,7 +38,7 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 
-app.post('/sms/:reply', function(req, res) {
+app.post('/sms', function(req, res) {
   const MessagingResponse = require('twilio').twiml.MessagingResponse;
   var twiml = new twilio.TwimlResponse();
 
@@ -50,13 +50,11 @@ app.post('/sms/:reply', function(req, res) {
 
 app.post("/order", (req, res) => {
     console.log(req.body.phone);
-  client.messages
-  .create({
+  client.messages.create({
 
     to: '+16477619205',
     from: '+14508230998',
-    body: `Your order has been placed ${req.body.name}: \n
-     ${req.body.receipt}`,
+    body: `Your order has been placed ${req.body.name}:${req.body.receipt}`,
   }).then((message) => {
       console.log(message.sid)
     });
