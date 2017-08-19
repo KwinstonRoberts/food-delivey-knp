@@ -193,7 +193,7 @@ $(document).ready(function(){
             url : '/order',
             name:$('#orderForm').find('#name').val(),
             email:$('#orderForm').find('#email').val(),
-            receipt:orderReceipt
+            receipt:orderReceipt,
             success: function(data) {
               console.log('receipt inside ajax call', receipt)
             }
