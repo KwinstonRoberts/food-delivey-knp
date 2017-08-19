@@ -44,16 +44,17 @@ app.post('/sms', function(req, res) {
   if(req.body.Body.toLowerCase() === 'confirm'){
     twiml.message('Thanks, your order is now being processed');
     res.writeHead(200, {'Content-Type': 'text/xml'});
-    console.log(req.body.phone);
+    console.log(req.body.from);
     knex('order')
       .where('phone', '=', req.body.from)
       .update({
         status: 'comfirmed',
-      })
-      knex.select('*').from('order').asCallback((err,rows)=>{
-        console.log(rows);
-      });
-    res.end(twiml.toString());
+      }).ascallback((err)=>{
+        knex.select('*').from('order').asCallback((err,rows)=>{
+          console.log(rows);
+        });
+      res.end(twiml.toString());
+    });
   }else if(req.body.Body.toLowerCase()==='decline'){
     twiml.message('Your order has been cancelled');
     res.writeHead(200, {'Content-Type': 'text/xml'});
@@ -79,7 +80,7 @@ app.post("/order", (req, res) => {
         status: 'ordered'
 
       })
-      console.log(message.sid);
+      res.send(console.log(message.sid));
     });
   });
 
