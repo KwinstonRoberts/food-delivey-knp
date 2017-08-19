@@ -57,7 +57,7 @@ app.post("/order", (req, res) => {
     from: '+14508230998',
     body: `Your order has been placed ${req.body.name}: \n
      ${req.body.receipt}`,
-  }).then((call) => {
+  }).then((message) => {
       console.log(message.sid)
     });
   });
