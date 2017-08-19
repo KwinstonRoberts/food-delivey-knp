@@ -56,16 +56,15 @@ app.post("/order", (req, res) => {
     body: `Your order has been placed ${req.body.name} ${req.body.receipt}`,
   })
   .then((message) => {
-    const VoiceResponse = require('twilio').twiml.VoiceResponse;
-    const response = new VoiceResponse();
-    response.say(
-      {
-        voice: 'alice',
-        language: 'en',
-      },
-      '${req.body.name} has place an order'
-    );
 
+    client.api.calls.create({
+      url: `<Response>
+<Say voice="alice">Kyle has placed an order</Say>
+</Response>`,
+      to: '+16477619205',
+      from: '+14508230998',
+    })
+    .then((call) => console.log(call.sid));
     console.log(message.sid)
   });
 });
