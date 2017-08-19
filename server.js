@@ -120,12 +120,12 @@ app.post("/order", (req, res) => {
       knex('order').insert({
         name: req.body.name || 'kyle',
         phone: process.env.VERIFIED_NUMBER,
-        receipt: req.body.receipt.replace(/<\/tr]/g,'\n').replace(/<[a-z]>/g,''),
+        receipt: req.body.receipt.replace(/<\/tr]/g,'\n').replace(/<[^>]*>/g,''),
         status: 'ordered'
 
       }).asCallback((err)=>{
           if(err)console.error(err);
-          res.send(console.log(message.sid));
+          res.send(message.sid);
       })
 
     });
