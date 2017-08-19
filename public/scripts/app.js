@@ -132,7 +132,6 @@ $(document).ready(function(){
 
         for (arr of data['cart']) {
           sumTotal += (arr.price * arr.quantity.toFixed(2))
-
         }
 
 
@@ -157,12 +156,18 @@ $(document).ready(function(){
 
         </table>`
 
+        cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
+
 
         $('#cart-content').html(cartContentHtml)
 
       }
     })
   })
+
+
+$('#myModal')
+
 
 
   // $('.add-to-cart').click(function(e) {
