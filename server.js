@@ -42,10 +42,10 @@ app.post('/sms', function(req, res) {
   const MessagingResponse = require('twilio').twiml.MessagingResponse;
   var twiml = new MessagingResponse();
 
-  knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) =>{
+  knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) => {
     if(err)console.error(err);
     var status = row[0].status;
-
+  }).then(function(){
     if(status==='ordered'){
       if(req.body.Body.toLowerCase() === 'confirm'){
         twiml.message('Thanks, your order is now being processed');
@@ -78,7 +78,7 @@ app.post('/sms', function(req, res) {
         knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
           if(err)console.error(err);
           var receipt = row[0].receipt;
-        });
+        }).then(function(){
         twiml.message(`Here is your current order: \n
           ${receipt}
           `);
@@ -106,6 +106,7 @@ app.post('/sms', function(req, res) {
             res.end(twiml.toString());
           });
       }
+    });
     }
   });
 });
@@ -122,24 +123,12 @@ app.post("/order", (req, res) => {
         phone: process.env.VERIFIED_NUMBER,
         receipt: req.body.receipt.replace(/<\/tr]/g,'\n').replace(/<[^>]*>/g,''),
         status: 'ordered'
-
       }).asCallback((err)=>{
           if(err)console.error(err);
           res.send(message.sid);
-      })
-
+      });
     });
   });
-
-var receipt =function(){ app.post('/receipt', (req, res) => {
-  const VoiceResponse = require('twilio').twiml.VoiceResponse;
-  const twiml = new VoiceResponse();
-  twiml.say('Kyle has placed an order');
-  res.writeHead(200, { 'Content-Type': 'text/xml' });
-  res.end(twiml.toString());
-
-})};
-
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
