@@ -90,7 +90,7 @@ $(document).ready(function(){
       data:{
         name:$('#orderForm').find('#name').val(),
         email:$('#orderForm').find('#email').val(),
-        receipt:$('#cart-content').html(),
+        receipt:$('#cart-content').html()
       },
       success: function(data){
         console.log(data.items);
