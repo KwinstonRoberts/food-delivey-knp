@@ -21,6 +21,7 @@ body {
   }
   .navbar{
     background-color: #302f2f;
+    background-color: #282520;
     margin:0;
     height:130px;
     border-radius: 0px;
@@ -82,7 +83,6 @@ body {
       #details{
         margin: 50px;
         webkit-transform: translateY(500px);
-
       }
 
       b{
@@ -161,7 +161,38 @@ body {
   .sidePrice{
     font-size: 1em;
   }
+
+  .btn-info{
+    background-color: #282520;
+    color: #ecefc7;
+    color: #eee;
+    border: 1px solid #ecefc7;
+  }
+
+  .btn-info:hover{
+    background-color: #eee;
+    color: #282520;
+    border: 1px solid #282520;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+@media(max-width: 1000px){
+  h4 {font-size: 1em;}
 }
+  h2 {font-size: 1.5em;}
+
+  @media(max-width: 765px){
+
+    #details{
+      width: 90%;
+      margin: 0 auto;
+    }
+
+  }
+
+
+}
+
 
 
 
