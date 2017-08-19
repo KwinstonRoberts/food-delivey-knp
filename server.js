@@ -46,11 +46,13 @@ app.post('/sms', function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/xml'});
     console.log(req.body.From);
     knex('order')
-      .where('phone', '=', req.body.from)
+      .where('phone', '=', req.body.From)
       .update({
-        status: 'comfirmed',
+        status: 'confirmed',
       }).asCallback((err)=>{
+        if(err)console.error(err);
         knex.select('*').from('order').asCallback((err,rows)=>{
+          if(err)console.errro(err);
           console.log(rows[0]);
         });
       res.end(twiml.toString());
@@ -60,8 +62,10 @@ app.post('/sms', function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/xml'});
     knex('order')
       .where('phone', '=', req.body.from)
-      .del();
-    res.end(twiml.toString());
+      .del().asCallback((err)=>{
+        if(err)console.error(err);
+        res.end(twiml.toString());
+      });
   }
 });
 
