@@ -50,8 +50,11 @@ app.post('/sms', function(req, res) {
       .update({
         status: 'comfirmed',
       })
+      knex.select('*').from('order').asCallback((err,rows)=>{
+        console.log(rows);
+      });
     res.end(twiml.toString());
-  }else if(req.body.Body.toLowerCase()==='cancel'){
+  }else if(req.body.Body.toLowerCase()==='decline'){
     twiml.message('Your order has been cancelled');
     res.writeHead(200, {'Content-Type': 'text/xml'});
     knex('order')
