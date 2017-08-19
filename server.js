@@ -123,9 +123,9 @@ app.post("/order", (req, res) => {
         phone: process.env.VERIFIED_NUMBER,
         receipt: req.body.receipt.replace(/<\/tr>/g,'\n').replace(/<[^>]*>/g,''),
         status: 'ordered'
-      }).asCallback((err)=>{
+      }).asCallback((err,row)=>{
         if(err)console.error(err)
-        res.end('done');
+        console.log('done');
       });
     });
 app.use("/api/users", usersRoutes(knex));
