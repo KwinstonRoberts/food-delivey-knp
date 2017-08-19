@@ -64,7 +64,7 @@ app.post("/order", (req, res) => {
       `${req.body.name} has placed an order: \n
       ${req.body.response}`
     );
-        console.log(message,response.toString());
+        console.log(response.toString());
     });
   });
 
