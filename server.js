@@ -110,7 +110,7 @@ app.post('/sms', function(req, res) {
                 if(err)console.error(err);
                 res.end(twiml.toString());
               });
-          }else if(req.body.toLowerCase()==='process'){
+          }else if(req.body.Body.toLowerCase()==='process'){
             twiml.message('Your food is now being made. It will be ready in 5 minutes');
             res.writeHead(200, {'Content-Type': 'text/xml'});
             console.log(req.body.From);
@@ -122,7 +122,7 @@ app.post('/sms', function(req, res) {
                 if(err)console.error(err);
                 res.end(twiml.toString());
               });
-            }else if(req.body.toLowerCase()==='finish' && status==='processed'){
+            }else if(req.body.BodytoLowerCase()==='finish' && status==='processed'){
               twiml.message('Thanks for ordering at Zuckerburgers!');
               res.writeHead(200, {'Content-Type': 'text/xml'});
               console.log(req.body.From);
