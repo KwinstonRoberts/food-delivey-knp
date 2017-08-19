@@ -23,7 +23,6 @@ const client = require('twilio')(accountSid, authToken);
 
 
 app.post('/sms', function(req, res) {
-  var twilio = require('twilio');
   var twiml = new twilio.TwimlResponse();
   twiml.message('The Robots are coming! Head for the hills!');
   res.writeHead(200, {'Content-Type': 'text/xml'});
@@ -38,11 +37,19 @@ app.post("/order", (req, res) => {
       body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
       ${req.body.receipt}
             `,
-  }, function(err,message){
-    if(err)console.error(err)
-        console.log(message);
-      });
-});
+  }, function(){
+    const VoiceResponse = require('twilio').twiml.VoiceResponse;
+    const response = new VoiceResponse();
+    response.say(
+      {
+        voice: 'alice',
+        language: 'en',
+      },
+      `${req.body.name} has placed an order: \n
+      ${req.body.response}`
+    );
+        console.log(message,response.toString());
+    });
 
 app.use(morgan('dev'));
 
