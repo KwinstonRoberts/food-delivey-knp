@@ -1,25 +1,25 @@
 "use strict";
 
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
+const bodyParser = require("body-parser");
+const sass = require("node-sass-middleware");
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require('morgan');
+const knexLogger = require('knex-logger');
+const usersRoutes = require("./routes/sms");
+const usersRoutes = require("./routes/cart");
+const app = express();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const app         = express();
-
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
-
-// Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
-
+//twilio variables
 const accountSid = process.env.TWILIO_KEY;
-const authToken =  process.env.TWILIO_SECRET;
+const authToken = process.env.TWILIO_SECRET;
 const client = require('twilio')(accountSid, authToken);
-
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const myNumber = process.env.VERIFIED_NUMBER;
+const twiNumber = process.env.TWILIO_NUMBER;
 
 app.use(morgan('dev'));
 
@@ -27,205 +27,79 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
   debug: true,
   outputStyle: 'expanded'
 }));
+
 app.use(express.static("public"));
 
-// Mount all resource routes
-
-app.post('/sms', function(req, res) {
-  const MessagingResponse = require('twilio').twiml.MessagingResponse;
+//helper functions
+function respond(message, callback) {
+  //generate twiml message and continue code after message is sent
   var twiml = new MessagingResponse();
-  knex('order').select('status').where('phone','=',req.body.From).asCallback((err,row) => {
-    if(err)console.error(err);
-    console.log(row[0]);
-    var status = row[0].status;
-    if(status==='ordered'){
-      if(req.body.Body.toLowerCase() === 'confirm'){
-        twiml.message('Thanks, your order is now being processed\ntext "receipt" to review the order');
-        res.writeHead(200, {'Content-Type': 'text/xml'});
-        console.log(req.body.From);
-        knex('order')
-          .where('phone', '=', req.body.From)
-          .update({
-            status: 'confirmed',
-          }).asCallback((err)=>{
-            if(err)console.error(err);
-            knex.select('receipt').from('order')
-              .where('phone', '=', req.body.From)
-              .asCallback((err,row)=>{
-                if(err)console.error(err);
-                client.messages.create({
-                  to: process.env.VERIFIED_NUMBER,
-                  from: process.env.TWILIO_NUMBER,
-                  body: `${req.body.From} Has ordered these items:\n
-                  ${row[0].receipt}\n
-                  text "ready" when the order has been completed, and "end" once you have received payment`
-                }).then((message)=>{
-                  console.log(message.sid);
-                  res.end(twiml.toString());
-                  });
-                })
-            });
-      }else if(req.body.Body.toLowerCase()==='2'){
-        twiml.message('Your order has been cancelled');
-        res.writeHead(200, {'Content-Type': 'text/xml'});
-        knex('order')
-          .where('phone', '=', req.body.From)
-          .del().asCallback((err)=>{
-            if(err)console.error(err);
-            res.end(twiml.toString());
-          });
-        }
-      }else if(status==='confirmed'){
-        if(req.body.Body.toLowerCase() === 'receipt'){
-          knex('order').select('receipt').where('phone','=',req.body.From).asCallback((err,row) =>{
-            if(err)console.error(err);
-            var receipt = row[0].receipt;
-            twiml.message(`Here is your current order: \n
-              ${receipt}
-              `);
-            res.writeHead(200, {'Content-Type': 'text/xml'});
-            console.log(req.body.From);
-            knex('order')
-              .where('phone', '=', req.body.From)
-              .update({
-                status: 'confirmed',
-              }).asCallback((err)=>{
-                if(err)console.error(err);
-                  res.end(twiml.toString());
-                })
-              });
-
-          }else if(req.body.Body.toLowerCase()==='2' && status!=='processed'){
-            twiml.message('Your order has been cancelled');
-            res.writeHead(200, {'Content-Type': 'text/xml'});
-            knex('order')
-              .where('phone', '=', req.body.From)
-              .del().asCallback((err)=>{
-                if(err)console.error(err);
-                res.end(twiml.toString());
-              });
-          }else if(req.body.Body.toLowerCase()==='ready'){
-            twiml.message('Your food is ready for pickup.');
-            res.writeHead(200, {'Content-Type': 'text/xml'});
-            console.log(req.body.From);
-            knex('order')
-              .where('phone', '=', req.body.From)
-              .update({
-                status: 'ready',
-              }).asCallback((err)=>{
-                if(err)console.error(err);
-                res.end(twiml.toString());
-              });
-          }
-        }else if(req.body.Body.toLowerCase()==='done' && status==='ready'){
-          twiml.message('Thanks for ordering at Zuckerburgers!');
-          res.writeHead(200, {'Content-Type': 'text/xml'});
-          console.log(req.body.From);
-          knex('order')
-            .where('phone', '=', req.body.From)
-            .update({
-              status: 'finished',
-            }).asCallback((err)=>{
-              if(err)console.error(err);
-              res.end(twiml.toString());
-            });
-        }
-     });
+  twiml.message(message);
+  res.writeHead(200, {
+    'Content-Type': 'text/xml'
   });
-app.post("/order", (req, res) => {
-    client.messages.create({
-      to: process.env.VERIFIED_NUMBER,
-      from: process.env.TWILIO_NUMBER,
-      body: `Your order has been placed ${req.body.name}: \n${req.body.receipt}\n
-      text "confirm" to start the order or text "2" to undo`,
-    }).then((message) => console.log(message.sid));
-        knex('order').insert({
-        name: req.body.name || 'kyle',
-        phone: process.env.VERIFIED_NUMBER,
-        receipt: req.body.receipt,
-        status: 'ordered'
-      }).asCallback((err,row)=>{
-        if(err)console.error(err)
-         res.end('Done');
-      });
-    });
-app.use("/api/users", usersRoutes(knex));
+  callback()
+  //respond with the message header
+  res.end(twiml.toString)
+}
 
-// Home page
+//function to use when user has yet to receive any messages
+function message(message, to, from, callback) {
+  client.messages.create({
+    to: to,
+    from: from,
+    body: message
+  }).then((message) => console.log(message.sid));
+  callback();
+}
+
+//routes for the twilio sms service
+app.use("/sms", usersRoutes(sms));
+
+//routes shopping cart
+app.use("/cart", usersRoutes(cart));
+
+//routes for the menu
 app.get("/", (req, res) => {
-  res.redirect('/menu');
-});
-
-app.get("/menu", (req, res) => {
- knex.select('name','price','type').from('dishes').asCallback((err,rows)=>{
+  knex.select('name', 'price', 'type').from('dishes').asCallback((err, rows) => {
     if (err) return console.error(err);
-      let templateVars = {
-        dishes:rows,
-        dish:{},
-        addons:{}
-      }
-      knex.select('*').from('dishes').where('name','Billionaire Burger').asCallback((err,row)=>{
-         if (err) return console.error(err);
-           templateVars.dish = row;
-          knex.select('name','price','pic').from('dishes').where('type','sides').asCallback((err,sides)=>{
-            templateVars.addons = sides;
-            console.log(templateVars);
-            res.render('index',templateVars)
-          });
-    });
-  });
-
-app.get("/menu/:name",(req, res) => {
-  console.log(req.params.name);
-  knex.select('*').from('dishes').where('name',req.params.name).asCallback((err,row)=>{
-     if (err) return console.error(err);
-       res.json({
-         dish:row[0]
-       });
-     })
-   });
-});
-
-app.post("/cart",(req, res) => {
-  if(!req.body.name)return console.error('param does not exist');
-  console.log(req.body.name);
-
-  knex('menu_cart').insert({
-    cart_id: knex.select('id').from('cart').where('owner','Kyle'),
-    menu_id: knex.select('id').from('dishes').where('name',req.body.name),
-    quantity: req.body.quantity
-  }).asCallback((err)=>{
-    if (err) return console.error(err);
-    knex.countDistinct("menu_id").from('menu_cart').where('cart_id',knex.select('id').from('cart').where('owner','Kyle')).asCallback((err,row)=>{
+    let templateVars = {
+      dishes: rows,
+      dish: {},
+      addons: {}
+    }
+    knex.select('*').from('dishes').where('name', 'Billionaire Burger').asCallback((err, row) => {
       if (err) return console.error(err);
-          res.json({
-            items: row[0]
-          });
-        });
+      templateVars.dish = row;
+      knex.select('name', 'price', 'pic').from('dishes').where('type', 'sides').asCallback((err, sides) => {
+        templateVars.addons = sides;
+        res.render('index', templateVars)
       });
     });
-
-app.get("/cart", (req, res) => {
-  knex('dishes')
-  .leftJoin('menu_cart','dishes.id','menu_cart.menu_id')
-  .leftJoin('cart','menu_cart.cart_id','cart.id')
-  .select('name','price', 'menu_cart.quantity as quantity').distinct()
-  .whereNotNull('quantity')
-  .asCallback((err,rows)=>{
-    console.log(rows)
-    let templateVars = {
-      cart : rows
-    }
-     res.json(templateVars);
-  })
+  });
 });
+
+//detail view
+app.get("/menu/:name", (req, res) => {
+  knex.select('*').from('dishes').where('name', req.params.name).asCallback((err, row) => {
+    if (err) return console.error(err);
+    res.json({
+      dish: row[0]
+    });
+  });
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
