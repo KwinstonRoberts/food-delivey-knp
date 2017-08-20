@@ -3,13 +3,10 @@
 const express = require('express');
 const router = express.Router();
 
-
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
     if (!req.body.name) return console.error('param does not exist');
-    console.log(req.body.name);
-
     knex('menu_cart').insert({
       cart_id: knex.select('id').from('cart').where('owner', 'Kyle'),
       menu_id: knex.select('id').from('dishes').where('name', req.body.name),
@@ -38,4 +35,5 @@ module.exports = (knex) => {
         res.json(templateVars);
       })
   });
+  return router;
 };

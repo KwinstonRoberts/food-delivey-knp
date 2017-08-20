@@ -5,6 +5,29 @@ const router = express.Router();
 
 module.exports = (knex) => {
 
+  //helper functions
+  function respond(message, callback) {
+    //generate twiml message and continue code after message is sent
+    var twiml = new MessagingResponse();
+    twiml.message(message);
+    res.writeHead(200, {
+      'Content-Type': 'text/xml'
+    });
+    callback()
+    //respond with the message header
+    res.end(twiml.toString)
+  }
+
+  //function to use when user has yet to receive any messages
+  function message(message, to, from, callback) {
+    client.messages.create({
+      to: to,
+      from: from,
+      body: message
+    }).then((message) => console.log(message.sid));
+    callback();
+  }
+
   router.post('/', function(req, res) {
     knex('order').select('status').where('phone', '=', req.body.From).asCallback((err, row) => {
       if (err) console.error(err);

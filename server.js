@@ -9,10 +9,10 @@ const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require('morgan');
 const knexLogger = require('knex-logger');
-const usersRoutes = require("./routes/sms");
-const usersRoutes = require("./routes/cart");
+const smsRoutes = require("./routes/sms");
+const cartRoutes = require("./routes/cart");
 const app = express();
-
+const router = express.Router();
 //twilio variables
 const accountSid = process.env.TWILIO_KEY;
 const authToken = process.env.TWILIO_SECRET;
@@ -31,7 +31,6 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -40,35 +39,6 @@ app.use("/styles", sass({
 }));
 
 app.use(express.static("public"));
-
-//helper functions
-function respond(message, callback) {
-  //generate twiml message and continue code after message is sent
-  var twiml = new MessagingResponse();
-  twiml.message(message);
-  res.writeHead(200, {
-    'Content-Type': 'text/xml'
-  });
-  callback()
-  //respond with the message header
-  res.end(twiml.toString)
-}
-
-//function to use when user has yet to receive any messages
-function message(message, to, from, callback) {
-  client.messages.create({
-    to: to,
-    from: from,
-    body: message
-  }).then((message) => console.log(message.sid));
-  callback();
-}
-
-//routes for the twilio sms service
-app.use("/sms", usersRoutes(knex));
-
-//routes shopping cart
-app.use("/cart", usersRoutes(knex));
 
 //routes for the menu
 app.get("/", (req, res) => {
@@ -99,6 +69,12 @@ app.get("/menu/:name", (req, res) => {
     });
   });
 });
+
+//routes for the twilio sms service
+app.use("/sms", smsRoutes(knex));
+
+//routes shopping cart
+app.use("/cart", cartRoutes(knex));
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
