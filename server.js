@@ -14,10 +14,10 @@ const cartRoutes = require("./routes/cart");
 const app = express();
 const router = express.Router();
 //twilio variables
-const accountSid = process.env.TWILIO_KEY;
-const authToken = process.env.TWILIO_SECRET;
-const client = require('twilio')(accountSid, authToken);
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
+// const accountSid = process.env.TWILIO_KEY;
+// const authToken = process.env.TWILIO_SECRET;
+// const client = require('twilio')(accountSid, authToken);
+// const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const myNumber = process.env.VERIFIED_NUMBER;
 const twiNumber = process.env.TWILIO_NUMBER;
 

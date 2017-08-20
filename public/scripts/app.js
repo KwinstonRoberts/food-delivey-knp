@@ -230,4 +230,15 @@ $(document).ready(function() {
     $(this).find('.card-block').toggle('slow', function() {});
   });
 
+
+  $('#addons button').on('click', function(e) {
+    console.log($(this).closest())
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/cart',
+
+    // })
+  })
+
 });
+
