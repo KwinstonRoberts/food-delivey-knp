@@ -13,6 +13,7 @@
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="icon" href="./images/ZB.ico" type="image/x-icon"/>
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
 
@@ -21,14 +22,14 @@
 
             <a href="#"><i class='burger'><img src="../images/lightLogoTagNoBG.png" class="img-responsive"></i></a>
 
-              <div class="dropdown">
+              <div class="dropdown pull-right">
                 <button class="btn btn-default dropdown-toggle" type="button" id="show-cart-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   <span class='glyphicon glyphicon-shopping-cart'></span>
                   <span class="caret"></span>
                 </button>
 
 
-                <div id="cart-content" class="dropdown-menu" aria-labelledby="show-cart-button">
+                <div id="cart-content" class="dropdown-menu pull-right" aria-labelledby="show-cart-button">
 
                 </div>
               </div>
@@ -90,23 +91,23 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Confirm </h4>
+            <h4 class="modal-title text-center">Confirm </h4>
           </div>
           <div id='orderForm' class="modal-body">
 
               <label for="name"> Name </label>
-              <input id="name" type="text" name="name" style="width: 350px">
-              <label for="phone"> phone number </label>
+              <input id="name" type="text" name="name" style="width: 350px"><br>
+              <label for="phone"> Phone </label>
               <input id="phonenumber" type="phone" name="phone" style="width: 350px">
 
-              <label for="">Order Details</label>
+              <p class="orderDetails"><label for="">Order Details</label></p>
               <div id="orderDetails"></div>
 
               <div id='thanks'>Thanks for your order. You should be receiving a text message shortly with your receipt</div>
 
           </div>
           <div class="modal-footer">
-            <button id='orderButton' type="button" class="btn btn-primary">Order</button>
+            <button id='orderButton' type="button" class="btn ckeckout">Place Order</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

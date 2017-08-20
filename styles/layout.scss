@@ -20,7 +20,6 @@ body {
     background-color: #282520;
     margin:0;
     height:130px;
-    border: 1px solid #302f2f;
     top: 0;
     z-index: 1;
     width: 100%;
@@ -30,7 +29,15 @@ body {
     padding-right: 50px;
 
     button{
-      background-color: #ecefc7;
+      background-color: #282520;
+
+      #show-cart-button:hover{
+        background-color: #d3d3d3;
+      }
+
+      .glyphicon-shopping-cart, .caret{
+        color: #ecefc7;
+      }
     }
   }
 
@@ -47,9 +54,7 @@ body {
     }
 
     #viewMenu{
-    color: #ecefc7 ;
     color: #302f2f;
-    background-color: #302f2f;
     background-color: #ecefc7;
     padding: 10px 40px;
     border: 1px solid #ecefc7;
@@ -60,7 +65,6 @@ body {
     #viewMenu:hover{
       opacity: 0.5;
     }
-
 
     #menu{
       display:none;
@@ -113,6 +117,8 @@ body {
         overflow:hidden;
         text-overflow: ellipsis;
       }
+
+
       .price{
         text-align: right;
       }
@@ -163,25 +169,59 @@ body {
   }
 
   footer{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  height: 60px;
-  border-top: 5px solid #282520;
-  background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 60px;
+    border-top: 5px solid #282520;
+    background-color: white;
   }
   .siteAddress{
     padding-left: 20px;
   }
 
   .footerSocial{
-    padding-right: 20px;
+    padding-right: 40px;
     padding-left: 10px;
   }
-@media(max-width: 1000px){
-  h4 {font-size: 1em;}
-}
-  h2 {font-size: 1.5em;}
+  .dropdown{
+    padding-right: 0;
+    margin-right: 50px;
+  }
+
+  .checkout, #orderButton{
+    background-color: #282520;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+    float: right;
+    border: 1px solid #282520;
+  }
+  .checkout:hover, #orderButton:hover{
+    background-color: white;
+    color: #282520;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  .orderDetails{
+    padding-top: 20px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    text-align: center;
+    }
+
+  h4 {
+    font-size: 1em;
+    }
+
+  h4 .panel-title{
+    font-size: 1.2em;
+  }
+
+
 
   @media(max-width: 765px){
 
@@ -219,6 +259,7 @@ body {
       height: 700px;
       padding-top: 280px;
     }
+
 
 
   }
