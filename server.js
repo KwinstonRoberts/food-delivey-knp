@@ -12,7 +12,7 @@ const knexLogger = require('knex-logger');
 const smsRoutes = require("./routes/sms");
 const cartRoutes = require("./routes/cart");
 const app = express();
-
+const router = express.Router();
 //twilio variables
 const accountSid = process.env.TWILIO_KEY;
 const authToken = process.env.TWILIO_SECRET;
