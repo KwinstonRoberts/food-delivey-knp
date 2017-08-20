@@ -9,73 +9,61 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.min.css" type="text/css" />
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
-
   <body>
-      <nav class="navbar navbar-default">
-        <div class='container-fluid'>
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#"><i class='burger'><img src="../images/lightLogoTagNoBG.png"></i></a>
+      <nav class="navBar">
+        <a href="#"><i class='burger'><img src="../images/lightLogoTagNoBG.png" class="img-responsive"></i></a>
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="show-cart-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class='glyphicon glyphicon-shopping-cart'></span>
+            <span class="caret"></span>
+          </button>
+          <div id="cart-content" class="dropdown-menu" aria-labelledby="show-cart-button">
           </div>
-          <ul class="nav navbar-nav navbar-right">
-            <li><p class='navbar-text'><%= Math.floor(Math.random()*700)%> Spadina Road - Toronto, ON</p></li>
-            <li>
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="show-cart-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  <span class='glyphicon glyphicon-shopping-cart'></span>
-                  <span class="caret"></span>
-                </button>
-
-<div id="cart-content" class="dropdown-menu" aria-labelledby="show-cart-button">
-
-  </div>
-
-              </div>
-            </li>
-          </ul>
         </div>
       </nav>
       <div class="jumbotron">
         <div class="background">
-        <div class='container-fluid cta'>
-          <button class='btn' id="viewMenu">View Menu</button>
+          <div class='container-fluid cta'>
+            <button class='btn' id="viewMenu">View Menu</button>
           </div>
-        </div>
+        </div> <!-- end of .background -->
         <div id='menu' class='container'>
           <div class='row'>
             <div class='col-xs-12 col-sm-3'>
               <% include menu.ejs %>
             </div>
-
             <div class='col-xs-12 col-sm-7'>
-
               <% include details.ejs %>
             </div>
-
             <div id='addons' class='col-xs-12 col-sm-2'>
               <% for(x in addons){%>
-                <div class="card">
-                   <img class="card-img-top img-responsive" src="<%=addons[x].pic%>" >
-                   <div class="card-block">
-                     <h4 class="card-title"> <%=addons[x].name%></h4>
-                     <p class="card-text sidePrice"> <%=addons[x].price%> </p>
-                     <button class="btn center-block">Add</button>
-                  </div>
-
+              <div class="card">
+                <img class="card-img-top img-responsive center-block" src="<%=addons[x].pic%>" >
+                <div class="card-block">
+                  <h4 class="card-title"> <%=addons[x].name%></h4>
+                  <p class="card-text sidePrice"> <%=addons[x].price%> </p>
+                  <button class="btn center-block">Add</button>
+                </div>
               </div>
               <%}%>
-
-          </div> <!-- end of addons -->
-
-        </div> <!-- end of row -->
-
-
-      </div>
-
+            </div> <!-- end of addons -->
+          </div> <!-- end of row -->
+        </div>
+      <footer>
+        <p class='siteAddress'><%= Math.floor(Math.random()*700)%> Spadina Road - Toronto, ON</p>
+        <div class="footerSocial">
+          <i class="fa fa-facebook-square fa-3x socialLogo" aria-hidden="true"></i>
+          <i class="fa fa-twitter fa-3x sociallogo"></i>
+          <i class="fa fa-instagram fa-3x sociallogo"></i>
+        </div>
+      </footer>
+    </div>
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -83,25 +71,17 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Confirm </h4>
           </div>
-          <div class="modal-body">
-            <form action="/order" method="POST" style="margin:50px;">
-              <label for=""> email </label>
-              <input id="email" type="email" name="email" style="width: 350px">
-              <label for=""> phone number </label>
-              <input id="phoneNumber" type="phoneNumber" name="phoneNumber" style="width: 350px">
-              <label for=""> Order Details </label>
-              <div id="orderDetails">                  </div>
-
-              <button id="orderButton" type="button" class="btn btn-primary">Order</button>
-
-
-            </form>
-
-
-
+          <div id='orderForm' class="modal-body">
+            <label for="name"> Name </label>
+            <input id="name" type="text" name="name" style="width: 350px">
+            <label for="phone"> phone number </label>
+            <input id="phonenumber" type="phone" name="phone" style="width: 350px">
+            <label for="">Order Details</label>
+            <div id="orderDetails"></div>
+            <div id='thanks'>Thanks for your order. You should be receiving a text message shortly with your receipt</div>
           </div>
           <div class="modal-footer">
-
+            <button id='orderButton' type="button" class="btn btn-primary">Order</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
