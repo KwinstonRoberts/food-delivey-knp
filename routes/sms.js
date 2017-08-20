@@ -105,7 +105,7 @@ module.exports = (knex) => {
     message(myNumber, twiNumber, `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`, function() {
       knex('order').insert({
         name: req.body.name || 'kyle',
-        phone: twiNumber,
+        phone: myNumber,
         receipt: req.body.receipt,
         status: 'ordered'
       }).asCallback((err, row) => {
