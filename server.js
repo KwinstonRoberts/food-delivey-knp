@@ -9,8 +9,8 @@ const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require('morgan');
 const knexLogger = require('knex-logger');
-const usersRoutes = require("./routes/sms");
-const usersRoutes = require("./routes/cart");
+const smsRoutes = require("./routes/sms");
+const cartRoutes = require("./routes/cart");
 const app = express();
 
 //twilio variables
