@@ -39,29 +39,6 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-//helper functions
-function respond(message, callback) {
-  //generate twiml message and continue code after message is sent
-  var twiml = new MessagingResponse();
-  twiml.message(message);
-  res.writeHead(200, {
-    'Content-Type': 'text/xml'
-  });
-  callback()
-  //respond with the message header
-  res.end(twiml.toString)
-}
-
-//function to use when user has yet to receive any messages
-function message(message, to, from, callback) {
-  client.messages.create({
-    to: to,
-    from: from,
-    body: message
-  }).then((message) => console.log(message.sid));
-  callback();
-}
-
 //routes for the twilio sms service
 app.use("/sms", smsRoutes(knex));
 
