@@ -4,12 +4,10 @@ const express = require('express');
 const router = express.Router();
 
 
-module.exports = () => {
+module.exports = (cart) => {
 
-  app.post("/", (req, res) => {
+  cart.post("/", (req, res) => {
     if (!req.body.name) return console.error('param does not exist');
-    console.log(req.body.name);
-
     knex('menu_cart').insert({
       cart_id: knex.select('id').from('cart').where('owner', 'Kyle'),
       menu_id: knex.select('id').from('dishes').where('name', req.body.name),
@@ -24,7 +22,7 @@ module.exports = () => {
       });
     });
   });
-  app.get("/", (req, res) => {
+  cart.get("/", (req, res) => {
     knex('dishes')
       .leftJoin('menu_cart', 'dishes.id', 'menu_cart.menu_id')
       .leftJoin('cart', 'menu_cart.cart_id', 'cart.id')

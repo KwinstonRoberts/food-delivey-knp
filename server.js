@@ -63,10 +63,10 @@ function message(message, to, from, callback) {
 }
 
 //routes for the twilio sms service
-app.use("/sms", smsRoutes());
+app.use("/sms", smsRoutes(app));
 
 //routes shopping cart
-app.use("/cart", cartRoutes());
+app.use("/cart", cartRoutes(app));
 
 //routes for the menu
 app.get("/", (req, res) => {
