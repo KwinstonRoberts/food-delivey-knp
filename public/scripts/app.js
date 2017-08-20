@@ -37,6 +37,7 @@ $(document).ready(function(){
       document.onkeydown = null;
   }
 
+// Function to create Order Receipt
 
   function createOrderContentHTML(data) {
 
@@ -102,6 +103,9 @@ $(document).ready(function(){
     return orderContentHtml;
 
   }
+
+
+//  Function to create Cart Content (Addition to Order Content Form)
 
   function createCartContentHTML(data) {
     var cartContentHtml = createOrderContentHTML(data)
@@ -193,13 +197,13 @@ $(document).ready(function(){
       var orderReceipt = [];
 
         for (arr of data['cart']) {
-          var orderObject = { Name: arr.name, Qunatity: arr.quantity, Price: arr.price, subtotal: (arr.price * arr.quantity.toFixed(2))}
+          var orderObject = { Name: arr.name, Quantity: arr.quantity, Price: arr.price, subtotal: (arr.price * arr.quantity.toFixed(2))}
           orderReceipt.push(orderObject)
 
         }
 
         var receipt = orderReceipt
-
+        console.log(receipt)
           $.ajax({
             type : 'Post',
             url : '/order',
