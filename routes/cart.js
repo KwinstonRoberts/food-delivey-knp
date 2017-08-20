@@ -35,4 +35,5 @@ module.exports = (knex) => {
         res.json(templateVars);
       })
   });
+  return router;
 };

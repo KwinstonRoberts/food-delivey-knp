@@ -40,12 +40,6 @@ app.use("/styles", sass({
 
 app.use(express.static("public"));
 
-//routes for the twilio sms service
-app.use("/sms", smsRoutes(knex));
-
-//routes shopping cart
-app.use("/cart", cartRoutes(knex));
-
 //routes for the menu
 app.get("/", (req, res) => {
   knex.select('name', 'price', 'type').from('dishes').asCallback((err, rows) => {
@@ -75,6 +69,12 @@ app.get("/menu/:name", (req, res) => {
     });
   });
 });
+
+//routes for the twilio sms service
+app.use("/sms", smsRoutes(knex));
+
+//routes shopping cart
+app.use("/cart", cartRoutes(knex));
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

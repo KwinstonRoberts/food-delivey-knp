@@ -5,7 +5,6 @@ const router = express.Router();
 
 module.exports = (knex) => {
 
-
   //helper functions
   function respond(message, callback) {
     //generate twiml message and continue code after message is sent
@@ -28,7 +27,6 @@ module.exports = (knex) => {
     }).then((message) => console.log(message.sid));
     callback();
   }
-
 
   router.post('/', function(req, res) {
     knex('order').select('status').where('phone', '=', req.body.From).asCallback((err, row) => {
