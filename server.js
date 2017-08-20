@@ -17,9 +17,9 @@ const knexLogger  = require('knex-logger');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
-const accountSid = process.env.TWILIO_KEY;
-const authToken =  process.env.TWILIO_SECRET;
-const client = require('twilio')(accountSid, authToken);
+// const accountSid = process.env.TWILIO_KEY;
+// const authToken =  process.env.TWILIO_SECRET;
+// const client = require('twilio')(accountSid, authToken);
 
 
 
@@ -48,25 +48,25 @@ app.post('/sms', function(req, res) {
 });
 
 app.post("/order", (req, res) => {
-  twilio = require('twilio');
-  client.messages.create({
-      to: `+1${req.body.number}`,
-      from: '+14508230998',
-      body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
-      ${req.body.receipt}`
-  }, function(){
-    const VoiceResponse = require('twilio').twiml.VoiceResponse;
-    const response = new VoiceResponse();
-    response.say(
-      {
-        voice: 'alice',
-        language: 'en',
-      },
-      `${req.body.name} has placed an order: \n
-      ${req.body.response}`
-    );
-        console.log(message,response.toString());
-    });
+  // twilio = require('twilio');
+  // client.messages.create({
+  //     to: `+1${req.body.number}`,
+  //     from: '+14508230998',
+  //     body: `Your order has been placed ${req.body.name}. Thank you for choosing Zuckerburger. \n
+  //     ${req.body.receipt}`
+  // }, function(){
+  //   const VoiceResponse = require('twilio').twiml.VoiceResponse;
+  //   const response = new VoiceResponse();
+  //   response.say(
+  //     {
+  //       voice: 'alice',
+  //       language: 'en',
+  //     },
+  //     `${req.body.name} has placed an order: \n
+  //     ${req.body.response}`
+  //   );
+  //       console.log(message,response.toString());
+  //   });
   });
 
 

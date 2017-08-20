@@ -27,6 +27,7 @@ $(document).ready(function(){
     document.onkeydown  = preventDefaultForScrollKeys;
   }
   disableScroll();
+
   function enableScroll() {
       if (window.removeEventListener)
           window.removeEventListener('DOMMouseScroll', preventDefault, false);
@@ -36,6 +37,80 @@ $(document).ready(function(){
       document.onkeydown = null;
   }
 
+
+  function createOrderContentHTML(data) {
+
+     var orderContentHtml = '';
+
+      orderContentHtml += `<table class="table table-inverse cart-subtotal">
+      <thead>
+
+        <tr>
+          <th>Items</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>SubTotal</th>
+        </tr>
+
+      </thead>
+      <tbody>
+
+      `;
+
+      for (arr of data['cart']) {
+
+        orderContentHtml += `<tr>
+         <td> <p> ${arr.name} </p> </td>
+         <td> <p> ${arr.quantity} </p> </td>
+         <td> <p> ${arr.price} </p> </td>
+         <td> <p> $${(arr.price * arr.quantity.toFixed(2))} <p> </td>
+          </tr>
+        `;
+      }
+
+      orderContentHtml += ' </tbody> </table>';
+
+
+      var sumTotal = 0;
+
+      for (arr of data['cart']) {
+        sumTotal += (arr.price * arr.quantity.toFixed(2))
+      }
+
+
+      orderContentHtml += `<table>
+        <thead>
+          <tr>
+            <td> <p>                         </p> </td>
+            <td> <p>                         </p> </td>
+            <td> <p>                         </p> </td>
+            <th> Total Cost </th>
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr>
+            <td> <p>                         </p> </td>
+            <td> <p>                         </p> </td>
+            <td> <p>                         </p> </td>
+            <td> <p> $${sumTotal} </p> </td>
+          </tr>
+        </tbody>
+
+      </table>`
+
+    return orderContentHtml;
+
+  }
+
+  function createCartContentHTML(data) {
+    var cartContentHtml = createOrderContentHTML(data)
+
+        cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
+
+    return cartContentHtml;
+
+  }
 
   $('.cta').on('click','button',function(){
     $('.background').fadeTo('slow', 0);
@@ -91,77 +166,16 @@ $(document).ready(function(){
     $(this).toggleClass('active');
   });
 
+
   $('#show-cart-button').on('click', function(e){
     console.log('show cart')
     $.ajax({
       type:'Get',
       url:'/cart',
       success: function(data) {
-        var cartContentHtml = '';
 
-        cartContentHtml += `<table class="table table-inverse cart-subtotal">
-        <thead>
-
-          <tr>
-            <th>Items</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>SubTotal</th>
-          </tr>
-
-        </thead>
-        <tbody>
-
-        `;
-
-        for (arr of data['cart']) {
-
-          cartContentHtml += `<tr>
-           <td> <p> ${arr.name} </p> </td>
-           <td> <p> ${arr.quantity} </p> </td>
-           <td> <p> ${arr.price} </p> </td>
-           <td> <p> $${(arr.price * arr.quantity.toFixed(2))} <p> </td>
-            </tr>
-          `;
-        }
-
-        cartContentHtml += ' </tbody> </table>';
-
-
-        var sumTotal = 0;
-
-        for (arr of data['cart']) {
-          sumTotal += (arr.price * arr.quantity.toFixed(2))
-        }
-
-
-        cartContentHtml += `<table>
-          <thead>
-            <tr>
-              <td> <p>                         </p> </td>
-              <td> <p>                         </p> </td>
-              <td> <p>                         </p> </td>
-              <th> Total Cost </th>
-            </tr>
-
-          </thead>
-          <tbody>
-            <tr>
-              <td> <p>                         </p> </td>
-              <td> <p>                         </p> </td>
-              <td> <p>                         </p> </td>
-              <td> <p> $${sumTotal} </p> </td>
-            </tr>
-          </tbody>
-
-        </table>`
-
-        orderContentHtml = cartContentHtml;
-        cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
-
-
-        $('#cart-content').html(cartContentHtml)
-        $('#orderDetails').html(orderContentHtml)
+        $('#cart-content').html(createCartContentHTML(data))
+        $('#orderDetails').html(createOrderContentHTML(data))
       }
     })
   })
@@ -178,17 +192,13 @@ $(document).ready(function(){
       success: function (data) {
       var orderReceipt = [];
 
-
         for (arr of data['cart']) {
-          // console.log(arr.name, arr.quantity, arr.price, (arr.price * arr.quantity.toFixed(2)) )
           var orderObject = { Name: arr.name, Qunatity: arr.quantity, Price: arr.price, subtotal: (arr.price * arr.quantity.toFixed(2))}
           orderReceipt.push(orderObject)
-          // console.log(orderReceipt)
+
         }
 
-      console.log('orderReceipt', orderReceipt)
-
-      var receipt = orderReceipt
+        var receipt = orderReceipt
 
           $.ajax({
             type : 'Post',
@@ -199,11 +209,7 @@ $(document).ready(function(){
           })
 
       }
-
-
     })
-
-
   })
 
   $('.card').hover(function(){
