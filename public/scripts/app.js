@@ -231,13 +231,20 @@ $(document).ready(function() {
   });
 
 
-  $('#addons button').on('click', function(e) {
-    console.log($(this).closest())
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/cart',
-
+  $('#addons button').on('click', function() {
+    console.log($(this).parent().find('.card-title').text())
+    $.ajax({
+      type: 'POST',
+      url: '/cart',
+      data: {
+        name: $(this).parent().find('.card-title').text(),
+        quantity: '1',
+      },
+      success: function(data) {
+        console.log(data)
+      }
     // })
+    })
   })
 
 });
