@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (sms) => {
+module.exports = () => {
 
   app.post('/', function(req, res) {
     knex('order').select('status').where('phone', '=', req.body.From).asCallback((err, row) => {

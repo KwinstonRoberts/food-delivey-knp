@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 
-module.exports = (cart) => {
+module.exports = () => {
 
   app.post("/", (req, res) => {
     if (!req.body.name) return console.error('param does not exist');

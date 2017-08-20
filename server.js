@@ -31,14 +31,12 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
   debug: true,
   outputStyle: 'expanded'
 }));
-
 app.use(express.static("public"));
 
 //helper functions
@@ -65,10 +63,10 @@ function message(message, to, from, callback) {
 }
 
 //routes for the twilio sms service
-app.use("/sms", smsRoutes(sms));
+app.use("/sms", smsRoutes());
 
 //routes shopping cart
-app.use("/cart", cartRoutes(cart));
+app.use("/cart", cartRoutes());
 
 //routes for the menu
 app.get("/", (req, res) => {
