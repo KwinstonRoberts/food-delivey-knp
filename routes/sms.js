@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
+const myNumber = process.env.VERIFIED_NUMBER;
+const twiNumber = process.env.TWILIO_NUMBER;
+
 module.exports = (knex) => {
 
   //helper functions

@@ -18,8 +18,7 @@ const router = express.Router();
 // const authToken = process.env.TWILIO_SECRET;
 // const client = require('twilio')(accountSid, authToken);
 // const MessagingResponse = require('twilio').twiml.MessagingResponse;
-const myNumber = process.env.VERIFIED_NUMBER;
-const twiNumber = process.env.TWILIO_NUMBER;
+
 
 
 app.use(morgan('dev'));
