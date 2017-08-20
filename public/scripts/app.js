@@ -231,7 +231,7 @@ $(document).ready(function() {
   });
 
 
-  $('#addons>button').on('click', function() {
+  $('#addons>.card').on('click', 'button', function() {
     console.log($(this).parent().find('.card-title').text())
     $.ajax({
       type: 'POST',
