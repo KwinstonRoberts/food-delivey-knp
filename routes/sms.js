@@ -3,9 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (sms) => {
+module.exports = (knex) => {
 
-  sms.post('/', function(req, res) {
+  router.post('/', function(req, res) {
     knex('order').select('status').where('phone', '=', req.body.From).asCallback((err, row) => {
       if (err) console.error(err);
       var status = row[0].status;
@@ -78,7 +78,7 @@ module.exports = (sms) => {
       }
     });
   });
-  sms.post("/", (req, res) => {
+  router.post("/", (req, res) => {
     message(myNumber, twiNumber, `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`, function() {
       knex('order').insert({
         name: req.body.name || 'kyle',
