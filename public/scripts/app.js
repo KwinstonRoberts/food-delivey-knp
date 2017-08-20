@@ -185,7 +185,7 @@ $(document).ready(function() {
 
         $.ajax({
           type: 'POST',
-          url: '/order',
+          url: '/sms/order',
           data: {
             name: $('#orderForm').find('#name').val(),
             email: $('#orderForm').find('#email').val(),

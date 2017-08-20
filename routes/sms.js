@@ -101,7 +101,7 @@ module.exports = (knex) => {
       }
     });
   });
-  router.post("/", (req, res) => {
+  router.post("/order", (req, res) => {
     message(myNumber, twiNumber, `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`, function() {
       knex('order').insert({
         name: req.body.name || 'kyle',
