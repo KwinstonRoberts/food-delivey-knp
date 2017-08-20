@@ -43,13 +43,13 @@ $(document).ready(function() {
   }
 
 
-// Function to create Order Receipt
+  // Function to create Order Receipt
 
   function createOrderContentHTML(data) {
 
-     var orderContentHtml = '';
+    var orderContentHtml = '';
 
-      orderContentHtml += `<table class="table table-inverse cart-subtotal">
+    orderContentHtml += `<table class="table table-inverse cart-subtotal">
       <thead>
 
         <tr>
@@ -64,28 +64,28 @@ $(document).ready(function() {
 
       `;
 
-      for (arr of data['cart']) {
+    for (arr of data['cart']) {
 
-        orderContentHtml += `<tr>
+      orderContentHtml += `<tr>
          <td> <p> ${arr.name} </p> </td>
          <td> <p> ${arr.quantity} </p> </td>
          <td> <p> ${arr.price} </p> </td>
          <td> <p> $${(arr.price * arr.quantity.toFixed(2))} <p> </td>
           </tr>
         `;
-      }
+    }
 
-      orderContentHtml += ' </tbody> </table>';
-
-
-      var sumTotal = 0;
-
-      for (arr of data['cart']) {
-        sumTotal += (arr.price * arr.quantity.toFixed(2))
-      }
+    orderContentHtml += ' </tbody> </table>';
 
 
-      orderContentHtml += `<table>
+    var sumTotal = 0;
+
+    for (arr of data['cart']) {
+      sumTotal += (arr.price * arr.quantity.toFixed(2))
+    }
+
+
+    orderContentHtml += `<table>
         <thead>
           <tr>
             <td> <p>                         </p> </td>
@@ -111,12 +111,12 @@ $(document).ready(function() {
   }
 
 
-//  Function to create Cart Content (Addition to Order Content Form)
+  //  Function to create Cart Content (Addition to Order Content Form)
 
   function createCartContentHTML(data) {
     var cartContentHtml = createOrderContentHTML(data)
 
-        cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
+    cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
 
     return cartContentHtml;
 
@@ -231,21 +231,20 @@ $(document).ready(function() {
   });
 
 
-  $('#addons button').on('click', function() {
+  $('#addons>button').on('click', function() {
     console.log($(this).parent().find('.card-title').text())
     $.ajax({
       type: 'POST',
       url: '/cart',
       data: {
         name: $(this).parent().find('.card-title').text(),
-        quantity: '1',
+        quantity: 1,
       },
       success: function(data) {
-        console.log(data)
+        console.log(data);
       }
     // })
     })
   })
 
 });
-
