@@ -45,7 +45,13 @@ module.exports = (knex) => {
                 .where('phone', '=', req.body.From)
                 .asCallback((err, row) => {
                   if (err) console.error(err);
-                  message(myNumber, twiNumber, `${req.body.From} Has ordered these items:${row[0].receipt} text "ready" when the order has been completed, and "end" once you have received payment`, function() {});
+                  client.messages.create({
+                    to: myNumber,
+                    from: twiNumber,
+                    body: `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`
+                  }).then((message) => {
+                    console.log(message.sid);
+                  });
                 });
             });
           });

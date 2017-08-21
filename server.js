@@ -14,7 +14,6 @@ const cartRoutes = require("./routes/cart");
 const app = express();
 const router = express.Router();
 
-
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
