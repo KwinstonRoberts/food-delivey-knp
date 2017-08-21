@@ -8,8 +8,6 @@ body,html{
   height:100%;
 }
 body {
-
-
   .jumbotron{
     height:100%;
   }
@@ -34,13 +32,14 @@ body {
       #show-cart-button:hover{
         background-color: #d3d3d3;
       }
-
       .glyphicon-shopping-cart, .caret{
         color: #ecefc7;
       }
     }
   }
-
+  .input-group{
+    padding:10px;
+  }
   .background {
     background-image: url(../images/burgerBackground.jpg);
     background-size:cover;
@@ -233,7 +232,6 @@ body {
     footer{
       justify-content: center;
     }
-
   }
 
   @media(max-width: 615px){
@@ -259,8 +257,5 @@ body {
       height: 700px;
       padding-top: 280px;
     }
-
-
-
   }
 }
