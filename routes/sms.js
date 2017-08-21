@@ -46,7 +46,7 @@ module.exports = (knex) => {
                 client.messages.create({
                   to: myNumber,
                   from: twiNumber,
-                  body: `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`
+                  body: `${req.body.name} has placed an order: ${req.body.receipt} text "ready" once the order has been completed and '3' once you've recieved payment`
                 }).then((message) => {
                   console.log(message.sid);
                 });
