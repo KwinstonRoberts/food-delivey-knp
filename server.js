@@ -1,6 +1,5 @@
 "use strict";
 
-const app = express();
 const router = express.Router();
 
 const PORT = process.env.PORT || 8080;
@@ -17,6 +16,8 @@ const knexLogger = require('knex-logger');
 // Seperated Routes for each Resource
 const smsRoutes = require("./routes/sms");
 const cartRoutes = require("./routes/cart");
+
+const app = express();
 
 app.use(morgan('dev'));
 
