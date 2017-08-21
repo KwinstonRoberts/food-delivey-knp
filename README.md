@@ -8,7 +8,7 @@ ZuckerBurger is a fully responsive, food ordering application. Users  can browse
 !["menu items"](https://github.com/KwinstonRoberts/food-delivey-knp/blob/master/docs/menuView.png)
 !["Cart dropdown"](https://github.com/KwinstonRoberts/food-delivey-knp/blob/master/docs/cartDropdown.png)
 !["Order confirmation"](https://github.com/KwinstonRoberts/food-delivey-knp/blob/master/docs/orderConfirmation.png)
-!["Home page"](https://github.com/KwinstonRoberts/food-delivey-knp/blob/master/docs/mobileView.png)
+!["Home page"](https://github.com/KwinstonRoberts/food-delivey-knp/blob/master/docs/ZBmobile.jpg)
 
 
 ## Dependencies
