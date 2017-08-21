@@ -95,10 +95,16 @@
           </div>
           <div id='orderForm' class="modal-body">
 
-              <label for="name"> Name </label>
-              <input id="name" type="text" name="name" style="width: 350px"><br>
-              <label for="phone"> Phone </label>
-              <input id="phonenumber" type="phone" name="phone" style="width: 350px">
+            <div class='container row'>
+              <div class="input-group col-sm-6">
+                <span class="input-group-addon" id="basic-addon1">Name</span>
+                <input type="text" class="form-control" placeholder="name" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group col-sm-6">
+                <span class="input-group-addon" id="basic-addon2">Phone</span>
+                <input type="phone" class="form-control" placeholder="phone" aria-describedby="basic-addon2">
+              </div>
+            </div>
 
               <p class="orderDetails"><label for="">Order Details</label></p>
               <div id="orderDetails"></div>
