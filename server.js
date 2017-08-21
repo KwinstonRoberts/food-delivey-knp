@@ -1,5 +1,6 @@
 "use strict";
 
+<<<<<<< HEAD
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.ENV || "development";
 const express = require("express");
@@ -13,6 +14,28 @@ const smsRoutes = require("./routes/sms");
 const cartRoutes = require("./routes/cart");
 const app = express();
 const router = express.Router();
+=======
+
+const PORT        = process.env.PORT || 8080;
+const ENV         = process.env.ENV || "development";
+const express     = require("express");
+const bodyParser  = require("body-parser");
+const sass        = require("node-sass-middleware");
+const app         = express();
+
+const knexConfig  = require("./knexfile");
+const knex        = require("knex")(knexConfig[ENV]);
+const morgan      = require('morgan');
+const knexLogger  = require('knex-logger');
+
+// Seperated Routes for each Resource
+const usersRoutes = require("./routes/users");
+
+// const accountSid = process.env.TWILIO_KEY;
+// const authToken =  process.env.TWILIO_SECRET;
+// const client = require('twilio')(accountSid, authToken);
+
+>>>>>>> origin/formStyling
 
 app.use(morgan('dev'));
 

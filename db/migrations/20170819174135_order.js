@@ -1,9 +1,9 @@
 
 exports.up = function(knex, Promise) {
-  return promise.all([
+  return Promise.all([
      knex.schema.table('order', function (table) {
        table.string('status');
-     });
+     })
   ]);
 };
 

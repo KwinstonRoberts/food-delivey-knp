@@ -39,15 +39,14 @@ module.exports = (knex) => {
               status: 'confirmed',
             }).asCallback((err) => {
             if (err) console.error(err);
-
-            knex.select('receipt').from('order')
+            knex.select('name', 'receipt').from('order')
               .where('phone', '=', req.body.From)
               .asCallback((err, row) => {
                 if (err) console.error(err);
                 client.messages.create({
                   to: myNumber,
                   from: twiNumber,
-                  body: `${req.body.name} has placed an order: ${req.body.receipt} text "ready" once the order has been completed and '3' once you've recieved payment`
+                  body: `${row[0].name} has placed an order: ${row[0].receipt} text "ready" once the order has been completed and '3' once you've recieved payment`
                 }).then((message) => {
                   console.log(message.sid);
                   res.end(respond('Thanks, your order is now being processed\ntext "receipt" to review the order', res));

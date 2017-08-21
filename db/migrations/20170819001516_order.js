@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return promise.all([
+  return Promise.all([
      knex.schema.createTable('order', function (table) {
        table.increments('id');
        table.text('name');
@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
        table.integer('phone');
        table.text('receipt','longtext');
        table.integer('amount_owing');
-     });
+     })
   ]);
 };
 
