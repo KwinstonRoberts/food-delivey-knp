@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
-  // left: 37, up: 38, right: 39, down: 40,
-  // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+  //disable scrolling on the landing page
   var keys = {
     37: 1,
     38: 1,
@@ -41,7 +40,7 @@ $(document).ready(function() {
     window.ontouchmove = null;
     document.onkeydown = null;
   }
-
+  //------
 
   // Function to create Order Receipt
 
@@ -77,13 +76,11 @@ $(document).ready(function() {
 
     orderContentHtml += ' </tbody> </table>';
 
-
     var sumTotal = 0;
 
     for (arr of data['cart']) {
       sumTotal += (arr.price * arr.quantity.toFixed(2))
     }
-
 
     orderContentHtml += `<table>
         <thead>
@@ -93,7 +90,6 @@ $(document).ready(function() {
             <td> <p>                         </p> </td>
             <th> Total Cost </th>
           </tr>
-
         </thead>
         <tbody>
           <tr>
@@ -103,16 +99,13 @@ $(document).ready(function() {
             <td> <p> $${sumTotal} </p> </td>
           </tr>
         </tbody>
-
       </table>`
 
     return orderContentHtml;
 
   }
 
-
   //  Function to create Cart Content (Addition to Order Content Form)
-
   function createCartContentHTML(data) {
     var cartContentHtml = createOrderContentHTML(data)
 
@@ -139,7 +132,6 @@ $(document).ready(function() {
       type: 'GET',
       url: `/menu/${$(this).find('.foodItemTitle').text()}`,
       success: function(data) {
-        //console.log(data);
         $('#details').find('h2').text(data.dish.name);
         $('#details').find('p').text(data.dish.description);
         $('#details').find('b').text('$' + data.dish.price);
@@ -178,7 +170,7 @@ $(document).ready(function() {
     $(this).toggleClass('active');
   });
 
-
+  //retrieve the cart on click
   $('#show-cart-button').on('click', function(e) {
 
     $.ajax({
@@ -188,10 +180,11 @@ $(document).ready(function() {
 
         $('#cart-content').html(createCartContentHTML(data))
         $('#orderDetails').html(createOrderContentHTML(data))
-
       }
     })
   })
+
+  //checkout and order events
   $('.checkout').on('click', function(e) {
     $('#orderDetails').fadeOut();
     $('#thanks').fadeIn();
@@ -206,11 +199,9 @@ $(document).ready(function() {
         var orderReceipt = [];
         orderReceipt.push('====================\n');
         for (arr of data['cart']) {
-          // console.log(arr.name, arr.quantity, arr.price, (arr.price * arr.quantity.toFixed(2)) )
           var orderObject = '' + arr.name + ':\nquantity' + arr.quantity + '\nprice: ' + arr.price + '\nsubtotal: ' + (arr.price * arr.quantity.toFixed(2));
           orderReceipt.push(orderObject)
           orderReceipt.push('-------------------------\n');
-        //console.log(orderReceipt)
         }
         orderReceipt.push('====================\n');
         $('#orderDetails').fadeOut();
@@ -232,14 +223,12 @@ $(document).ready(function() {
       }
     })
   })
-
+  //addon events
   $('.card').hover(function() {
     $(this).find('.card-block').toggle('slow', function() {});
   });
 
-
   $('#addons>.card').on('click', 'button', function() {
-    console.log($(this).parent().find('.card-title').text())
     $.ajax({
       type: 'POST',
       url: '/cart',
@@ -250,8 +239,6 @@ $(document).ready(function() {
       success: function(data) {
         console.log(data);
       }
-    // })
     })
   })
-
 });
