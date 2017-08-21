@@ -1,6 +1,5 @@
 "use strict";
 
-const router = express.Router();
 
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.ENV || "development";
@@ -18,6 +17,7 @@ const smsRoutes = require("./routes/sms");
 const cartRoutes = require("./routes/cart");
 
 const app = express();
+const router = express.Router();
 
 app.use(morgan('dev'));
 
