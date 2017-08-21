@@ -40,7 +40,7 @@ module.exports = (knex) => {
               status: 'confirmed',
             }).asCallback((err) => {
             if (err) console.error(err);
-            respond('Thanks, your order is now being processed\ntext "receipt" to review the order', function() {
+            respond('Thanks, your order is now being processed\ntext "receipt" to review the order', res, function() {
               knex.select('receipt').from('order')
                 .where('phone', '=', req.body.From)
                 .asCallback((err, row) => {
