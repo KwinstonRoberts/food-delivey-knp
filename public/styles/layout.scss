@@ -54,9 +54,9 @@ body {
     }
 
     #viewMenu{
+    @include set-box(inherit,10px 40px,inherit,inherit);
     color: #302f2f;
     background-color: #ecefc7;
-    padding: 10px 40px;
     border: 1px solid #ecefc7;
     box-shadow: 7px 7px 5px;
     font-size: 1.3em;
@@ -99,8 +99,7 @@ body {
       webkit-transform: translateY(500px);
 
       h2{
-        margin:0;
-        padding:0;
+        @include set-box(0,0,inherit,inherit);
       }
       hr{
         margin:2px;
@@ -153,7 +152,6 @@ body {
   .btn-info{
     background-color: #282520;
     color: #ecefc7;
-    color: #eee;
     border: 1px solid #ecefc7;
   }
   .btn-info:hover{
@@ -175,20 +173,17 @@ body {
     padding-left: 20px;
   }
   .footerSocial{
-    padding-right: 40px;
-    padding-left: 10px;
+    padding: 5px 40px 5px 10px;
   }
   .dropdown{
-    padding-right: 0;
-    margin-right: 50px;
+    @include set-box(inherit 50px inherit inherit,inherit 0 inherit inherit,inherit,inherit);
   }
 
   .checkout, #orderButton{
+    @include set-box(10px,5px,inherit,inherit);
     background-color: #282520;
     color: white;
     border-radius: 5px;
-    padding: 5px;
-    margin: 10px;
     float: right;
     border: 1px solid #282520;
   }
@@ -212,8 +207,14 @@ body {
     font-size: 1.2em;
   }
 
+  #thanks{
+    display:none;
+  }
+
   @media(max-width: 765px){
     #details{
+      @include set-box(0 auto,5px,90%,inherit);
+
       width: 90%;
       margin: 0 auto;
     }
