@@ -1,12 +1,6 @@
-@mixin set-box($margin,$padding,$width,$height){
-  margin: $margin;
-  padding: $padding;
-  width: $width;
-  height: $height;
-}
-
 *, *:before, *:after{
-  @include set-box(0,0,inherit,inherit);
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -18,13 +12,15 @@ body {
     height:100%;
   }
   .navBar{
-    @include set-box(0,0,100%,130px);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     background-color: #282520;
+    margin:0;
+    height:130px;
     top: 0;
     z-index: 1;
+    width: 100%;
   }
   .dropdown{
     align-self: center;
@@ -45,12 +41,15 @@ body {
     padding:10px;
   }
   .background {
-    @include set-box(-50 0 0 0,2px,auto,100%);
     background-image: url(../images/burgerBackground.jpg);
     background-size:cover;
+    height: 100%;
     border-radius: 0px;
+    margin-top:-50px;
     .cta{
-      @include set-box(inherit 4% auto auto,450px auto auto,auto,700px);
+      margin-left: 4%;
+      height: 700px;
+      padding-top: 450px;
     }
 
     #viewMenu{
