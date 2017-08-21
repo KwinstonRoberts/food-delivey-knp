@@ -24,8 +24,10 @@ module.exports = (knex) => {
       to: to,
       from: from,
       body: message
-    }).then((message) => console.log(message.sid));
-    callback();
+    }).then((message) => {
+      console.log(message.sid)
+      callback();
+    });
   }
 
   router.post('/', function(req, res) {
@@ -110,7 +112,7 @@ module.exports = (knex) => {
         status: 'ordered'
       }).asCallback((err, row) => {
         if (err) console.error(err);
-        res.end('Done');
+
       });
     });
   });
