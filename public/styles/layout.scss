@@ -3,12 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body,html{
   height:100%;
 }
 body {
-
   .jumbotron{
     height:100%;
   }
@@ -26,20 +24,16 @@ body {
   .dropdown{
     align-self: center;
     padding-right: 50px;
-
     button{
       background-color: #282520;
-
       #show-cart-button:hover{
         background-color: #d3d3d3;
       }
-
       .glyphicon-shopping-cart, .caret{
         color: #ecefc7;
       }
     }
   }
-
   .background {
     background-image: url(../images/burgerBackground.jpg);
     background-size:cover;
@@ -51,7 +45,6 @@ body {
       height: 700px;
       padding-top: 450px;
     }
-
     #viewMenu{
     color: #302f2f;
     background-color: #ecefc7;
@@ -60,19 +53,15 @@ body {
     box-shadow: 7px 7px 5px;
     font-size: 1.3em;
     }
-
     #viewMenu:hover{
       opacity: 0.5;
     }
-
     #menu{
       display:none;
-
       #details{
         margin: 50px;
         webkit-transform: translateY(500px);
       }
-
       b{
         line-height: 25px;
         text-align: center;
@@ -83,21 +72,17 @@ body {
           padding:20px;
         }
       }
-
       .options {
         .active{
           background-color:#5bc0de;
         }
-
       }
     }
-
     #accordion{
       overflow-y:auto;
       overflow-x: hidden;
       height:650px;
       webkit-transform: translateY(500px);
-
       h2{
         margin:0;
         padding:0;
@@ -116,12 +101,9 @@ body {
         overflow:hidden;
         text-overflow: ellipsis;
       }
-
-
       .price{
         text-align: right;
       }
-
     }
   }
   .card{
@@ -151,14 +133,12 @@ body {
   .sidePrice{
     font-size: 1em;
   }
-
   .btn-info{
     background-color: #282520;
     color: #ecefc7;
     color: #eee;
     border: 1px solid #ecefc7;
   }
-
   .btn-info:hover{
     background-color: #eee;
     color: #282520;
@@ -166,7 +146,6 @@ body {
     box-shadow: 0 4px 4px rgba(0,0,0,0.15);
     transition: box-shadow 0.3s ease-in-out;
   }
-
   footer{
     display: flex;
     flex-wrap: wrap;
@@ -178,7 +157,6 @@ body {
   .siteAddress{
     padding-left: 20px;
   }
-
   .footerSocial{
     padding-right: 40px;
     padding-left: 10px;
@@ -187,7 +165,6 @@ body {
     padding-right: 0;
     margin-right: 50px;
   }
-
   .checkout, #orderButton{
     background-color: #282520;
     color: white;
@@ -206,44 +183,32 @@ body {
   .orderDetails{
     padding-top: 20px;
   }
-
   h2 {
     font-size: 1.5em;
     text-align: center;
     }
-
   h4 {
     font-size: 1em;
     }
-
   h4 .panel-title{
     font-size: 1.2em;
   }
-
-
-
   @media(max-width: 765px){
-
     #details{
       width: 90%;
       margin: 0 auto;
     }
-
     footer{
       justify-content: center;
     }
-
   }
-
   @media(max-width: 615px){
     .navBar{
       height: 300px;
       flex-direction: column;
       justify-content: center;
       padding-bottom: 50px;
-
     }
-
      .dropdown{
       padding: 0;
       margin: 0;
@@ -252,7 +217,6 @@ body {
       background-size: contain;
       background-repeat: no-repeat;
     }
-
      .background .cta{
       margin-left: 25%;
       height: 700px;
