@@ -3,6 +3,13 @@
 const express = require('express');
 const router = express.Router();
 
+//twilio variables
+const accountSid = process.env.TWILIO_KEY;
+const authToken = process.env.TWILIO_SECRET;
+const client = require('twilio')(accountSid, authToken);
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+
+
 module.exports = (knex) => {
 
   //helper functions
