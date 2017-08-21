@@ -13,8 +13,6 @@ const smsRoutes = require("./routes/sms");
 const cartRoutes = require("./routes/cart");
 const app = express();
 const router = express.Router();
-const myNumber = process.env.VERIFIED_NUMBER;
-const twiNumber = process.env.TWILIO_NUMBER;
 
 
 app.use(morgan('dev'));
