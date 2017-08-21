@@ -13,21 +13,9 @@ module.exports = (knex) => {
     res.writeHead(200, {
       'Content-Type': 'text/xml'
     });
-    callback()
+    callback();
     //respond with the message header
-    res.end(twiml.toString)
-  }
-
-  //function to use when user has yet to receive any messages
-  function message(message, to, from, callback) {
-    client.messages.create({
-      to: to,
-      from: from,
-      body: message
-    }).then((message) => {
-      console.log(message.sid)
-      callback();
-    });
+    res.end(twiml.toString);
   }
 
   router.post('/', function(req, res) {
@@ -47,7 +35,7 @@ module.exports = (knex) => {
                 .where('phone', '=', req.body.From)
                 .asCallback((err, row) => {
                   if (err) console.error(err);
-                  message(myNumber, twiNumber, `${req.body.From} Has ordered these items:${row[0].receipt} text "ready" when the order has been completed, and "end" once you have received payment`, null);
+                  message(myNumber, twiNumber, `${req.body.From} Has ordered these items:${row[0].receipt} text "ready" when the order has been completed, and "end" once you have received payment`, function() {});
                 });
             });
           });
@@ -97,14 +85,19 @@ module.exports = (knex) => {
             .update({
               status: 'finished',
             }).asCallback((err) => {
-            if (err) console.error(err)
+            if (err) console.error(err);
           });
         }
       }
     });
   });
   router.post("/order", (req, res) => {
-    message(myNumber, twiNumber, `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`, function() {
+    client.messages.create({
+      to: myNumber,
+      from: twiNumber,
+      body: `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`
+    }).then((message) => {
+      console.log(message.sid);
       knex('order').insert({
         name: req.body.name || 'kyle',
         phone: myNumber,
@@ -112,7 +105,6 @@ module.exports = (knex) => {
         status: 'ordered'
       }).asCallback((err, row) => {
         if (err) console.error(err);
-
       });
     });
   });
