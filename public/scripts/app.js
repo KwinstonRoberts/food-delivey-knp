@@ -186,8 +186,8 @@ $(document).ready(function() {
 
   //checkout and order events
   $('.checkout').on('click', function(e) {
-    $('#orderDetails').fadeOut();
-    $('#thanks').fadeIn();
+    $('#orderDetails').fadeIn();
+    $('#thanks').fadeOut();
   });
 
   $('#orderButton').on('click', function(e) {
