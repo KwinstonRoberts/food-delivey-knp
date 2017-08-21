@@ -87,7 +87,7 @@ module.exports = (knex) => {
           if (err) console.error(err);
           res.end(respond('Your food is ready for pickup.', res));
         });
-      } else if (req.body.Body.toLowerCase() === 'done' && status === 'ready') {
+      } else if (req.body.Body.toLowerCase() === '3' && status === 'ready') {
         knex('order')
           .where('phone', '=', req.body.From)
           .update({
