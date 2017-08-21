@@ -219,7 +219,6 @@ $(document).ready(function() {
             console.log('receipt inside ajax call', receipt)
           }
         })
-
       }
     })
   })
