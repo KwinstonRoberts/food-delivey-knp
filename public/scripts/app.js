@@ -116,7 +116,7 @@ $(document).ready(function() {
   function createCartContentHTML(data) {
     var cartContentHtml = createOrderContentHTML(data)
 
-    cartContentHtml += `<button class='checkout' data-toggle="modal" data-target="#myModal"> Checkout </button>`
+    cartContentHtml += `<button class='checkout btn-btn' data-toggle="modal" data-target="#myModal"> Checkout </button>`
 
     return cartContentHtml;
 
