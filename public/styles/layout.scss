@@ -18,7 +18,7 @@ body {
     height:100%;
   }
   .navBar{
-    @include set-box(0,inherit,100%,130px);
+    @include set-box(0,0,100%,130px);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -45,12 +45,12 @@ body {
     padding:10px;
   }
   .background {
-    @include set-box(-50 0 0 0,inherit,inherit,100%);
+    @include set-box(-50 0 0 0,2px,auto,100%);
     background-image: url(../images/burgerBackground.jpg);
     background-size:cover;
     border-radius: 0px;
     .cta{
-      @include set-box(inherit 4% inherit inherit,450px inherit inherit inherit,inherit,700px);
+      @include set-box(inherit 4% auto auto,450px auto auto,auto,700px);
     }
 
     #viewMenu{
