@@ -17,26 +17,14 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 module.exports = (knex) => {
 
   //helper functions
-  function respond(message, callback) {
+  function respond(message, res) {
     //generate twiml message and continue code after message is sent
     var twiml = new MessagingResponse();
     twiml.message(message);
     res.writeHead(200, {
       'Content-Type': 'text/xml'
     });
-    callback()
-    //respond with the message header
-    res.end(twiml.toString)
-  }
-
-  //function to use when user has yet to receive any messages
-  function message(message, to, from, callback) {
-    client.messages.create({
-      to: to,
-      from: from,
-      body: message
-    }).then((message) => console.log(message.sid));
-    callback();
+    return twiml.toString();
   }
 
   router.post('/', function(req, res) {
@@ -51,77 +39,81 @@ module.exports = (knex) => {
               status: 'confirmed',
             }).asCallback((err) => {
             if (err) console.error(err);
-            respond('Thanks, your order is now being processed\ntext "receipt" to review the order', function() {
-              knex.select('receipt').from('order')
-                .where('phone', '=', req.body.From)
-                .asCallback((err, row) => {
-                  if (err) console.error(err);
-                  message(myNumber, twiNumber, `${req.body.From} Has ordered these items:${row[0].receipt} text "ready" when the order has been completed, and "end" once you have received payment`, null);
+            res.end(respond('Thanks, your order is now being processed\ntext "receipt" to review the order', res))
+            knex.select('receipt').from('order')
+              .where('phone', '=', req.body.From)
+              .asCallback((err, row) => {
+                if (err) console.error(err);
+                client.messages.create({
+                  to: myNumber,
+                  from: twiNumber,
+                  body: `${req.body.name} has placed an order: ${req.body.receipt} text "ready" once the order has been completed and '3' once you've recieved payment`
+                }).then((message) => {
+                  console.log(message.sid);
                 });
-            });
+              });
           });
         } else if (req.body.Body.toLowerCase() === '2') {
-          respond('Your order has been cancelled', function() {
-            ;
-            knex('order').where('phone', '=', req.body.From).del();
-          });
+          knex('order').where('phone', '=', req.body.From).del();
+          res.end(respond('Your order has been cancelled', res));
         }
       } else if (status === 'confirmed') {
         if (req.body.Body.toLowerCase() === 'receipt') {
           knex('order').select('receipt').where('phone', '=', req.body.From).asCallback((err, row) => {
             if (err) console.error(err);
             var receipt = row[0].receipt;
-            respond(`Here is your current order: ${receipt}`, function() {
-              knex('order')
-                .where('phone', '=', req.body.From)
-                .update({
-                  status: 'confirmed',
-                }).asCallback((err) => {
-                if (err) console.error(err);
-              });
-            });
-          });
-        } else if (req.body.Body.toLowerCase() === '2' && status !== 'processed') {
-          respond('Your order has been cancelled', function() {
-            knex('order')
-              .where('phone', '=', req.body.From)
-              .del().asCallback((err) => {
-              if (err) console.error(err);
-            });
-          });
-        } else if (req.body.Body.toLowerCase() === 'ready') {
-          respond('Your food is ready for pickup.', function() {
             knex('order')
               .where('phone', '=', req.body.From)
               .update({
-                status: 'ready',
+                status: 'confirmed',
               }).asCallback((err) => {
               if (err) console.error(err);
+              res.end(respond(`Here is your current order: ${receipt}`, res));
             });
           });
-        } else if (req.body.Body.toLowerCase() === 'done' && status === 'ready') {
-          respond('Thanks for ordering at Zuckerburgers!');
-          knex('order')
-            .where('phone', '=', req.body.From)
-            .update({
-              status: 'finished',
-            }).asCallback((err) => {
-            if (err) console.error(err)
-          });
         }
+      } else if (req.body.Body.toLowerCase() === '2' && status !== 'processed') {
+        res.end(respond('Your order has been cancelled', res))
+        knex('order')
+          .where('phone', '=', req.body.From)
+          .del().asCallback((err) => {
+          if (err) console.error(err);
+        });
+      } else if (req.body.Body.toLowerCase() === 'ready') {
+        knex('order')
+          .where('phone', '=', req.body.From)
+          .update({
+            status: 'ready',
+          }).asCallback((err) => {
+          if (err) console.error(err);
+          res.end(respond('Your food is ready for pickup.', res));
+        });
+      } else if (req.body.Body.toLowerCase() === '3' && status === 'ready') {
+        knex('order')
+          .where('phone', '=', req.body.From)
+          .update({
+            status: 'finished',
+          }).asCallback((err) => {
+          if (err) console.error(err);
+          res.end(respond('Thanks for ordering at Zuckerburgers!', res));
+        });
       }
     });
   });
   router.post("/order", (req, res) => {
-    message(myNumber, twiNumber, `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`, function() {
+    client.messages.create({
+      to: myNumber,
+      from: twiNumber,
+      body: `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`
+    }).then((message) => {
+      console.log(message.sid);
       knex('order').insert({
         name: req.body.name || 'kyle',
-        phone: twiNumber,
+        phone: myNumber,
         receipt: req.body.receipt,
         status: 'ordered'
       }).asCallback((err, row) => {
         if (err) console.error(err);
-        res.end('Done');
       });
     });
   });
