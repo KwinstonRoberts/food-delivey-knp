@@ -23,9 +23,7 @@ module.exports = (knex) => {
     res.writeHead(200, {
       'Content-Type': 'text/xml'
     });
-    callback();
-    //respond with the message header
-    res.end(twiml.toString);
+    callback(twiml.toString);
   }
 
   router.post('/', function(req, res) {
@@ -40,7 +38,7 @@ module.exports = (knex) => {
               status: 'confirmed',
             }).asCallback((err) => {
             if (err) console.error(err);
-            respond('Thanks, your order is now being processed\ntext "receipt" to review the order', res, function() {
+            respond('Thanks, your order is now being processed\ntext "receipt" to review the order', res, function(sms) {
               knex.select('receipt').from('order')
                 .where('phone', '=', req.body.From)
                 .asCallback((err, row) => {
@@ -51,6 +49,7 @@ module.exports = (knex) => {
                     body: `Your order has been placed ${req.body.name}: ${req.body.receipt} text "confirm" to start the order or text "2" to undo`
                   }).then((message) => {
                     console.log(message.sid);
+                    res.end(sms)
                   });
                 });
             });
