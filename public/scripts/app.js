@@ -192,12 +192,17 @@ $(document).ready(function() {
       }
     })
   })
+  $('.checkout').on('click', function(e) {
+    $('#orderDetails').fadeOut();
+    $('#thanks').fadeIn();
+  });
 
   $('#orderButton').on('click', function(e) {
     $.ajax({
       type: 'Get',
       url: '/cart',
       success: function(data) {
+
         var orderReceipt = [];
         orderReceipt.push('====================\n');
         for (arr of data['cart']) {
@@ -208,6 +213,8 @@ $(document).ready(function() {
         //console.log(orderReceipt)
         }
         orderReceipt.push('====================\n');
+        $('#orderDetails').fadeOut();
+        $('#thanks').fadeIn();
 
         $.ajax({
           type: 'POST',
