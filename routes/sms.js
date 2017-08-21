@@ -39,7 +39,7 @@ module.exports = (knex) => {
               status: 'confirmed',
             }).asCallback((err) => {
             if (err) console.error(err);
-            res.end(respond('Thanks, your order is now being processed\ntext "receipt" to review the order', res))
+
             knex.select('receipt').from('order')
               .where('phone', '=', req.body.From)
               .asCallback((err, row) => {
@@ -50,6 +50,7 @@ module.exports = (knex) => {
                   body: `${req.body.name} has placed an order: ${req.body.receipt} text "ready" once the order has been completed and '3' once you've recieved payment`
                 }).then((message) => {
                   console.log(message.sid);
+                  res.end(respond('Thanks, your order is now being processed\ntext "receipt" to review the order', res));
                 });
               });
           });
