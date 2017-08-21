@@ -211,6 +211,10 @@ body {
     font-size: 1.2em;
   }
 
+  #thanks{
+    display:none;
+  }
+
   @media(max-width: 765px){
     #details{
       width: 90%;
