@@ -16,7 +16,7 @@ const twiNumber = process.env.TWILIO_NUMBER;
 module.exports = (knex) => {
 
   //helper functions
-  function respond(message, callback) {
+  function respond(message, res, callback) {
     //generate twiml message and continue code after message is sent
     var twiml = new MessagingResponse();
     twiml.message(message);
@@ -60,7 +60,7 @@ module.exports = (knex) => {
           knex('order').select('receipt').where('phone', '=', req.body.From).asCallback((err, row) => {
             if (err) console.error(err);
             var receipt = row[0].receipt;
-            respond(`Here is your current order: ${receipt}`, function() {
+            respond(`Here is your current order: ${receipt}`, res, function() {
               knex('order')
                 .where('phone', '=', req.body.From)
                 .update({
@@ -71,7 +71,7 @@ module.exports = (knex) => {
             });
           });
         } else if (req.body.Body.toLowerCase() === '2' && status !== 'processed') {
-          respond('Your order has been cancelled', function() {
+          respond('Your order has been cancelled', res, function() {
             knex('order')
               .where('phone', '=', req.body.From)
               .del().asCallback((err) => {
@@ -79,7 +79,7 @@ module.exports = (knex) => {
             });
           });
         } else if (req.body.Body.toLowerCase() === 'ready') {
-          respond('Your food is ready for pickup.', function() {
+          respond('Your food is ready for pickup.', res, function() {
             knex('order')
               .where('phone', '=', req.body.From)
               .update({
@@ -89,13 +89,14 @@ module.exports = (knex) => {
             });
           });
         } else if (req.body.Body.toLowerCase() === 'done' && status === 'ready') {
-          respond('Thanks for ordering at Zuckerburgers!');
-          knex('order')
-            .where('phone', '=', req.body.From)
-            .update({
-              status: 'finished',
-            }).asCallback((err) => {
-            if (err) console.error(err);
+          respond('Thanks for ordering at Zuckerburgers!', res, function() {
+            knex('order')
+              .where('phone', '=', req.body.From)
+              .update({
+                status: 'finished',
+              }).asCallback((err) => {
+              if (err) console.error(err);
+            });
           });
         }
       }
